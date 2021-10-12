@@ -3,6 +3,7 @@ import { getRequest } from '../../api/request';
 import PublicLayout from '../../layouts/Public/PublicLayout'
 import { PostCard } from './../../components/Public/PostCard';
 import { useState, useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Comunities = () => {
     const [comunitiesData, setComunitiesData] = useState([]);
@@ -27,19 +28,25 @@ const Comunities = () => {
         <PublicLayout>
             <main id="main_content">
                 <section className="latest_posts v2">
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10 col-md-10 col-12">
+                    <Container>
+                        <Row className="justify-content-center">
+                            <Col lg={10} md={10} xs={12} className="text-center">
                                 <h1>Chapters</h1>
-                                {
-                                    comunitiesData.map((e, index) => (
-                                        <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} grid={true} />
-                                    ))
-                                }
+                            </Col>
+                            <Col lg={12} md={12} xs={12}>
+                                <Row className="justify-content-center">
+                                    {
+                                        comunitiesData.map((e, index) => (
+                                            <Col lg={4} md={4} xs={12} key={`id_${e._id}_${index}`} >
+                                                <PostCard heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} grid={true} row={false} />
+                                            </Col>
+                                        ))
+                                    }
 
-                            </div>
-                        </div>
-                    </div>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </Container>
                 </section>
             </main>
         </PublicLayout>

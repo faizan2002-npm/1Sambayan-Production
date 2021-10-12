@@ -231,6 +231,7 @@ const siteHeaderMethods = {
   update: asyncHandler(async (req, res, next) => {
     try {
       const { title, description, headerId ,buttonURL} = req.body;
+      console.log(req.files);
 
       let image, backgroundImage;
 
@@ -238,7 +239,7 @@ const siteHeaderMethods = {
         image = req.files.image[0].filename;
       }
       if (req.files.backgroundImage) {
-        image = req.files.backgroundImage[0].filename;
+        backgroundImage = req.files.backgroundImage[0].filename;
       }
 
       let header = await SiteHeader.findById(headerId);

@@ -423,7 +423,7 @@ var routes = [
   },
   {
     path: "",
-    name: "Communities",
+    name: "Chapters",
     icon: "fas fa-paperclip text-success",
     component: _ListCommunity,
     layout: "/admin",
@@ -432,7 +432,7 @@ var routes = [
     subMenu: [
       {
         path: "/ListCommunity",
-        name: "All Communities",
+        name: "All Chapters",
         icon: "ni ni-single-02 text-yellow",
         component: _ListCommunity,
         layout: "/admin",
@@ -440,7 +440,7 @@ var routes = [
       },
       {
         path: "/CreateCommunity",
-        name: "Add Community",
+        name: "Add Chapter",
         icon: "ni ni-single-02 text-yellow",
         component: _CreateCommunity,
         layout: "/admin",
@@ -461,7 +461,7 @@ var routes = [
         path: "/ListCandidates",
         name: "All Candidates",
         icon: "ni ni-single-02 text-yellow",
-        component: _ListCommunity,
+        component: _ListCandidates,
         layout: "/admin",
         order: 1,
       },
@@ -477,7 +477,7 @@ var routes = [
   },
   {
     path: "",
-    name: "Parties",
+    name: "Member Organizations",
     icon: "fas fa-paperclip text-default",
     component: _ListParties,
     layout: "/admin",
@@ -486,7 +486,7 @@ var routes = [
     subMenu: [
       {
         path: "/ListParties",
-        name: "All Parties",
+        name: "All Member Organizations",
         icon: "ni ni-single-02 text-yellow",
         component: _ListParties,
         layout: "/admin",
@@ -494,7 +494,7 @@ var routes = [
       },
       {
         path: "/CreateParty",
-        name: "Add Party",
+        name: "Add Member Organization",
         icon: "ni ni-single-02 text-yellow",
         component: _CreateParty,
         layout: "/admin",

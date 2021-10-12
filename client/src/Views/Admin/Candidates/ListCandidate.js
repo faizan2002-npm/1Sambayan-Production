@@ -131,7 +131,7 @@ const ExpandedComponent = ({ data }) => {
     </>)
 };
 
-const ListParty = () => {
+const ListCandidate = () => {
     const handleRowClick = () => {
         console.log('row.createdAt', this.row.title);
     }
@@ -260,4 +260,4 @@ const ListParty = () => {
     )
 }
 
-export default ListParty
+export default ListCandidate

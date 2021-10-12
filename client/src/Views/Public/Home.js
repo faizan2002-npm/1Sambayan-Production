@@ -1,5 +1,5 @@
 import img from "../../Constants/Admin/images";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Carousel, Image, Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { PostCard } from "../../components/Public/PostCard";
@@ -7,6 +7,13 @@ import OwlCarousel from "react-owl-carousel";
 import PublicLayout from './../../layouts/Public/PublicLayout';
 import { getRequest } from "../../api/request";
 import ReactPlayer from 'react-player'
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// import Swiper core and required modules
+// import SwiperCore, {
+//     Pagination
+// } from 'swiper';
+// SwiperCore.use([Pagination]);
 
 const Home = () => {
     const [index, setIndex] = useState(0);
@@ -210,16 +217,42 @@ const Home = () => {
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
+    // const swiper = new Swiper('.swiper', {
+    //     // Optional parameters
+    //     direction: 'vertical',
+    //     loop: true,
+
+    //     // If we need pagination
+    //     pagination: {
+    //         el: '.swiper-pagination',
+    //     },
+
+    //     // Navigation arrows
+    //     navigation: {
+    //         nextEl: '.swiper-button-next',
+    //         prevEl: '.swiper-button-prev',
+    //     },
+
+    //     // And if we need scrollbar
+    //     scrollbar: {
+    //         el: '.swiper-scrollbar',
+    //     },
+    // });
+    const startPosition = useRef(0);
+
     const carouselOptions = {
         margin: 100,
         responsiveClass: true,
         nav: false,
         dots: true,
-        autoplay: true,
+        loop: true,
+        rewindNav: false,
+        autoplay: false,
+        freeDrag: true,
         smartSpeed: 1500,
-        // rows: true,
+        autoplayTimeout: 1000,
         items: 4,
-        // rowsCount: 2,
+        autoplayHoverPause: true,
         responsive: {
             0: {
                 margin: 50,
@@ -427,13 +460,13 @@ const Home = () => {
                                     <Carousel.Item key={`id_${e._id}_${index}`}>
                                         <Image src={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
                                         {
-                                            (index === 0) ? <>
+                                            (e.image) ? <>
                                                 <Carousel.Caption>
                                                     <Container>
                                                         <Row className="justify-content-center">
                                                             <Col lg={10} md={10} xs={12}>
                                                                 <Image src={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} alt="" fluid />
-                                                                <a class="btn btn-default" href={e.buttonURL}>CTA Button</a>
+                                                                <a class="btn btn-default" href={e.buttonURL}>Click to know more</a>
                                                             </Col>
                                                         </Row>
                                                     </Container>
@@ -455,20 +488,20 @@ const Home = () => {
                     <Container>
                         <div className="video_cover">
                             {
-                                (bigVideo.video)?<ReactPlayer
-                                playing={true}
-                                light={false}
-                                muted={true}
-                                loop={true}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                    borderRadius: "20px"
-                                }} width='100%'
-                                height='100%' url={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + bigVideo.video} />:''
+                                (bigVideo.video) ? <ReactPlayer
+                                    playing={true}
+                                    light={false}
+                                    muted={true}
+                                    loop={true}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        borderRadius: "20px"
+                                    }} width='100%'
+                                    height='100%' url={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + bigVideo.video} /> : ''
                             }
-                            
+
 
                             {/* <div className="button_cover">
                                 <Row>
@@ -546,7 +579,22 @@ const Home = () => {
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12}>
                                 <h1>{candidatesSection.heading}</h1>
-                                <OwlCarousel className='owl-theme' {...carouselOptions} >
+                                <OwlCarousel className='owl-theme owl-carousel'
+                                    // onDragged={startPosition.current}
+                                    // startPosition={startPosition.current}
+                                    margin={100}
+                                    responsiveClass={true}
+                                    nav={false}
+                                    dots={true}
+                                    loop={false}
+                                    rewind={false}
+                                    autoplay={true}
+                                    freeDrag={true}
+                                    // smartSpeed={5000}
+                                    autoplayTimeout={5000}
+                                    items={4}
+                                    autoplayHoverPause={true}
+                                >
                                     {
                                         candidates.map((e, index) => (
                                             <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} grid={false} row={false} />
@@ -562,7 +610,51 @@ const Home = () => {
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12}>
                                 <h1>{partiesSection.heading}</h1>
-                                <OwlCarousel className='owl-theme' {...carouselOptions} >
+                                {/* <Swiper slidesPerView={3} spaceBetween={30} freeMode={true} pagination={{
+                                    "clickable": true
+                                }} className="mySwiper">
+                                    <SwiperSlide>Slide 1</SwiperSlide>
+                                    <SwiperSlide>Slide 2</SwiperSlide>
+                                    <SwiperSlide>Slide 3</SwiperSlide>
+                                    <SwiperSlide>Slide 4</SwiperSlide>
+                                    <SwiperSlide>Slide 5</SwiperSlide>
+                                    <SwiperSlide>Slide 6</SwiperSlide>
+                                    <SwiperSlide>Slide 7</SwiperSlide>
+                                    <SwiperSlide>Slide 8</SwiperSlide><SwiperSlide>Slide 9</SwiperSlide>
+                                </Swiper> */}
+                                {/* <div class="swiper">
+                                    <div class="swiper-wrapper">
+                                        {
+                                            parties.map((e, index) => (
+                                                <div key={`id_${e._id}_${index}`} class="swiper-slide">
+                                                    <PostCard text={e.title} image={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} grid={false} row={false} />
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+
+                                    <div class="swiper-scrollbar"></div>
+                                </div> */}
+                                {/* <OwlCarousel startPosition={startPosition.current} className='owl-theme' {...carouselOptions} > */}
+                                <OwlCarousel
+                                    className='owl-theme owl-carousel'
+                                    margin={100}
+                                    responsiveClass={true}
+                                    nav={false}
+                                    dots={true}
+                                    loop={false}
+                                    rewind={false}
+                                    autoplay={true}
+                                    freeDrag={true}
+                                    // smartSpeed={1500}
+                                    // autoplayTimeout={1000}
+                                    items={4}
+                                    autoplayHoverPause={true}>
+
                                     {
                                         parties.map((e, index) => (
                                             <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} grid={false} row={false} />

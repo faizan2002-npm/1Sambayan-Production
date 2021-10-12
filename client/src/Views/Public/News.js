@@ -3,6 +3,8 @@ import { getRequest } from '../../api/request';
 import PublicLayout from './../../layouts/Public/PublicLayout';
 import { useState, useEffect } from 'react';
 import OwlCarousel from "react-owl-carousel";
+import { PostCard } from './../../components/Public/PostCard';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const News = () => {
     const [postData, setPostData] = useState([]);
@@ -59,12 +61,16 @@ const News = () => {
     return (
         <PublicLayout>
             <main id="main_content">
-                <section className="section-7">
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10 col-md-10 col-12">
+            <section className="latest_posts v2">
+                    <Container>
+                        <Row className="justify-content-center">
+                            <Col lg={10} md={10} xs={12} className="text-center">
+                                <h1>News</h1>
+                            </Col>
+                            <Col lg={10} md={10} xs={12}>
                                 {
-                                    (postData) ? <OwlCarousel id="candidates_carousel" className='owl-theme' {...carouselOptions} >
+                                    (postData) ? <>
+                                        {/* <OwlCarousel id="candidates_carousel" className='owl-theme' {...carouselOptions} >
                                         {
                                             postData.map((e, index) => (
                                                 <div key={`id_${e._id}_${index}`} className="card" style={{
@@ -84,14 +90,19 @@ const News = () => {
                                                 </div>
                                             ))
                                         }
-                                    </OwlCarousel> : <h2>
+                                    </OwlCarousel> */}
+                                        {
+                                            postData.map((e, index) => (
+                                                <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://1sambayan-env.eba-5wmwf5mk.us-east-1.elasticbeanstalk.com/views/uploads/" + e.image} image={false} grid={true} />
+                                            ))
+                                        }
+                                    </> : <h2>
                                         Loading
                                     </h2>
                                 }
-
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </section>
             </main>
         </PublicLayout>

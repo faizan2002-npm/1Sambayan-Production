@@ -6,9 +6,20 @@ import AdminLayout from './layouts/Admin';
 import Auth from "./layouts/Auth";
 import PublicLayout from './layouts/Public/PublicLayout';
 import routes from "./routes";
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import 'react-toastify/dist/ReactToastify.css';
+import $ from "jquery";
+
+// Import Swiper styles
+// import "swiper/css";
+// import "swiper/css/pagination"
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
+// modules styles
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+
 
 import { createBrowserHistory } from 'history'
 import store from './redux/store';
