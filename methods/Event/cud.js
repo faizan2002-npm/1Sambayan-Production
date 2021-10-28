@@ -36,6 +36,7 @@ const methods = {
   update: asyncHandler(async (req, res, next) => {
     try {
       const { title, description, eventId } = req.body;
+      console.log("req.body",req.body);
       let video, image;
 
       if (req.files.video) {
@@ -47,17 +48,17 @@ const methods = {
       let event = await Event.findById(eventId);
 
       if (title) {
-        post.title = title;
+        event.title = title;
       }
       if (description) {
         const newDescription = description.replace(/(<([^>]+)>)/gi, "");
-        post.description = newDescription;
+        event.description = newDescription;
       }
       if (image) {
-        post.image = image;
+        event.image = image;
       }
       if (video) {
-        post.video = video;
+        event.video = video;
       }
 
       const updatedEvent = await event.save();

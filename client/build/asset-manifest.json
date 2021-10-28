@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b3d97f34.chunk.css",
+    "main.js": "/static/js/main.ebd4a18b.chunk.js",
+    "main.js.map": "/static/js/main.ebd4a18b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.fa2e8c28.js",
+    "runtime-main.js.map": "/static/js/runtime-main.fa2e8c28.js.map",
+    "static/css/2.94b3d5fe.chunk.css": "/static/css/2.94b3d5fe.chunk.css",
+    "static/js/2.a9912ebe.chunk.js": "/static/js/2.a9912ebe.chunk.js",
+    "static/js/2.a9912ebe.chunk.js.map": "/static/js/2.a9912ebe.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.94b3d5fe.chunk.css.map": "/static/css/2.94b3d5fe.chunk.css.map",
+    "static/css/main.b3d97f34.chunk.css.map": "/static/css/main.b3d97f34.chunk.css.map",
+    "static/js/2.a9912ebe.chunk.js.LICENSE.txt": "/static/js/2.a9912ebe.chunk.js.LICENSE.txt",
+    "static/media/Books.c7ab4e73.png": "/static/media/Books.c7ab4e73.png",
+    "static/media/Hand.cd352ed9.png": "/static/media/Hand.cd352ed9.png",
+    "static/media/Image.385cd448.png": "/static/media/Image.385cd448.png",
+    "static/media/Profile_pic.b639a44f.png": "/static/media/Profile_pic.b639a44f.png",
+    "static/media/argon-react-white.e4dd3b41.png": "/static/media/argon-react-white.e4dd3b41.png",
+    "static/media/argon-react.128d71d3.png": "/static/media/argon-react.128d71d3.png",
+    "static/media/all.min.css": "/static/media/fa-solid-900.efbd5d20.eot",
+    "static/media/logo.6d202c64.png": "/static/media/logo.6d202c64.png",
+    "static/media/logo_1.141315a2.png": "/static/media/logo_1.141315a2.png",
+    "static/media/mobile1.01d5b651.png": "/static/media/mobile1.01d5b651.png",
+    "static/media/nucleo.css": "/static/media/nucleo-icons.d6a66724.ttf",
+    "static/media/team-1-800x800.fa5a7ac2.jpg": "/static/media/team-1-800x800.fa5a7ac2.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fa2e8c28.js",
+    "static/css/2.94b3d5fe.chunk.css",
+    "static/js/2.a9912ebe.chunk.js",
+    "static/css/main.b3d97f34.chunk.css",
+    "static/js/main.ebd4a18b.chunk.js"
+  ]
+}
