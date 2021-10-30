@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react'
-import { Navbar, Container, Nav, Image, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, Image, NavDropdown, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes';
 import { getRequest } from '../../../api/request';
 import { Dropdown, NavItem } from 'reactstrap';
 
 const Header = () => {
+    const [collapseOpen, setCollapseOpen] = useState();
+    // toggles collapse between opened and closed (true/false)
+    const toggleCollapse = () => {
+        setCollapseOpen((data) => !data);
+    };
+    // closes the collapse
+    const closeCollapse = () => {
+        setCollapseOpen(false);
+    };
     const [loading, setLoading] = useState(true);
     const [siteSetting, setSiteSetting] = useState();
     const getSiteSetting = async () => {
@@ -19,7 +28,6 @@ const Header = () => {
                 setSiteSetting(response.result.data.site[0]);
                 setLoading(false);
             }
-            console.log("Get Profile Iamge Response", response.result.data.site[0]);
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
@@ -61,6 +69,24 @@ const Header = () => {
                                 </Link>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
+                                    <div className="navbar-collapse-header d-md-none mb-3">
+                                        <Row>
+                                            {siteSetting.logo ? (
+                                                <Col className="collapse-brand" xs="6">
+                                                    <Link to='/'>
+                                                        <img alt='' src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} />
+                                                    </Link>
+                                                </Col>
+                                            ) : null}
+                                            <Col className="collapse-close" xs="6">
+                                                <Navbar.Toggle aria-controls="basic-navbar-nav">
+
+                                                    <span />
+                                                    <span />
+                                                </Navbar.Toggle>
+                                            </Col>
+                                        </Row>
+                                    </div>
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
                                         {
                                             getRoutes(routes)
@@ -86,7 +112,7 @@ const Header = () => {
                                                 </NavItem>
                                             </Dropdown.Menu>
                                         </Dropdown> */}
-                                        <Nav.Item className="btn" as="li" >
+                                        <Nav.Item className="btn mt-3" as="li" >
                                             <Nav.Link href={siteSetting.donateURL} target="_BLANK">Donate Now</Nav.Link>
                                         </Nav.Item>
                                     </Nav>

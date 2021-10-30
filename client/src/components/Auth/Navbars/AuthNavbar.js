@@ -23,7 +23,7 @@ const AdminNavbar = () => {
         setSiteSetting(response.result.data.site[0]);
         setLoading(false);
       }
-      console.log("Get Profile Iamge Response", response.result.data.site[0]);
+      // console.log("Get Profile Iamge Response", response.result.data.site[0]);
     } catch (error) {
       console.log("Get Site Setting Error", error);
     }

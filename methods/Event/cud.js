@@ -26,7 +26,7 @@ const methods = {
         owner: ownerId,
       });
 
-      res.status(200).json({ event: event });
+      return res.status(200).json({ event: event });
     } catch (err) {
       next(err);
     }
@@ -36,7 +36,7 @@ const methods = {
   update: asyncHandler(async (req, res, next) => {
     try {
       const { title, description, eventId } = req.body;
-      console.log("req.body",req.body);
+      console.log("req.body", req.body);
       let video, image;
 
       if (req.files.video) {
@@ -63,7 +63,7 @@ const methods = {
 
       const updatedEvent = await event.save();
 
-      res.status(200).json({ message: "Success!", Event: updatedEvent });
+      return res.status(200).json({ message: "Success!", Event: updatedEvent });
     } catch (err) {
       next(err);
     }
@@ -74,7 +74,7 @@ const methods = {
     try {
       const eventId = req.query.eventId;
       const event = await Event.findById(eventId);
-      res.status(200).json({ event });
+      return res.status(200).json({ event });
     } catch (err) {
       next(err);
     }
@@ -84,7 +84,7 @@ const methods = {
   getEvents: asyncHandler(async (req, res, next) => {
     try {
       const events = await Event.find({});
-      res.status(200).json({ events });
+      return res.status(200).json({ events });
     } catch (err) {
       next(err);
     }
@@ -97,7 +97,7 @@ const methods = {
       const postId = req.body.postId;
       if (!postId) return res.status(400).json({ message: "Provide post id" });
       await Event.findByIdAndDelete(postId);
-      res.status(200).json({ message: "Successfully Deleted!" });
+      return res.status(200).json({ message: "Successfully Deleted!" });
     } catch (err) {
       next(err);
     }
@@ -108,7 +108,7 @@ const methods = {
     try {
       const title = req.query.title;
       const events = await Event.find({ title: title });
-      res.status(200).json({ events });
+      return res.status(200).json({ events });
     } catch (err) {
       next(err);
     }

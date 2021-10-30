@@ -18,7 +18,7 @@ function camelize(str) {
 const ExpandedComponent = ({ data }) => {
     const [defaultData, setDefaultSlideData] = useState({
         title: data.title,
-        image: "/views/uploads/" + data.image,
+        image: "https://votewatchers.co.in/views/uploads/" + data.image,
     })
     const [featuredImage, setFeaturedImage] = useState({ image: data.image, defaultImage: defaultData.image })
     const [backgroundImage, setBackgroundImage] = useState({ backgroundImage: data.backgroundImage, defaultbackgroundImage: defaultData.backgroundImage })
@@ -93,7 +93,7 @@ const ExpandedComponent = ({ data }) => {
         }
     }
     return (<>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         <Form className="form" encType="multipart/form-data" method="post" onSubmit={updateSlideHandler}>
             <Row className="m-0">
                 <Col xs={12} className="my-3">

@@ -18,6 +18,7 @@ const Convenors = () => {
                 `/api/secure/convenor/convenor-list`,
                 token
             );
+            console.log("response.result.data.convenors", response.result.data.convenors);
             setConvenorData(response.result.data.convenors)
         } catch (error) {
             console.log("Get Site Setting Error", error);

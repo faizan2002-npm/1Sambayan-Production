@@ -45,20 +45,38 @@ const methods = {
   //----- Edit Profile -----//
   editProfile: asyncHandler(async (req, res, next) => {
     try {
-      let { firstName, lastName, email, phone } = req.body;
+      let {
+        firstName,
+        middleName,
+        address,
+        barangay,
+        lastName,
+        email,
+        phone,
+      } = req.body;
       let image;
       if (req.file) {
         image = req.file.filename;
       }
-      console.log("req.body",req.body);
-      console.log("req.file",req.file);
 
       let user = req.user;
       if (firstName) {
         user.firstName = firstName;
       }
+      if (middleName) {
+        user.middleName = middleName;
+      }
       if (lastName) {
         user.lastName = lastName;
+      }
+      if (address) {
+        user.address = address;
+      }
+      if (profession) {
+        user.profession = profession;
+      }
+      if (barangay) {
+        user.barangay = barangay;
       }
       if (email) {
         user.email = email;

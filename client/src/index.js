@@ -55,6 +55,7 @@ ReactDOM.render(
         }
         {/* <Route component={NotFound} /> */}
         <Redirect from="/editProfile" to="/admin/EditProfile" />
+        <Redirect from="/editProfile" to="/admin/admin/EditProfile" />
         <Redirect from="/auth" to="/auth/login" />
         <Redirect from="/login" to="/auth/login" />
         <Redirect from="/setNewPassword" to="/auth/setNewPassword" />

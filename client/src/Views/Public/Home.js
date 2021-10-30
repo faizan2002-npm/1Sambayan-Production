@@ -217,29 +217,6 @@ const Home = () => {
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
-    // const swiper = new Swiper('.swiper', {
-    //     // Optional parameters
-    //     direction: 'vertical',
-    //     loop: true,
-
-    //     // If we need pagination
-    //     pagination: {
-    //         el: '.swiper-pagination',
-    //     },
-
-    //     // Navigation arrows
-    //     navigation: {
-    //         nextEl: '.swiper-button-next',
-    //         prevEl: '.swiper-button-prev',
-    //     },
-
-    //     // And if we need scrollbar
-    //     scrollbar: {
-    //         el: '.swiper-scrollbar',
-    //     },
-    // });
-    const startPosition = useRef(0);
-
     const carouselOptions = {
         margin: 100,
         responsiveClass: true,
@@ -392,7 +369,7 @@ const Home = () => {
                 token
             );
             setCommunitiesSection(response.result.data.pages[0].sections[2]);
-            console.log("getCommunitiesSection", response.result.data.pages[0].sections[2]);
+            // console.log("getCommunitiesSection", response.result.data.pages[0].sections[2]);
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
@@ -455,7 +432,7 @@ const Home = () => {
                     <Carousel activeIndex={index} onSelect={handleSelect} controls={false} fade={true}>
                         {
                             slides.map((e, index) => {
-                                console.log("slides", e);
+                                // console.log("slides", e);
                                 return (
                                     <Carousel.Item key={`id_${e._id}_${index}`}>
                                         <Image src={"https://votewatchers.co.in/views/uploads/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
@@ -518,10 +495,6 @@ const Home = () => {
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12}>
                                 <h1>{latestPostsSection.heading}</h1>
-                                {
-
-                                    console.log("latestPostsSection", latestPostsSection.heading)
-                                }
                                 {
                                     latestPosts.map((e, index) => (
                                         <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
@@ -590,7 +563,7 @@ const Home = () => {
                                     rewind={false}
                                     autoplay={true}
                                     freeDrag={true}
-                                    // smartSpeed={5000}
+                                    responsive={carouselOptions.responsive} 
                                     autoplayTimeout={5000}
                                     items={4}
                                     autoplayHoverPause={true}
@@ -610,36 +583,7 @@ const Home = () => {
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12}>
                                 <h1>{partiesSection.heading}</h1>
-                                {/* <Swiper slidesPerView={3} spaceBetween={30} freeMode={true} pagination={{
-                                    "clickable": true
-                                }} className="mySwiper">
-                                    <SwiperSlide>Slide 1</SwiperSlide>
-                                    <SwiperSlide>Slide 2</SwiperSlide>
-                                    <SwiperSlide>Slide 3</SwiperSlide>
-                                    <SwiperSlide>Slide 4</SwiperSlide>
-                                    <SwiperSlide>Slide 5</SwiperSlide>
-                                    <SwiperSlide>Slide 6</SwiperSlide>
-                                    <SwiperSlide>Slide 7</SwiperSlide>
-                                    <SwiperSlide>Slide 8</SwiperSlide><SwiperSlide>Slide 9</SwiperSlide>
-                                </Swiper> */}
-                                {/* <div class="swiper">
-                                    <div class="swiper-wrapper">
-                                        {
-                                            parties.map((e, index) => (
-                                                <div key={`id_${e._id}_${index}`} class="swiper-slide">
-                                                    <PostCard text={e.title} image={"https://votewatchers.co.in/views/uploads/" + e.image} grid={false} row={false} />
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                    <div class="swiper-pagination"></div>
-
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-
-                                    <div class="swiper-scrollbar"></div>
-                                </div> */}
-                                {/* <OwlCarousel startPosition={startPosition.current} className='owl-theme' {...carouselOptions} > */}
+                               
                                 <OwlCarousel
                                     className='owl-theme owl-carousel'
                                     margin={100}
@@ -650,6 +594,7 @@ const Home = () => {
                                     rewind={false}
                                     autoplay={true}
                                     freeDrag={true}
+                                    responsive={carouselOptions.responsive} 
                                     // smartSpeed={1500}
                                     // autoplayTimeout={1000}
                                     items={4}

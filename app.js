@@ -49,6 +49,7 @@ const community = require("./routes/secure/community");
 const candidate = require("./routes/secure/candidate");
 const party = require("./routes/secure/party");
 const convenor = require("./routes/secure/convenor");
+const channel = require("./routes/secure/channel");
 
 //----- Mount Routers -----//
 
@@ -60,6 +61,7 @@ app.use("/api/secure/event", event);
 app.use("/api/secure/community", community);
 app.use("/api/secure/candidate", candidate);
 app.use("/api/secure/party", party);
+app.use("/api/secure/channel", channel);
 app.use("/api/secure/convenor", convenor);
 
 

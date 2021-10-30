@@ -24,12 +24,15 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "googleapis": "^89.0.0",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
     "multer": "^1.4.3",
-    "nodemailer": "^6.6.3",
-    "passport": "^0.4.1"
+    "nodemailer": "^6.7.0",
+    "passport": "^0.4.1",
+    "twilio": "^3.70.0",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

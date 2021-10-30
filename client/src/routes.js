@@ -57,6 +57,11 @@ import TermsConditionsSettings from './Views/Admin/Settings/TermsConditionsSetti
 import LegalInformationSettings from './Views/Admin/Settings/LegalInformationSettings';
 import DisclaimerSettings from './Views/Admin/Settings/DisclaimerSettings';
 import PrivacyPolicySettings from './Views/Admin/Settings/PrivacyPolicySettings';
+import ListMembers from './Views/Admin/Members/ListMembers';
+import CreateChannel from './Views/Admin/Channels/CreateChannel';
+import ListChannels from './Views/Admin/Channels/ListChannels';
+import ListApproval from './Views/Admin/Approvals/ListApproval';
+import Approval from './Views/Admin/Approvals/Approval';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -270,24 +275,44 @@ function _CreateConvenor() {
 function _PrivacyPolicySettings() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Privacy Policy Settings`)
   return <PrivacyPolicySettings />
-}    
+}
 function _DisclaimerSettings() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Disclaimer Settings`)
   return <DisclaimerSettings />
-}        
+}
 function _LegalInformationSettings() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Legal Information Settings`)
   return <LegalInformationSettings />
-}  
+}
 function _TermsConditionsSettings() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Terms & Conditions Settings`)
   return <TermsConditionsSettings />
-}   
+}
 function _ActRegulationSettings() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Act & Regulation Settings`)
   return <ActRegulationSettings />
 }
+function _ListChannels() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List of Channels`)
+  return <ListChannels />
+}
+function _CreateChannel() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Create New Channel`)
+  return <CreateChannel />
+}
+function _ListMembers() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List of Members`)
+  return <ListMembers />
+}
+function _ListApproval() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List of Approvals`)
+  return <ListApproval />
+}
 
+function _Approval() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Approvals for Channel`)
+  return <Approval />
+}
 
 var routes = [
   //Auth
@@ -370,7 +395,7 @@ var routes = [
   {
     path: "",
     name: "Posts",
-    icon: "fas fa-paperclip text-primary",
+    icon: "fal fa-newspaper text-primary",
     component: _ListPost,
     layout: "/admin",
     type: 'post_type',
@@ -379,7 +404,7 @@ var routes = [
       {
         path: "/ListPost",
         name: "All Posts",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fal fa-newspaper text-yellow",
         component: _ListPost,
         layout: "/admin",
         order: 1,
@@ -387,7 +412,7 @@ var routes = [
       {
         path: "/CreatePost",
         name: "Add Post",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fal fa-newspaper text-yellow",
         component: _CreatePost,
         layout: "/admin",
         order: 2,
@@ -397,7 +422,7 @@ var routes = [
   {
     path: "",
     name: "Events",
-    icon: "fas fa-paperclip text-danger",
+    icon: "fas fa-calendar-week text-danger",
     component: _ListEvent,
     layout: "/admin",
     type: 'post_type',
@@ -451,7 +476,7 @@ var routes = [
   {
     path: "",
     name: "Candidates",
-    icon: "fas fa-paperclip text-info",
+    icon: "fal fa-user-graduate text-info",
     component: _ListCandidates,
     layout: "/admin",
     type: 'post_type',
@@ -460,7 +485,7 @@ var routes = [
       {
         path: "/ListCandidates",
         name: "All Candidates",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fal fa-user-graduate text-yellow",
         component: _ListCandidates,
         layout: "/admin",
         order: 1,
@@ -468,7 +493,7 @@ var routes = [
       {
         path: "/CreateCandidate",
         name: "Add Candidate",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fal fa-user-graduate text-yellow",
         component: _CreateCandidate,
         layout: "/admin",
         order: 2,
@@ -478,7 +503,7 @@ var routes = [
   {
     path: "",
     name: "Member Organizations",
-    icon: "fas fa-paperclip text-default",
+    icon: "fas fa-sitemap text-default",
     component: _ListParties,
     layout: "/admin",
     type: 'post_type',
@@ -487,7 +512,7 @@ var routes = [
       {
         path: "/ListParties",
         name: "All Member Organizations",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fas fa-sitemap text-yellow",
         component: _ListParties,
         layout: "/admin",
         order: 1,
@@ -495,7 +520,7 @@ var routes = [
       {
         path: "/CreateParty",
         name: "Add Member Organization",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fas fa-sitemap text-yellow",
         component: _CreateParty,
         layout: "/admin",
         order: 2,
@@ -505,7 +530,7 @@ var routes = [
   {
     path: "",
     name: "Convenors",
-    icon: "fas fa-paperclip text-default",
+    icon: "fas fa-user-friends  text-success",
     component: _ListConvenors,
     layout: "/admin",
     type: 'post_type',
@@ -514,7 +539,7 @@ var routes = [
       {
         path: "/ListConvenors",
         name: "All Convenors",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fas fa-user-friends text-yellow",
         component: _ListConvenors,
         layout: "/admin",
         order: 1,
@@ -522,11 +547,84 @@ var routes = [
       {
         path: "/CreateConvenor",
         name: "Add Convenor",
-        icon: "ni ni-single-02 text-yellow",
+        icon: "fas fa-user-friends text-yellow",
         component: _CreateConvenor,
         layout: "/admin",
         order: 2,
       },
+    ]
+  },
+  {
+    path: "",
+    name: "Channels",
+    icon: "fas fa-layer-group text-default",
+    component: _ListChannels,
+    layout: "/admin",
+    type: 'post_type',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListChannels",
+        name: "All Channels",
+        icon: "fas fa-layer-group text-yellow",
+        component: _ListChannels,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreateChannel",
+        name: "Add Channel",
+        icon: "fas fa-layer-group text-yellow",
+        component: _CreateChannel,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Members",
+    icon: "fas fa-users  text-success",
+    component: _ListChannels,
+    layout: "/admin",
+    type: 'post_type',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListMembers",
+        name: "All Members",
+        icon: "fas fa-users text-yellow",
+        component: _ListMembers,
+        layout: "/admin",
+        order: 1,
+      }
+    ]
+  },
+  {
+    path: "",
+    name: "Approval",
+    icon: "far fa-smile  text-success",
+    component: _ListApproval,
+    layout: "/admin",
+    type: 'post_type',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListApproval",
+        name: "All Approval",
+        icon: "far fa-smile text-yellow",
+        component: _ListApproval,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/Approval",
+        name: "Approval",
+        icon: "far fa-smile text-yellow",
+        component: _Approval,
+        layout: "/admin",
+        order: 1,
+      }
     ]
   },
   //Admin SETTINGS
@@ -628,7 +726,7 @@ var routes = [
     layout: "/admin",
     type: 'PAGE_SETTINGS',
     order: 11,
-  },{
+  }, {
     path: "/DisclaimerSettings",
     name: "Disclaimer Settings",
     icon: "ni ni-settings text-primary",

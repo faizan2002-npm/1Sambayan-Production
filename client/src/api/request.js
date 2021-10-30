@@ -2,9 +2,9 @@ const axios = require("axios");
 const qs = require("querystring");
 
 //DEV
-// const baseURL = "https://votewatchers.co.in";
+const baseURL = "http://localhost:8080";
 //Production
-const baseURL = "https://votewatchers.co.in";
+// const baseURL = "https://votewatchers.co.in";
 
 export const postRequest = async (url, body = {}, headers = {}) => {
   let xform = qs.stringify(body);

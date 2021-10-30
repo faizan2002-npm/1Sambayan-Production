@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  middleName: {
+    type: String,
+    required: false,
+  },
   lastName: {
     type: String,
     required: false,
@@ -27,6 +31,11 @@ const UserSchema = new mongoose.Schema({
     required: false,
   },
 
+  age: {
+    type: Number,
+    required: false,
+  },
+
   profileImage: {
     type: String,
   },
@@ -38,12 +47,19 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
 
+  partyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "parties",
+  },
+
   address: {
-    street: { type: String, required: false },
+    country: { type: String, required: false },
     city: { type: String, required: false },
-    zip: { type: String, required: false },
-    latitude: { type: Number, required: false },
-    longitude: { type: Number, required: false },
+    province: { type: String, required: false },
+    region: {
+      type: String,
+      required: false,
+    },
   },
   role: {
     type: String,
@@ -60,6 +76,16 @@ const UserSchema = new mongoose.Schema({
   isDeleted: {
     type: Boolean,
     default: false,
+  },
+
+  barangay: {
+    type: String,
+    required: false,
+  },
+
+  profession: {
+    type: String,
+    required: false,
   },
 
   createdAt: {

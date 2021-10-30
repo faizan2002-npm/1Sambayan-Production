@@ -5,6 +5,7 @@ const Joi = require("joi");
 const asyncHandler = require("../../middlewares/async");
 const User = require("../../models/User/User");
 const sendEmail = require("../../services/sendEmail");
+const sendSms = require("../../services/twillio");
 
 //REGISTER USER API
 const methods = {
@@ -12,13 +13,18 @@ const methods = {
     try {
       const {
         firstName,
+        middleName,
         lastName,
         email,
+        age,
         password,
         confirm_password,
+        address,
+        profession,
+        barangay,
         phone,
         fbLink,
-        profession,
+        partyId,
       } = req.body;
 
       //// Check If Password and Confirm Password are same or not ////
@@ -36,16 +42,50 @@ const methods = {
         // Saving User in DataBase
         const user = await User.create({
           firstName,
+          middleName,
           lastName,
           email,
+          age,
+          partyId,
+          address,
+          profession,
+          barangay,
           password: hashedPassword,
           phone,
           fbLink,
-          profession,
         });
 
-        res.status(200).json({ user: user });
+        return res.status(200).json({ user: user });
       }
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  //---- GET all Users ----//
+  getAllUsers: asyncHandler(async (req, res, next) => {
+    try {
+      const users = await User.find({ role: "user" });
+      return res.status(200).json({ users });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  //---- Delete USER  ----//
+  delete: asyncHandler(async (req, res, next) => {
+    try {
+      const userId = req.body.userId;
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          isDeleted: true,
+        },
+        { new: true }
+      );
+      return res
+        .status(200)
+        .json({ message: "User has been deleted successfully" });
     } catch (err) {
       next(err);
     }
@@ -242,7 +282,7 @@ const methods = {
     req.session.destroy(() => {
       req.logOut();
       res.clearCookie("token");
-      res.status(200).send("Logged out successfully");
+      return res.status(200).send("Logged out successfully");
     });
   }),
 
@@ -261,9 +301,9 @@ const methods = {
           subject: "Password reset token",
           message: message,
         });
-        res.status(200).json({ success: true, data: "Email sent" });
+        return res.status(200).json({ success: true, data: "Email sent" });
       } catch (error) {
-        res.status(404).json({ message: "Internelm Error" });
+        return res.status(404).json({ message: "Internelm Error" });
       }
     } catch (err) {
       next(err);
@@ -282,9 +322,21 @@ const methods = {
       user.resetPasswordToken = undefined;
       user.restPasswordExpires = undefined;
       await user.save({ validateBeforeSave: false });
-      res
+      return res
         .status(200)
         .json({ message: "Password has been Updated successfully" });
+    } catch (error) {
+      next(error);
+    }
+  }),
+
+  //----- Verify Phone Number ----//
+  verifyPhone: asyncHandler(async (req, res, next) => {
+    try {
+      const phone = req.body.phone;
+      const messageToSend = "HELLO";
+      const sendOtp = await sendSms(messageToSend, phone);
+      return res.status(200).json({ message: "success!" });
     } catch (error) {
       next(error);
     }

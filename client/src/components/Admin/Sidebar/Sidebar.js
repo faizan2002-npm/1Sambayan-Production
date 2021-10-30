@@ -43,7 +43,7 @@ const Sidebar = (props) => {
         setSiteSetting(response.result.data.site[0]);
         setLoading(false);
       }
-      console.log("Get Profile Iamge Response", response.result.data.site[0]);
+      // console.log("Get Profile Iamge Response", response.result.data.site[0]);
     } catch (error) {
       console.log("Get Site Setting Error", error);
     }
@@ -193,7 +193,7 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="admin/EditProfile" tag={Link}>
+              <DropdownItem to="/admin/EditProfile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
