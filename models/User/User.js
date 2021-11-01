@@ -51,15 +51,12 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "parties",
   },
-
-  address: {
-    country: { type: String, required: false },
-    city: { type: String, required: false },
-    province: { type: String, required: false },
-    region: {
-      type: String,
-      required: false,
-    },
+  country: { type: String, required: false },
+  city: { type: String, required: false },
+  province: { type: String, required: false },
+  region: {
+    type: String,
+    required: false,
   },
   role: {
     type: String,
@@ -109,7 +106,7 @@ UserSchema.methods.getSignedJwtToken = function () {
 
 //----- Generate and hash password token ----//
 UserSchema.methods.getResetPasswordToken = function () {
-  const resetToken = crypto.randomBytes(20).toString("hex");
+  const resetToken = crypto.randomBytes(10).toString("hex");
 
   this.resetPasswordToken = crypto
     .createHash("sha256")
@@ -117,7 +114,7 @@ UserSchema.methods.getResetPasswordToken = function () {
     .digest("hex");
 
   this.restPasswordExpires = Date.now() + 10 * 60 * 1000;
-  return resetToken;
+  return this.resetPasswordToken;
 };
 
 //Check user entered password

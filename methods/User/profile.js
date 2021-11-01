@@ -45,21 +45,29 @@ const methods = {
   //----- Edit Profile -----//
   editProfile: asyncHandler(async (req, res, next) => {
     try {
+      console.log("req.body",req.body);
       let {
         firstName,
         middleName,
-        address,
+        country,
+        city,
+        province,
+        region,
         barangay,
         lastName,
         email,
         phone,
+        profession,
+        userId
       } = req.body;
       let image;
       if (req.file) {
         image = req.file.filename;
       }
 
-      let user = req.user;
+      // let user = req.user;
+      let user = await User.findById(userId);
+
       if (firstName) {
         user.firstName = firstName;
       }
@@ -69,8 +77,17 @@ const methods = {
       if (lastName) {
         user.lastName = lastName;
       }
-      if (address) {
-        user.address = address;
+      if (country) {
+        user.country = country;
+      }
+      if (city) {
+        user.city = city;
+      }
+      if (province) {
+        user.province = province;
+      }
+      if (region) {
+        user.region = region;
       }
       if (profession) {
         user.profession = profession;

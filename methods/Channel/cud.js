@@ -129,20 +129,20 @@ const methods = {
       let pendingUsers = [];
       await members.map((user) => {
         if (user.status == "Pending" || user.status == "Declined") {
-          pendingUsers.push(user.userId);
+          pendingUsers.push(user);
         }
       });
       let enrichPendingUsers = [];
       await pendingUsers.map(async (user) => {
-        let enrichedUser = await User.findById(user);
+        let enrichedUser = await User.findById(user.userId);
+        enrichedUser.status = user.status;
         enrichPendingUsers.push(enrichedUser);
-        return enrichPendingUsers
+        return enrichPendingUsers;
       });
       setTimeout(function () {
         // console.log("enrichedUser", enrichPendingUsers);
         return res.status(200).json({ enrichPendingUsers });
       }, 3000);
-
     } catch (err) {
       next(err);
     }

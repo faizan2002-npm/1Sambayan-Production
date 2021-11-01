@@ -2,9 +2,9 @@ const axios = require("axios");
 const qs = require("querystring");
 
 //DEV
-const baseURL = "http://localhost:8080";
+// const baseURL = "http://localhost:8080";
 //Production
-// const baseURL = "https://votewatchers.co.in";
+const baseURL = "https://votewatchers.co.in";
 
 export const postRequest = async (url, body = {}, headers = {}) => {
   let xform = qs.stringify(body);
@@ -13,7 +13,7 @@ export const postRequest = async (url, body = {}, headers = {}) => {
 
   let config = {
     headers: {
-      "Content-Type": "application/x-www-form-ur	lencoded",
+      "Content-Type": "application/x-www-form-urlencoded",
       ...headers,
     },
   };
