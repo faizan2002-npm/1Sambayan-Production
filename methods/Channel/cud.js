@@ -97,8 +97,8 @@ const methods = {
   //----- Join Channel -----//
   joinChannel: asyncHandler(async (req, res, next) => {
     try {
-      const channelId = req.params.channelId;
-      const senderId = req.user._id;
+      const channelId = req.query.channelId;
+      const senderId = req.query._id;
       const userName = req.user.firstName;
       const member = { userId: senderId, status: "Pending" };
       let channel = await Channel.findById(channelId);
@@ -109,7 +109,7 @@ const methods = {
       //-- Send Email to Admin --//
       const message = `${userName} has requested to join ${channelName}, Please review his request and take action accordingly.`;
       await sendEmail({
-        email: process.env.admin_email,
+        email: process.env.SMTP_EMAIL,
         subject: "Channel Request",
         message: message,
       });
