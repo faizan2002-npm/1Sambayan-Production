@@ -18,6 +18,7 @@ const methods = {
         email,
         age,
         password,
+        address,
         confirm_password,
         address,
         profession,
@@ -47,6 +48,7 @@ const methods = {
           email,
           age,
           partyId,
+          address,
           address,
           profession,
           barangay,
@@ -290,10 +292,8 @@ const methods = {
   mailForResetPassword: asyncHandler(async (req, res, next) => {
     try {
       const email = req.body.email;
-      console.log("req.body.email", req);
       const user = await User.findOne({ email: email });
       const resetToken = await user.getResetPasswordToken();
-      console.log("resetToken",resetToken);
       await user.save({ validateBeforeSave: false });
       const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
 
@@ -316,12 +316,9 @@ const methods = {
   resetPassword: asyncHandler(async (req, res, next) => {
     try {
       const resetPasswordToken = req.query.resetPasswordToken;
-      console.log("req.query",req.query);
       const password = req.body.password;
       const hashedPassword = await helpers.genHashPassword(password);
-      console.log(req.body);
       let user = await User.findOne({ resetPasswordToken: resetPasswordToken });
-      console.log("user", user);
       user.password = hashedPassword;
       user.resetPasswordToken = undefined;
       user.restPasswordExpires = undefined;

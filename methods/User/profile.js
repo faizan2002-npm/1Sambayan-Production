@@ -45,7 +45,6 @@ const methods = {
   //----- Edit Profile -----//
   editProfile: asyncHandler(async (req, res, next) => {
     try {
-      console.log("req.body",req.body);
       let {
         firstName,
         middleName,
@@ -58,6 +57,7 @@ const methods = {
         email,
         phone,
         profession,
+        address,
         userId
       } = req.body;
       let image;
@@ -82,6 +82,9 @@ const methods = {
       }
       if (city) {
         user.city = city;
+      }
+      if (address) {
+        user.address = address;
       }
       if (province) {
         user.province = province;

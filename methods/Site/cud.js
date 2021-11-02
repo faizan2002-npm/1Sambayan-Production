@@ -98,7 +98,6 @@ const siteMethods = {
         copyright,
         donateURL
       } = req.body;
-      console.log("req.body",req.body);
       let video, logo;
 
       if (req.files.video) {
@@ -194,7 +193,6 @@ const siteHeaderMethods = {
   //----- Create Header -----//
   create: asyncHandler(async (req, res, next) => {
     try {
-      console.log(req.files);
       const { title, description,buttonURL } = req.body;
       let image, backgroundImage;
       if (req.files.image) {
@@ -231,7 +229,6 @@ const siteHeaderMethods = {
   update: asyncHandler(async (req, res, next) => {
     try {
       const { title, description, headerId ,buttonURL} = req.body;
-      console.log(req.files);
 
       let image, backgroundImage;
 
@@ -291,7 +288,6 @@ const siteHeaderMethods = {
 
   delete:asyncHandler(async (req, res, next) => {
     try {
-      console.log(req.body);
       const postId = req.body.postId;
       if (!postId) return res.status(400).json({ message: "Provide Slide id" });
       await SiteHeader.findByIdAndDelete(postId);
@@ -338,7 +334,6 @@ const sitePageMethods = {
   //----- Update Site Page -----//
   update: asyncHandler(async (req, res, next) => {
     try {
-      // console.log("req.body",req.body);
       const { name, sections, contentBox, pageId } = req.body;
 
       const ownerId = req.user._id;
@@ -352,7 +347,6 @@ const sitePageMethods = {
           },
         ],
       });
-      // console.log("isPage",isPage);
 
       if (name) {
         isPage.name = name;
@@ -375,12 +369,9 @@ const sitePageMethods = {
   //----- Get Site settings document -----//
   getPages: asyncHandler(async (req, res, next) => {
     try {
-      // console.log("req.query",req.query);
       const name = req.query.name;
-      // console.log(owner);
       // const site = await Site.findOne({ owner: owner._id });
       const pages = await SitePage.find({ name: name });
-      // console.log("pages",pages);
       res.status(200).json({ pages: pages });
     } catch (err) {
       next(err);

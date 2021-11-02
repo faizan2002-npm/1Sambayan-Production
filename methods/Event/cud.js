@@ -36,7 +36,6 @@ const methods = {
   update: asyncHandler(async (req, res, next) => {
     try {
       const { title, description, eventId } = req.body;
-      console.log("req.body", req.body);
       let video, image;
 
       if (req.files.video) {
@@ -93,7 +92,6 @@ const methods = {
   //----- Delete Event -----//
   deleteEvent: asyncHandler(async (req, res, next) => {
     try {
-      console.log(req.body);
       const postId = req.body.postId;
       if (!postId) return res.status(400).json({ message: "Provide post id" });
       await Event.findByIdAndDelete(postId);

@@ -11,6 +11,7 @@ const {
   joinChannel,
   pendingUsers,
   takeActionForPendingRequest,
+  getUserChannels,
 } = require("../../methods/Channel/cud");
 const { protect, authorize } = require("../../middlewares/auth");
 const upload = require("../../services/multer");
@@ -32,6 +33,8 @@ router.post("/delete-channel", deleteChannel);
 
 router.post("/join-channel", protect, joinChannel);
 router.post("/pending-users", protect, pendingUsers);
+
+router.get("/get-user-channel", protect, getUserChannels);
 
 // Approve OR Decline request //
 router.post("/request-action", protect, takeActionForPendingRequest);

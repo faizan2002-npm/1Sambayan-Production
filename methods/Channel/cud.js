@@ -127,22 +127,21 @@ const methods = {
       let channel = await Channel.findById(channelId);
       let members = channel.members;
       let pendingUsers = [];
-      await members.map((user) => {
+      members.map((user) => {
         if (user.status == "Pending" || user.status == "Declined") {
-          pendingUsers.push(user);
+          return pendingUsers.push(user);
         }
       });
+
       let enrichPendingUsers = [];
-      await pendingUsers.map(async (user) => {
-        let enrichedUser = await User.findById(user.userId);
-        enrichedUser.status = user.status;
-        enrichPendingUsers.push(enrichedUser);
-        return enrichPendingUsers;
-      });
-      setTimeout(function () {
-        // console.log("enrichedUser", enrichPendingUsers);
-        return res.status(200).json({ enrichPendingUsers });
-      }, 3000);
+      await Promise.all(
+        pendingUsers.map(async (user) => {
+          let enrichedUser = await User.findById(user.userId);
+          enrichedUser.status = user.status;
+          enrichPendingUsers.push(enrichedUser);
+        })
+      );
+      return res.status(200).json({ enrichPendingUsers });
     } catch (err) {
       next(err);
     }
@@ -173,6 +172,19 @@ const methods = {
         message: message,
       });
       return res.status(200).json({ updateStatus });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  //----- List of users who requested to join channel -----//
+  getUserChannels: asyncHandler(async (req, res, next) => {
+    try {
+      const userId = req.user._id;
+      const channels = await Channel.find({
+        members: { $elemMatch: { userId: userId } },
+      }).select("_id members.$ title");
+      return res.status(200).json({ channels });
     } catch (err) {
       next(err);
     }

@@ -32,7 +32,6 @@ const methods = {
   //----- Update Convenor -----//
   update: asyncHandler(async (req, res, next) => {
     try {
-      console.log('req.body',req.body);
       const { title, description, postId,desigination } = req.body;
       let image;
       if (req.files.image) {
@@ -85,7 +84,6 @@ const methods = {
   //----- Delete Convenor -----//
   deleteConvenor: asyncHandler(async (req, res, next) => {
     try {
-      console.log(req.body);
       const postId = req.body.postId;
       if (!postId) return res.status(400).json({ message: "Provide Convenor id" });
       await Convenor.findByIdAndDelete(postId);

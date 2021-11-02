@@ -40,7 +40,6 @@ const methods = {
         image = req.file.filename;
       }
       let candidate = await Candidate.findById(candidateId);
-      console.log(candidate);
 
       if (title) {
         candidate.title = title;
@@ -73,7 +72,6 @@ const methods = {
   //----- Delete Event -----//
   deleteCandidate: asyncHandler(async (req, res, next) => {
     try {
-      console.log(req.body);
       const postId = req.body.postId;
       if (!postId) return res.status(400).json({ message: "Provide post id" });
       await Candidate.findByIdAndDelete(postId);

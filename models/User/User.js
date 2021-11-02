@@ -51,6 +51,7 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "parties",
   },
+  address: { type: String, required: false },
   country: { type: String, required: false },
   city: { type: String, required: false },
   province: { type: String, required: false },
