@@ -18,7 +18,6 @@ const methods = {
         email,
         age,
         password,
-        address,
         confirm_password,
         address,
         profession,
