@@ -55,8 +55,9 @@ const methods = {
           phone,
           fbLink,
         });
+        helpers.sendTokenResponse(user, 200, res);
 
-        return res.status(200).json({ user: user });
+        // return res.status(200).json({ user: user });
       }
     } catch (err) {
       next(err);
