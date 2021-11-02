@@ -137,7 +137,7 @@ const methods = {
       await Promise.all(
         pendingUsers.map(async (user) => {
           let enrichedUser = await User.findById(user.userId);
-          enrichedUser.status = user.status;
+          // enrichedUser.status = user.status;
           enrichPendingUsers.push(enrichedUser);
         })
       );
