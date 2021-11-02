@@ -98,7 +98,7 @@ const methods = {
   joinChannel: asyncHandler(async (req, res, next) => {
     try {
       const channelId = req.query.channelId;
-      const senderId = req.query._id;
+      const senderId = req.query.senderId;
       const userName = req.user.firstName;
       const member = { userId: senderId, status: "Pending" };
       let channel = await Channel.findById(channelId);
