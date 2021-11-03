@@ -37,6 +37,7 @@ class EditProfile extends React.Component {
         );
         // console.log("Get ProfileData", response);
         this.setState({
+            admin_id:response.result.data.user._id,
             admin_firstName: response.result.data.user.firstName,
             admin_lastName: response.result.data.user.lastName,
             admin_email: response.result.data.user.email,
@@ -52,48 +53,35 @@ class EditProfile extends React.Component {
     UpdateProfileHandler = async (e) => {
         e.preventDefault();
         // console.log("this.state",this.state);
-        const formData = new FormData();
-        formData.append(
-            "firstName",
-            e.target[0].value
-        );
-        formData.append(
-            "lastName",
-            e.target[1].value
-        );
-        formData.append(
-            "email",
-            e.target[2].value
-        );
-        formData.append(
-            "phone",
-            e.target[3].value
-        );
-        formData.append(
-            "image",
-            this.state.admin_pic
-        );
-        console.log("formData.get('image')", formData.get('image'));
-        //         for (var key of formData.entries()) 
-        // {
-        //     console.log(key[0] + ', ' + key[1])
-        // }
-        const prifielImage = {
-            image: formData.get('image')
-        };
-        const APIresponse = {
-            props: {
-                firstName: e.target[0].value,
-                lastName: e.target[1].value,
-                email: e.target[2].value,
-                phone: e.target[3].value,
-            },
-            ...prifielImage,
-        };
-        console.log("APIresponse", APIresponse);
-        const token = localStorage.getItem("TOKEN");
+
 
         try {
+            const formData = new FormData();
+            formData.append(
+                "firstName",
+                e.target[0].value
+            );
+            formData.append(
+                "lastName",
+                e.target[1].value
+            );
+            formData.append(
+                "email",
+                e.target[2].value
+            );
+            formData.append(
+                "phone",
+                e.target[3].value
+            );
+            formData.append(
+                "image",
+                this.state.admin_pic
+            );
+            formData.append(
+                "userId",
+                this.state.admin_id
+            );
+            const token = localStorage.getItem("TOKEN");
             const response = await putRequest(
                 "/api/secure/user/edit-profile",
                 token,

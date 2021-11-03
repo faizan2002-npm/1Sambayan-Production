@@ -296,7 +296,7 @@ const ListMembers = () => {
             );
             // console.log(response);
             if (response.result.status === 200) {
-                toast.success('Candidate Deleted', {
+                toast.success('Member Deleted', {
                     position: "bottom-right",
                     autoClose: 2000,
                     hideProgressBar: false,

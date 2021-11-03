@@ -155,7 +155,7 @@ const Approval = () => {
                 {
                     name: 'Status',
                     sortable: true,
-                    selector: 'Pending',
+                    selector: row => row.status,
                 },
             ]);
             setPending(false);

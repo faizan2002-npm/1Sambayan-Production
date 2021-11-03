@@ -67,7 +67,7 @@ const methods = {
   //---- GET all Users ----//
   getAllUsers: asyncHandler(async (req, res, next) => {
     try {
-      const users = await User.find({ role: "user" });
+      const users = await User.find({ role: "user",isDeleted: false });
       return res.status(200).json({ users });
     } catch (err) {
       next(err);
@@ -75,8 +75,9 @@ const methods = {
   }),
 
   //---- Delete USER  ----//
-  delete: asyncHandler(async (req, res, next) => {
+  deleteUser: asyncHandler(async (req, res, next) => {
     try {
+      console.log("req.body",req.body);
       const userId = req.body.userId;
       await User.findByIdAndUpdate(
         userId,

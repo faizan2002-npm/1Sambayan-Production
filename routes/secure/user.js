@@ -6,7 +6,7 @@ const accountMethods = require("../../methods/User/account");
 const {
   editProfile,
   getProfile,
-  updateProfile,
+  deleteUser,
 } = require("../../methods/User/profile");
 const { protect, authorize } = require("../../middlewares/auth");
 const upload = require("../../services/multer");
@@ -22,5 +22,9 @@ router.get(
   [protect, authorize("admin")],
   accountMethods.getAllUsers
 );
+
+//----- Delete User -----//
+router.post("/delete-user", [protect, authorize("admin")], accountMethods.deleteUser);
+
 
 module.exports = router;

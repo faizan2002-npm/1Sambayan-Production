@@ -70,7 +70,7 @@ class CreateCandidate extends React.Component {
 
             console.log("status", response);
             if (response.result.status === 200) {
-                toast.success('Candidate Created', {
+                toast.success('Channel Created', {
                     position: "bottom-right",
                     autoClose: 2000,
                     hideProgressBar: false,

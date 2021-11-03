@@ -78,7 +78,7 @@ const ExpandedComponent = ({ data }) => {
 
             console.log("status", response);
             if (response.result.status === 200) {
-                toast.success('Post Updated', {
+                toast.success('Channel Updated', {
                     position: "bottom-right",
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -166,7 +166,7 @@ const ListCandidate = () => {
             );
             // console.log(response);
             if (response.result.status === 200) {
-                toast.success('Candidate Deleted', {
+                toast.success('Channel Deleted', {
                     position: "bottom-right",
                     autoClose: 2000,
                     hideProgressBar: false,
