@@ -64,7 +64,6 @@ app.use("/api/secure/party", party);
 app.use("/api/secure/channel", channel);
 app.use("/api/secure/convenor", convenor);
 
-
 //// Error Handler
 app.use((error, req, res, next) => {
   console.log("Main Error =>", error);
@@ -73,7 +72,7 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, error: error });
 });
 
-app.use('/views/uploads', express.static(path.join('views', 'uploads')));
+app.use("/views/uploads", express.static(path.join("views", "uploads")));
 app.use(express.static("pdfImgaes"));
 app.use(express.static(path.join(__dirname, "client/build", "index.html")));
 
@@ -91,7 +90,7 @@ if (app.get("env") === "production") {
       : res.redirect("https://" + req.hostname + req.url);
   });
 }
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("Listening to port " + `${port}`);
 });

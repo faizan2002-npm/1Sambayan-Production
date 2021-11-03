@@ -98,11 +98,21 @@ const methods = {
   joinChannel: asyncHandler(async (req, res, next) => {
     try {
       const channelId = req.query.channelId;
-      const senderId = req.query.senderId;
+      const requesterId = req.user.senderId;
       const userName = req.user.firstName;
-      const member = { userId: senderId, status: "Pending" };
+      const member = { userId: requesterId, status: "Pending" };
       let channel = await Channel.findById(channelId);
       const channelName = channel.title;
+      //---- Check if user is already a member ----//
+      const isMember = await Channel.findOne({
+        _id: channelId,
+        members: { $elemMatch: { userId: requesterId } },
+      });
+      if (isMember) {
+        return res
+          .status(400)
+          .json({ message: "You have already requested to join this channel" });
+      }
       channel.members.push(member);
       await channel.save();
 
@@ -129,7 +139,7 @@ const methods = {
       let pendingUsers = [];
       members.map((user) => {
         if (user.status == "Pending" || user.status == "Declined") {
-          return pendingUsers.push(user);
+          pendingUsers.push(user);
         }
       });
 
@@ -137,8 +147,10 @@ const methods = {
       await Promise.all(
         pendingUsers.map(async (user) => {
           let enrichedUser = await User.findById(user.userId);
-          // enrichedUser.status = user.status;
-          enrichPendingUsers.push(enrichedUser);
+          if (enrichedUser) {
+            enrichedUser.status = user.status;
+            enrichPendingUsers.push(enrichedUser);
+          }
         })
       );
       return res.status(200).json({ enrichPendingUsers });
