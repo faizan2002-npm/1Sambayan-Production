@@ -50,6 +50,7 @@ const candidate = require("./routes/secure/candidate");
 const party = require("./routes/secure/party");
 const convenor = require("./routes/secure/convenor");
 const channel = require("./routes/secure/channel");
+const notification = require("./routes/secure/notification");
 
 //----- Mount Routers -----//
 
@@ -63,6 +64,7 @@ app.use("/api/secure/candidate", candidate);
 app.use("/api/secure/party", party);
 app.use("/api/secure/channel", channel);
 app.use("/api/secure/convenor", convenor);
+app.use("/api/secure/notification", notification);
 
 //// Error Handler
 app.use((error, req, res, next) => {

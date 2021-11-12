@@ -25,6 +25,8 @@ const methods = {
         phone,
         fbLink,
         partyId,
+        expoPushToken,
+        fcmPushToken,
       } = req.body;
 
       //// Check If Password and Confirm Password are same or not ////
@@ -55,6 +57,12 @@ const methods = {
           phone,
           fbLink,
         });
+        if (expoPushToken) {
+          user.notificationPreferences.expoPushTokens.push(expoPushToken);
+        }
+        if (fcmPushToken) {
+          user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
+        }
         helpers.sendTokenResponse(user, 200, res);
 
         // return res.status(200).json({ user: user });
@@ -67,7 +75,7 @@ const methods = {
   //---- GET all Users ----//
   getAllUsers: asyncHandler(async (req, res, next) => {
     try {
-      const users = await User.find({ role: "user",isDeleted: false });
+      const users = await User.find({ role: "user", isDeleted: false });
       return res.status(200).json({ users });
     } catch (err) {
       next(err);
@@ -77,7 +85,7 @@ const methods = {
   //---- Delete USER  ----//
   deleteUser: asyncHandler(async (req, res, next) => {
     try {
-      console.log("req.body",req.body);
+      console.log("req.body", req.body);
       const userId = req.body.userId;
       await User.findByIdAndUpdate(
         userId,
@@ -249,8 +257,8 @@ const methods = {
 
   //Login User
   login: asyncHandler(async (req, res, next) => {
-    const { email, password } = req.body;
-
+    const { email, password, expoPushToken, fcmPushToken } = req.body;
+console.log("req.body",req.body)
     const schema = Joi.object().keys({
       email: Joi.string().max(40).required().email(),
       password: Joi.string().min(6).max(255).required(),
@@ -276,6 +284,12 @@ const methods = {
 
     if (!isMatch) {
       return res.status(400).send("Password is Invalid");
+    }
+    if (expoPushToken) {
+      user.notificationPreferences.expoPushTokens.push(expoPushToken);
+    }
+    if (fcmPushToken) {
+      user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
     }
     helpers.sendTokenResponse(user, 200, res);
   }),

@@ -47,6 +47,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
 
+  notificationPreferences: {
+    expoPushTokens: [String],
+    fcmPushTokens: [String],
+    pushDisabled: Boolean,
+    lastPushSentDate: Date,
+  },
+
   partyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "parties",

@@ -98,7 +98,7 @@ const methods = {
   joinChannel: asyncHandler(async (req, res, next) => {
     try {
       const channelId = req.query.channelId;
-      const requesterId = req.user.senderId;
+      const requesterId = req.query.senderId;
       const userName = req.user.firstName;
       const member = { userId: requesterId, status: "Pending" };
       let channel = await Channel.findById(channelId);
@@ -123,6 +123,7 @@ const methods = {
         subject: "Channel Request",
         message: message,
       });
+      // console.log("channel",channel)
 
       return res.status(200).json({ channel });
     } catch (err) {
@@ -188,15 +189,71 @@ const methods = {
       next(err);
     }
   }),
-
-  //----- List of users who requested to join channel -----//
+  //----- List of all user channels OLD VERSION-----//
   getUserChannels: asyncHandler(async (req, res, next) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user._id.toString();
       const channels = await Channel.find({
         members: { $elemMatch: { userId: userId } },
       }).select("_id members.$ title");
       return res.status(200).json({ channels });
+    } catch (err) {
+      next(err);
+    }
+  }),
+  //----- List of all user channels NEW VERSION-----//
+  // getUserChannels: asyncHandler(async (req, res, next) => {
+  //   try {
+  //     const userId = req.user._id.toString();
+  //     let channels;
+  //     let userChannels = [];
+  //     channels = await Channel.find({});
+  //     await Promise.all(
+  //       channels.map((channel) => {
+  //         channel.members.map((member) => {
+  //           if (member.userId == userId) {
+  //             channel.members = [member];
+  //             userChannels.push(channel);
+  //           }
+  //         });
+  //       })
+  //     );
+  //     return res.status(200).json({ userChannels });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }),
+  
+
+  //----- List of channels against UserId -----//
+  allChannelsList: asyncHandler(async (req, res, next) => {
+    try {
+      const userId = req.user._id.toString();
+      let channels;
+      let userChannels = [];
+      let nonUserChannels = [];
+      channels = await Channel.find({});
+
+      await Promise.all(
+        channels.map((channel) => {
+          if (channel.members) {
+            channel.members.map((member) => {
+              console.log(member);
+              if (member.userId == userId) {
+                channel.members = [member];
+                userChannels.push(channel);
+              } else {
+                console.log("else");
+
+                nonUserChannels.push(channel);
+              }
+            });
+          } else {
+            nonUserChannels.push(channel);
+          }
+        })
+      );
+      return res.status(200).json({ userChannels, nonUserChannels });
     } catch (err) {
       next(err);
     }
