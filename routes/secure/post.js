@@ -9,6 +9,7 @@ const {
   getPost,
   search,
   deletePost,
+  getSinglePost
 } = require("../../methods/Post/cud");
 const { protect, authorize } = require("../../middlewares/auth");
 const upload = require("../../services/multer");
@@ -25,6 +26,7 @@ const postUploads = upload.fields([
 
 //----- POST -----//
 router.get("/", getPost);
+router.get("/single", getSinglePost);
 router.get("/post-list", getPosts);
 router.post("/create", [protect, authorize("admin"), postUploads], create);
 router.put("/update", [protect, authorize("admin"), postUploads], update);

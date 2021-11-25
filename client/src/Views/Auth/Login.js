@@ -22,7 +22,7 @@ const Login = () => {
     if (role === 'admin') {
       history.push("/admin");
     } else {
-      // history.push("/admin");
+      history.push("/account");
     }
   }
 
@@ -78,6 +78,26 @@ const Login = () => {
                     localStorage.setItem(
                       "TOKEN",
                       response.result.data.token
+                    );
+                    localStorage.setItem(
+                      "ROLE",
+                      response.result.data.user.role
+                    );
+                    localStorage.setItem(
+                      "USER_FIRSTNAME",
+                      response.result.data.user.firstName
+                    );
+                    localStorage.setItem(
+                      "USER_LASTNAME",
+                      response.result.data.user.lastName
+                    );
+                    localStorage.setItem(
+                      "USER_EMAIL",
+                      response.result.data.user.email
+                    );
+                    localStorage.setItem(
+                      "USER_ID",
+                      response.result.data.user._id
                     );
                     // if (response.result.data.user.type === "teacher") {
                     // navigate("TeacherDashboard");

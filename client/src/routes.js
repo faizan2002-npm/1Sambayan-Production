@@ -62,6 +62,12 @@ import CreateChannel from './Views/Admin/Channels/CreateChannel';
 import ListChannels from './Views/Admin/Channels/ListChannels';
 import ListApproval from './Views/Admin/Approvals/ListApproval';
 import Approval from './Views/Admin/Approvals/Approval';
+import SinglePost from './Views/Public/SinglePost';
+import MemberEditProfile from "./Views/Public/MemberEditProfile";
+import MemberChangePassword from './Views/Public/MemberChangePassword';
+import MemberChannels from "./Views/Public/MemberChannels";
+import MemberJoinedChannels from "./Views/Public/MemberJoinedChannels";
+import SingleEvent from './Views/Public/SingleEvent';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -313,7 +319,32 @@ function _Approval() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Approvals for Channel`)
   return <Approval />
 }
-
+function _SinglePost() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Single Post`)
+  return <SinglePost />
+}
+// _SingleEvent
+function _SingleEvent() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Single Event`)
+  return <SingleEvent />
+}
+// _MemberEditProfile
+function _MemberEditProfile() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Edit Profile`)
+  return <MemberEditProfile />
+}
+function _MemberChangePassword() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Password Change`)
+  return <MemberChangePassword />
+}
+function _MemberChannels() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Channels`)
+  return <MemberChannels />
+}
+function _MemberJoinedChannels() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Joined Channels`)
+  return <MemberJoinedChannels />
+}
 var routes = [
   //Auth
   {
@@ -916,6 +947,22 @@ var routes = [
     show: "no",
   },
   {
+    path: "/singlePost",
+    name: "Single Post",
+    icon: "ni ni-tv-2 text-primary",
+    component: _SinglePost,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/singleEvent",
+    name: "Single Event",
+    icon: "ni ni-tv-2 text-primary",
+    component: _SingleEvent,
+    layout: "",
+    show: "no",
+  },
+  {
     path: "/PrivacyPolicy",
     name: "Privacy Policy",
     icon: "ni ni-tv-2 text-primary",
@@ -960,6 +1007,38 @@ var routes = [
     name: "Act and Regulation",
     icon: "ni ni-tv-2 text-primary",
     component: _ActRegulation,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/MemberEditProfile",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _MemberEditProfile,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/MemberChangePassword",
+    name: "Member Change Password",
+    icon: "ni ni-tv-2 text-primary",
+    component: _MemberChangePassword,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/MemberChannels",
+    name: "Member Channels",
+    icon: "ni ni-tv-2 text-primary",
+    component: _MemberChannels,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/MemberJoinedChannels",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _MemberJoinedChannels,
     layout: "",
     show: "no",
   },

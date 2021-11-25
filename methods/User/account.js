@@ -258,10 +258,11 @@ const methods = {
   //Login User
   login: asyncHandler(async (req, res, next) => {
     const { email, password, expoPushToken, fcmPushToken } = req.body;
-console.log("req.body",req.body)
     const schema = Joi.object().keys({
       email: Joi.string().max(40).required().email(),
       password: Joi.string().min(6).max(255).required(),
+      expoPushToken: Joi.string(),
+      fcmPushToken: Joi.string(),
     });
 
     const results = schema.validate(req.body);

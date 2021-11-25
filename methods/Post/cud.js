@@ -1,7 +1,13 @@
+
+const express = require("express");
+const fs = require("fs");
 const nodemailer = require("nodemailer");
 const asyncHandler = require("../../middlewares/async");
 const Site = require("../../models/Site/Site");
 const Post = require("../../models/Post/Post");
+var path = require("path");
+const entities = require("html-entities");
+// const entities = new Entities();
 
 const methods = {
   //----- Create post -----//
@@ -76,7 +82,53 @@ const methods = {
       const postId = req.query.postId;
       if (!postId) return res.status(400).json({ message: "Provide post id" });
       const post = await Post.findById(postId);
+      // console.log("post.title", post.title);
+      // if (process.env.NODE_ENV == "production") {
+      const indexFilePath = path.join(__dirname, "../../client/build", "index.html");
+
+      const data = {
+        ogTitle: `${post.title}`,
+        ogDiscription: `${post.description}`,
+        image: '',
+        _id: post._id,
+        request: 'singlePost'
+      };
+      if (post.image) {
+        data.image = post.image;
+      }
+      res.render('single', { data: data });
+      // const content = fs.readFileSync(indexFilePath);
+
+      // let resHtml = content.toString();
+
+      // resHtml = resHtml.replace("_META_TITLE_", entities.encode(post.title));
+      // resHtml = resHtml.replace(
+      //   "_META_DESCRIPTION_",
+      //   entities.encode(post.description)
+      // );
+
+      // resHtml = resHtml.replace("_META_THUMBNAIL_", `${process.env.UPLOAD_BASE_URL}${post.image}`);
+      // resHtml = resHtml.replace("_META_TWITTER_THUMBNAIL_", `${process.env.UPLOAD_BASE_URL}${post.image}`);
+
+      // // res.status(200).json({ post: post });
+      // res.header("Content-Type", "text/html; charset=UTF-8").send(resHtml);
+      // } else {
+      // res.status(200).json({ post: post });
+      // }
+
+    } catch (err) {
+      next(err);
+    }
+  }),
+  //----- Get Single post -----//
+  getSinglePost: asyncHandler(async (req, res, next) => {
+    try {
+      const postId = req.query.postId;
+      if (!postId) return res.status(400).json({ message: "Provide post id" });
+      const post = await Post.findById(postId);
+
       res.status(200).json({ post: post });
+
     } catch (err) {
       next(err);
     }

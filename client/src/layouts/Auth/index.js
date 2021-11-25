@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Switch, Redirect,useHistory } from "react-router-dom";
+import { useLocation, Route, Switch, Redirect, useHistory } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -16,13 +16,15 @@ const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
   const history = useHistory();
-  if (localStorage.getItem("TOKEN")) {
-    history.push("/admin");
+  if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "user")) {
+    history.push("/account");
+  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") !== "user")) {
+
   } else {
-    // var pathName = window.location.pathname;
-    // if (location.pathname.indexOf('/admin') > -1) {
-    //   history.push("/login");
-    // }
+    var pathName = window.location.pathname;
+    if (location.pathname.indexOf('/admin') > -1) {
+      history.push("/login");
+    }
   }
   React.useEffect(() => {
     document.body.classList.add("bg-default");

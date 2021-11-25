@@ -73,6 +73,29 @@ const methods = {
     try {
       const eventId = req.query.eventId;
       const event = await Event.findById(eventId);
+      // return res.status(200).json({ event });
+      const data = {
+        ogTitle: `${event.title}`,
+        ogDiscription: `${event.description}`,
+        image: '',
+        _id: event._id,
+        request: 'singleEvent'
+      };
+      if (event.image) {
+        // var imge_uri = `${process.env.UPLOAD_BASE_URL}${event.image}`;
+        // console.log("imge_uri",imge_uri)
+        // console.log("decodeURIComponent(encodeURIComponent(imge_uri))",decodeURIComponent(encodeURIComponent(imge_uri)))
+        data.image = event.image;
+      }
+      res.render('single', { data: data });
+    } catch (err) {
+      next(err);
+    }
+  }),
+  getSingleEvent: asyncHandler(async (req, res, next) => {
+    try {
+      const eventId = req.query.eventId;
+      const event = await Event.findById(eventId);
       return res.status(200).json({ event });
     } catch (err) {
       next(err);

@@ -11,9 +11,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 var cors = require("cors");
+var mustacheExpress = require('mustache-express');
 
 const app = express();
 app.use(cors());
+
+app.engine('html', mustacheExpress());
+app.set('view engine', 'html');
 
 //// Body Parser Middleware ////
 app.use(bodyParser.json());

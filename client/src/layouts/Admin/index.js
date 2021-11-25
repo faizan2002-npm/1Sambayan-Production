@@ -26,8 +26,10 @@ const Admin = (props) => {
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
-  if (localStorage.getItem("TOKEN")) {
-    // console.log(localStorage.getItem("TOKEN"));
+  if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "user")) {
+    history.push("/account");
+  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") !== "user")) {
+
   } else {
     var pathName = window.location.pathname;
     if (location.pathname.indexOf('/admin') > -1) {

@@ -497,7 +497,7 @@ const Home = () => {
                                 <h1>{latestPostsSection.heading}</h1>
                                 {
                                     latestPosts.map((e, index) => (
-                                        <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                        <PostCard  link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
                                     ))
                                 }
                                 <Row>
@@ -516,7 +516,7 @@ const Home = () => {
                                 <h1>{eventUpdatesSection.heading}</h1>
                                 {
                                     eventUpdates.map((e, index) => (
-                                        <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                        <PostCard link={`/singleEvent?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
                                     ))
                                 }
                                 <Row>

@@ -2,7 +2,6 @@ import React from 'react'
 import { getRequest } from '../../api/request';
 import PublicLayout from './../../layouts/Public/PublicLayout';
 import { useState, useEffect } from 'react';
-import OwlCarousel from "react-owl-carousel";
 import { PostCard } from './../../components/Public/PostCard';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -61,7 +60,7 @@ const News = () => {
     return (
         <PublicLayout>
             <main id="main_content">
-            <section className="latest_posts v2">
+                <section className="latest_posts v2">
                     <Container>
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12} className="text-center">
@@ -93,7 +92,7 @@ const News = () => {
                                     </OwlCarousel> */}
                                         {
                                             postData.map((e, index) => (
-                                                <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                                <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
                                             ))
                                         }
                                     </> : <h2>

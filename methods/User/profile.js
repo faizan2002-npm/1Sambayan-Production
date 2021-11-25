@@ -1,6 +1,10 @@
 const nodemailer = require("nodemailer");
 const asyncHandler = require("../../middlewares/async");
 const User = require("../../models/User/User");
+const bcrypt = require("bcryptjs");
+
+
+
 
 //REGISTER USER API
 const methods = {
@@ -18,7 +22,8 @@ const methods = {
 
       const isPassword = await user.matchPassword(oldPassword);
       if (isPassword) {
-        user.password = newPassword;
+        const newHashedPassword = await helpers.genHashPassword(newPassword);
+        user.password = newHashedPassword;
         await user.save();
         return res
           .status(200)
@@ -58,7 +63,7 @@ const methods = {
         phone,
         profession,
         address,
-        userId
+        userId,
       } = req.body;
       let image;
       if (req.file) {
@@ -114,6 +119,40 @@ const methods = {
       next(err);
     }
   }),
-  
 };
 module.exports = methods;
+
+const helpers = {
+  //Get token from Model create cookie and send response
+  sendTokenResponse: (user, statusCode, res) => {
+    //create token
+
+    const token = user.getSignedJwtToken();
+
+    const options = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+    };
+
+    if (process.env.NODE_ENV === "production") {
+      options.secure = true;
+    }
+    if (user) {
+      res
+        .status(statusCode)
+        .cookie("token", token, options)
+        .json({ token: token, user: user });
+    } else {
+      res.send("Invalid Permissions");
+    }
+  },
+
+  //Encrypt Password
+  genHashPassword: async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+  },
+};

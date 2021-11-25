@@ -9,6 +9,7 @@ const {
   getEvents,
   search,
   deleteEvent,
+  getSingleEvent
 } = require("../../methods/Event/cud");
 const { protect, authorize } = require("../../middlewares/auth");
 const upload = require("../../services/multer");
@@ -24,6 +25,7 @@ const eventUploads = upload.fields([
 ]);
 //----- EVENT -----//
 router.get("/", getEvent);
+router.get("/single", getSingleEvent);
 router.get("/event-list", getEvents);
 router.post("/create", [protect, authorize("admin"), eventUploads], create);
 router.put("/update", [protect, authorize("admin"), eventUploads], update);

@@ -5,6 +5,7 @@ import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import {  useEffect } from 'react';
 import { getRequest } from "../../../api/request";
+import { useHistory } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -30,6 +31,7 @@ import {
 var ps;
 
 const Sidebar = (props) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [siteSetting, setSiteSetting] = useState();
   const getSiteSetting = async () => {
@@ -198,7 +200,10 @@ const Sidebar = (props) => {
                 <span>My profile</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem to="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem to="#pablo" onClick={() => {
+                  localStorage.removeItem("TOKEN");
+                  history.push("/login");
+                }}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
