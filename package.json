@@ -37,6 +37,7 @@
     "nodemailer": "^6.7.0",
     "passport": "^0.4.1",
     "react-images-upload": "^1.2.7",
+    "react-phone-code": "0.0.4",
     "twilio": "^3.70.0",
     "xoauth2": "^1.2.0"
   },

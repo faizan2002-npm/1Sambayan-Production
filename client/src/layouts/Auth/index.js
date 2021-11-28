@@ -70,9 +70,9 @@ const Auth = (props) => {
                     <h1 className="text-white">
                       Welcome!
                     </h1>
-                    <p className="text-lead text-white">
+                    {/* <p className="text-lead text-white">
                       Please Login to manage the site.
-                    </p>
+                    </p> */}
                   </> : (location.pathname === '/auth/resetPassword') ? <>
                     <h1 className="text-white">
                       Reset Password

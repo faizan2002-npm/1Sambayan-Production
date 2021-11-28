@@ -142,7 +142,6 @@ export const putRequest = async (url, token, body = {}, headers = {}) => {
       ...headers,
     },
   };
-console.log("config",config);
   let returnValue;
 
   await axios

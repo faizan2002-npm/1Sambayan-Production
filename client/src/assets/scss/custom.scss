@@ -53,13 +53,14 @@ ul.post_type_navbar {
     }
 }
 
-b, strong {
+b,
+strong {
     font-weight: 700;
 }
-.section-1 .back{
+.section-1 .back {
     background-color: #ff9800;
 }
-.section-7 .card .card-body .read{
+.section-7 .card .card-body .read {
     margin: 0 auto !important;
 }
 
@@ -68,24 +69,26 @@ b, strong {
     background-color: #0000008f;
     padding-bottom: 20px;
 }
-.footer_copyright{
+.footer_copyright {
     background-color: #ff9800;
 }
 #primary_main_menu li.nav-item {
     display: flex;
     align-items: center;
 }
-#primary_main_menu li.btn.nav-item{
+#primary_main_menu li.btn.nav-item {
     background-color: #ff6400 !important;
 }
-button.sc-iBPTik,button.geUCyG:hover:not(:disabled),button.geUCyG:focus {
+button.sc-iBPTik,
+button.geUCyG:hover:not(:disabled),
+button.geUCyG:focus {
     background-color: #12a8f0;
     color: #fff;
 }
-button.del_btn:hover{
+button.del_btn:hover {
     transform: none !important;
 }
-button.del_btn{
+button.del_btn {
     height: 49.5px;
     transform: none !important;
     border-radius: 2px !important;
@@ -97,5 +100,153 @@ header#header nav.navbar ul.navbar-nav li .dropdown-menu a {
     padding: 4px 16px;
 }
 .navbar-vertical.navbar-expand-md .navbar-nav .nav-link {
-    padding: 0.65rem 0.5rem !important; 
+    padding: 0.65rem 0.5rem !important;
+}
+
+.react-tel-input input.form-control {
+    width: 95%;
+    padding-left: 10px !important;
+}
+
+.react-tel-input {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+}
+.react-tel-input .flag-dropdown {
+    position: relative;
+}
+main#main_content .latest_posts .form_box .form-control {
+    height: 50px !important;
+}
+.fileContainer {
+    width: 100%;
+    position: relative !important;
+    display: block;
+    height: 200px;
+    padding: 0;
+    box-shadow: none;
+}
+
+.fileContainer .uploadPicturesWrapper {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 1px solid #eee;
+}
+
+.section-1 .card .card-body .img_cover {
+    display: block;
+    margin: 0;
+}
+
+.fileContainer .chooseFileButton {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    right: 25px;
+    bottom: 0;
+    z-index: 1000;
+    margin: 0;
+}
+
+.fileContainer .uploadPictureContainer {
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.fileContainer .uploadPictureContainer img.uploadPicture {
+    object-fit: cover;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.fileContainer .deleteImage {
+    right: 24px;
+    bottom: 1px;
+    top: auto;
+    margin: 0;
+    z-index: 2000;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    color: #ff6400;
+    background-color: #ff6400;
+}
+.fileContainer .deleteImage:after {
+    content: "\f00d";
+    font-family: "Font Awesome 5 Pro";
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 300;
+    font-size: 18px;
+    text-align: center;
+    width: 30px;
+}
+
+.uploadPicturesWrapper > div {
+    display: block !important;
+}
+
+.fileContainer .uploadPictureContainer {
+    margin: 0;
+    border: 0;
+    display: block !important;
+    width: 100%;
+}
+
+.fileContainer .chooseFileButton:after {
+    content: "\f303";
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 300;
+}
+
+
+.image-item img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.upload__image-wrapper {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+}
+
+.image-item__btn-wrapper {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.image-item__btn-wrapper button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.upload__image-wrapper button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+}
+.upload__image-wrapper button {
+    background-color: #ff6400;
+    color: #fff;
+    border: 0;
 }

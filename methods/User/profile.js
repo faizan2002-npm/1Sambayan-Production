@@ -58,13 +58,17 @@ const methods = {
         province,
         region,
         barangay,
+        age,
         lastName,
         email,
         phone,
         profession,
         address,
+        fbLink,
+        partyId,
         userId,
       } = req.body;
+      console.log('req.body', req.body)
       let image;
       if (req.file) {
         image = req.file.filename;
@@ -76,7 +80,7 @@ const methods = {
       if (firstName) {
         user.firstName = firstName;
       }
-      if (middleName) {
+      if (middleName || middleName == '') {
         user.middleName = middleName;
       }
       if (lastName) {
@@ -106,13 +110,21 @@ const methods = {
       if (email) {
         user.email = email;
       }
+      if (age) {
+        user.age = age;
+      }
+      if (fbLink) {
+        user.fbLink = fbLink;
+      }
+      if (partyId) {
+        user.partyId = partyId;
+      }
       if (phone) {
         user.phone = phone;
       }
       if (image) {
         user.profileImage = image;
       }
-
       await user.save();
       return res.status(200).json({ message: "profile updated successfully!" });
     } catch (err) {

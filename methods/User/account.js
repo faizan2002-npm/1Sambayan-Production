@@ -28,7 +28,6 @@ const methods = {
         expoPushToken,
         fcmPushToken,
       } = req.body;
-
       //// Check If Password and Confirm Password are same or not ////
       if (password !== confirm_password) {
         res.status(403).send("Password and Confirm Password are not same");

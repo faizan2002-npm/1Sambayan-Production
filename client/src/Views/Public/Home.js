@@ -1,22 +1,29 @@
 import img from "../../Constants/Admin/images";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Carousel, Image, Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { PostCard } from "../../components/Public/PostCard";
 import OwlCarousel from "react-owl-carousel";
 import PublicLayout from './../../layouts/Public/PublicLayout';
-import { getRequest } from "../../api/request";
+import { getRequest, postRequest } from "../../api/request";
 import ReactPlayer from 'react-player'
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useHistory } from "react-router-dom";
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
 
-// import Swiper core and required modules
-// import SwiperCore, {
-//     Pagination
-// } from 'swiper';
-// SwiperCore.use([Pagination]);
+import PhoneInput from 'react-phone-input-2';
+import {
+    Button,
+    FormGroup,
+    InputGroup,
+    Form,
+    Input,
+    Label
+} from "reactstrap";
 
 const Home = () => {
+    const history = useHistory();
     const [index, setIndex] = useState(0);
+    const [value, setValue] = useState([]);
     const [slides, setSlides] = useState([]);
     const [bigVideo, setBigVideo] = useState({
         _id: 1,
@@ -410,6 +417,115 @@ const Home = () => {
             console.log("Get Site Setting Error", error);
         }
     };
+    const signUpHandler = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        console.log("e.target", e.target[0].value);
+        formData.append(
+            "firstName",
+            e.target[0].value
+        );
+        formData.append(
+            "middleName",
+            e.target[1].value
+        );
+        formData.append(
+            "lastName",
+            e.target[2].value
+        );
+        formData.append(
+            "email",
+            e.target[3].value
+        );
+        formData.append(
+            "phone",
+            e.target[4].value
+        );
+        formData.append(
+            "age",
+            e.target[5].value
+        );
+        formData.append(
+            "address",
+            e.target[6].value
+        );
+        formData.append(
+            "fbLink",
+            e.target[7].value
+        );
+        formData.append(
+            "profession",
+            e.target[8].value
+        );
+        formData.append(
+            "partyId",
+            e.target[9].value
+        );
+        formData.append(
+            "password",
+            e.target[10].value
+        );
+        formData.append(
+            "confirm_password",
+            e.target[11].value
+        );
+        const APIresponse = {
+            firstName: formData.get('firstName'),
+            middleName: formData.get('middleName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            phone: formData.get('phone').replace(/-|\s/g, ""),
+            age: formData.get('age'),
+            address: formData.get('address'),
+            fbLink: formData.get('fbLink'),
+            profession: formData.get('profession'),
+            partyId: formData.get('partyId'),
+            password: formData.get('password'),
+            confirm_password: formData.get('confirm_password'),
+        };
+        console.log("APIresponse", APIresponse)
+        // Display the key/value pairs
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
+        try {
+            const response = await postRequest(
+                "/api/pub/auth/register",
+                APIresponse,
+            );
+
+            console.log("status", response);
+            if (response.result.status === 200) {
+                localStorage.setItem(
+                    "TOKEN",
+                    response.result.data.token
+                );
+                localStorage.setItem(
+                    "ROLE",
+                    response.result.data.user.role
+                );
+                localStorage.setItem(
+                    "USER_FIRSTNAME",
+                    response.result.data.user.firstName
+                );
+                localStorage.setItem(
+                    "USER_LASTNAME",
+                    response.result.data.user.lastName
+                );
+                localStorage.setItem(
+                    "USER_EMAIL",
+                    response.result.data.user.email
+                );
+                localStorage.setItem(
+                    "USER_ID",
+                    response.result.data.user._id
+                );
+            }
+
+        } catch (error) {
+            console.log("Set Profile APi error", error.message);
+        }
+    }
     useEffect(() => {
         getAllSlides();
         getPageVideo();
@@ -497,7 +613,7 @@ const Home = () => {
                                 <h1>{latestPostsSection.heading}</h1>
                                 {
                                     latestPosts.map((e, index) => (
-                                        <PostCard  link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                        <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
                                     ))
                                 }
                                 <Row>
@@ -563,7 +679,7 @@ const Home = () => {
                                     rewind={false}
                                     autoplay={true}
                                     freeDrag={true}
-                                    responsive={carouselOptions.responsive} 
+                                    responsive={carouselOptions.responsive}
                                     autoplayTimeout={5000}
                                     items={4}
                                     autoplayHoverPause={true}
@@ -583,7 +699,7 @@ const Home = () => {
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12}>
                                 <h1>{partiesSection.heading}</h1>
-                               
+
                                 <OwlCarousel
                                     className='owl-theme owl-carousel'
                                     margin={100}
@@ -594,7 +710,7 @@ const Home = () => {
                                     rewind={false}
                                     autoplay={true}
                                     freeDrag={true}
-                                    responsive={carouselOptions.responsive} 
+                                    responsive={carouselOptions.responsive}
                                     // smartSpeed={1500}
                                     // autoplayTimeout={1000}
                                     items={4}
@@ -610,84 +726,222 @@ const Home = () => {
                         </Row>
                     </Container>
                 </section>
-                <section className="latest_posts  bg-white v2">
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10 col-md-10 col-12">
-                                <h1>{registerationSection.heading}</h1>
+                {
+                    (localStorage.getItem("TOKEN")) ? <>
+                        <section className="latest_posts  bg-white v2">
+                            <div className="container">
                                 <div className="row justify-content-center">
-                                    <div className="col-lg-6 col-md-8 col-12">
-                                        <div className="form_box">
-                                            <div className="form-group">
-                                                <label>First Name*</label>
-                                                <input type="text" className="form-control" placeholder="Peter" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Last Name*</label>
-                                                <input type="text" className="form-control" placeholder="Parker" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Email Address*</label>
-                                                <input type="email" className="form-control" placeholder="spider045@gmail.com" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Phone Number*</label>
-                                                <input type="tel" className="form-control" placeholder="+91 98765 43210" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Facebok Profile Link*</label>
-                                                <input type="url" className="form-control"
-                                                    placeholder="https://ww.facebook.com/spidey045" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Select Party*</label>
-                                                <select className="form-control">
-                                                    <option>Party Name</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Region and Province</label>
-                                                <select className="form-control">
-                                                    <option>Region Name</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Profession/Field of Expertise</label>
-                                                <select className="form-control">
-                                                    <option>Select your Profession</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                            <div
-                                                className="form-group align-items-center justify-content-center text-center flex-column d-flex">
-                                                <a to="#" className="btn">
-                                                    How do you want to help?
-                                                </a>
-                                                <input type="submit" className="btn btn-default" value="REGISTER NOW" />
+                                    <div className="col-lg-10 col-md-10 col-12 text-center">
+                                        <button className="btn btn-default" onClick={() => {
+                                            history.push("/account");
+                                        }}>Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </> : <>
+                        <section className="latest_posts  bg-white v2">
+                            <div className="container">
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-10 col-md-10 col-12">
+                                        <h1>{registerationSection.heading}</h1>
+                                        <div className="row justify-content-center">
+                                            <div className="col-lg-6 col-md-8 col-12">
+                                                <div className="form_box">
 
-                                            </div>
+                                                    <AvForm className="form" encType="multipart/form-data" method="post" onValidSubmit={signUpHandler}>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>First Name</Label>
+                                                            
+                                                                <AvField
+                                                                    name="firstName"
+                                                                    type="text"
+                                                                    placeholder="First Name"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Middle Name</Label>
+                                                            
+                                                                <AvField
+                                                                    name="middleName"
+                                                                    type="text"
+                                                                    placeholder="Middle Name"
+                                                                    className="form-control"
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Last Name</Label>
+                                                            
+                                                                <AvField
+                                                                    name="lastName"
+                                                                    type="text"
+                                                                    placeholder="Last Name"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Email</Label>
+                                                            
+                                                                <AvField
+                                                                    name="email"
+                                                                    type="email"
+                                                                    placeholder="Email"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Phone Number</Label>
+                                                            
+                                                                <PhoneInput
+                                                                    country={'ph'}
+                                                                    enableAreaCodes={true}
+                                                                    enableAreaCodeStretch
+                                                                    enableSearch={true}
+                                                                    inputProps={{
+                                                                        name: 'phone',
+                                                                        required: true,
+                                                                        autoFocus: true
+                                                                    }}
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Age</Label>
+                                                            
+                                                                <AvField
+                                                                    id="age"
+                                                                    name="age"
+                                                                    type="select"
+                                                                    placeholder="Select Age"
+                                                                    required
+                                                                >
+                                                                    <option>15</option>
+                                                                    <option>16</option>
+                                                                    <option>17</option>
+                                                                    <option>18</option>
+                                                                    <option>19</option>
+                                                                    <option>20</option>
+                                                                    <option>21</option>
+                                                                    <option>22</option>
+                                                                    <option>23</option>
+                                                                </AvField>
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup>
+                                                            <Label>Address</Label>
+                                                            
+                                                                <AvField
+                                                                    name="address"
+                                                                    type="text"
+                                                                    placeholder="Address"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup>
+                                                            <Label>Facebook Link</Label>
+                                                            
+                                                                <AvField
+                                                                    name="fbLink"
+                                                                    type="url"
+                                                                    placeholder="Facebook Link"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Professional / Field of Experties</Label>
+                                                            
+                                                                <AvField
+                                                                    id="profession"
+                                                                    name="profession"
+                                                                    type="select"
+                                                                    placeholder="Professional / Field of Experties"
+                                                                    placeholder="Select Field"
+                                                                    required
+                                                                >
+                                                                    <option>Self Employed</option>
+                                                                    <option>Government</option>
+                                                                </AvField>
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup className="mb-4">
+                                                            <Label>Select Member Organization</Label>
+                                                            
+                                                                <AvField
+                                                                    id="partyId"
+                                                                    name="partyId"
+                                                                    type="select"
+                                                                    placeholder="Select Party"
+                                                                    required
+                                                                >
+                                                                    {
+                                                                        parties.map((e, index) => (
+                                                                            <option key={index} value={e._id}>{e.title}</option>
+                                                                        ))
+                                                                    }
+                                                                </AvField>
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup>
+                                                            <Label>Password</Label>
+                                                            
+                                                                <AvField
+                                                                    name="password"
+                                                                    type="password"
+                                                                    placeholder="Password"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <FormGroup>
+                                                            <Label>Confirm Password</Label>
+                                                            
+                                                                <AvField
+                                                                    name="confirm_password"
+                                                                    type="password"
+                                                                    placeholder="Confirm Password"
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            
+                                                        </FormGroup>
+                                                        <div className="text-center">
+                                                            <Button className="mt-4" color="primary" type="submit">
+                                                                Sign in
+                                                            </Button>
+                                                        </div>
+                                                    </AvForm>
 
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
+                        </section>
+                    </>
+                }
             </main>
         </PublicLayout>
     )
 }
 
 export default Home;
+
+
+
+// josephzambri@hotmail.com	
+// joseph2021!!

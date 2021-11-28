@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getRequest } from '../../../api/request';
+import { ToastContainer } from 'react-toastify';
 
 const Footer = () => {
     const [loading, setLoading] = useState(true);
@@ -105,6 +106,18 @@ const Footer = () => {
                             Download MEMBERSHIP APPLICATION here
                         </a>
                     </div>
+
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
                 </>
             }
         </>
