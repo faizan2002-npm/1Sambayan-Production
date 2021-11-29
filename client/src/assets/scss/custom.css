@@ -58,7 +58,8 @@ ul.post_type_navbar ul.dropdown-menu {
   }
 }
 
-b, strong {
+b,
+strong {
   font-weight: 700;
 }
 
@@ -90,10 +91,12 @@ b, strong {
 }
 
 #primary_main_menu li.btn.nav-item {
-  background-color: #ff6400 !important;
+  background-color: #FF5EC1 !important;
 }
 
-button.sc-iBPTik, button.geUCyG:hover:not(:disabled), button.geUCyG:focus {
+button.sc-iBPTik,
+button.geUCyG:hover:not(:disabled),
+button.geUCyG:focus {
   background-color: #12a8f0;
   color: #fff;
 }
@@ -119,5 +122,167 @@ header#header nav.navbar ul.navbar-nav li .dropdown-menu a {
 
 .navbar-vertical.navbar-expand-md .navbar-nav .nav-link {
   padding: 0.65rem 0.5rem !important;
+}
+
+.react-tel-input input.form-control {
+  width: 95%;
+  padding-left: 10px !important;
+}
+
+.react-tel-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.react-tel-input .flag-dropdown {
+  position: relative;
+}
+
+main#main_content .latest_posts .form_box .form-control {
+  height: 50px !important;
+}
+
+.fileContainer {
+  width: 100%;
+  position: relative !important;
+  display: block;
+  height: 200px;
+  padding: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.fileContainer .uploadPicturesWrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
+.section-1 .card .card-body .img_cover {
+  display: block;
+  margin: 0;
+}
+
+.fileContainer .chooseFileButton {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  right: 25px;
+  bottom: 0;
+  z-index: 1000;
+  margin: 0;
+}
+
+.fileContainer .uploadPictureContainer {
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.fileContainer .uploadPictureContainer img.uploadPicture {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.fileContainer .deleteImage {
+  right: 24px;
+  bottom: 1px;
+  top: auto;
+  margin: 0;
+  z-index: 2000;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: #FF5EC1;
+  background-color: #FF5EC1;
+}
+
+.fileContainer .deleteImage:after {
+  content: "\f00d";
+  font-family: "Font Awesome 5 Pro";
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 300;
+  font-size: 18px;
+  text-align: center;
+  width: 30px;
+}
+
+.uploadPicturesWrapper > div {
+  display: block !important;
+}
+
+.fileContainer .uploadPictureContainer {
+  margin: 0;
+  border: 0;
+  display: block !important;
+  width: 100%;
+}
+
+.fileContainer .chooseFileButton:after {
+  content: "\f303";
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 300;
+}
+
+.image-item img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.upload__image-wrapper {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+}
+
+.image-item__btn-wrapper {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.image-item__btn-wrapper button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.upload__image-wrapper button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 25px;
+}
+
+.upload__image-wrapper button {
+  background-color: #FF5EC1;
+  color: #fff;
+  border: 0;
 }
 /*# sourceMappingURL=custom.css.map */

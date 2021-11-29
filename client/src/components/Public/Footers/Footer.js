@@ -102,8 +102,8 @@ const Footer = () => {
                         </Container>
                     </div>
                     <div className="lim">
-                        <a to="#" className="link btn">
-                            Download MEMBERSHIP APPLICATION here
+                        <a target="_BLANK" href="https://play.google.com/store/apps/details?id=com.sambayan" className="link btn">
+                            Membership Form Application Here
                         </a>
                     </div>
 

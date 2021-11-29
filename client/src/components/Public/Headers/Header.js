@@ -88,6 +88,11 @@ const Header = () => {
                                         </Row>
                                     </div>
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
+                                        <NavDropdown as="li" title="About" id="basic-nav-dropdown-1">
+                                            <Link className="nav-link" to="/about">About Us</Link>
+                                            <Link className="nav-link" to="/convenors">List Convenors</Link>
+                                            <Link className="nav-link" to="/communities">Chapters</Link>
+                                        </NavDropdown>
                                         {
                                             getRoutes(routes)
                                         }
@@ -112,8 +117,8 @@ const Header = () => {
                                                 </NavItem>
                                             </Dropdown.Menu>
                                         </Dropdown> */}
-                                        <Nav.Item className="btn mt-3" as="li" >
-                                            <Nav.Link href={siteSetting.donateURL} target="_BLANK">Donate Now</Nav.Link>
+                                        <Nav.Item className="btn" as="li" >
+                                            <Nav.Link href={siteSetting.donateURL} target="_BLANK">Donate</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
                                 </Navbar.Collapse>

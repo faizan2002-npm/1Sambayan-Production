@@ -181,7 +181,7 @@ main#main_content .latest_posts.v2 .card .card-body h2 {
 
 main#main_content .latest_posts h1 {
   text-transform: uppercase;
-  color: #ff6200;
+  color: #FF5EC1;
   margin: 0 0 30px;
 }
 
@@ -283,7 +283,7 @@ footer#footer p {
 }
 
 .link {
-  background-color: #ff6400 !important;
+  background-color: #FF5EC1 !important;
   border-radius: 13px;
   font-size: 15px;
   color: #fff !important;
@@ -542,7 +542,7 @@ footer#footer p {
   font-weight: 600;
   color: white;
   border-radius: 50%;
-  background: #ff6400;
+  background: #FF5EC1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

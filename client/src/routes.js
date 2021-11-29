@@ -836,7 +836,7 @@ var routes = [
     icon: "ni ni-tv-2 text-primary",
     component: _About,
     layout: "",
-    show: "yes",
+    show: "no",
     order: 1,
   },
   {
@@ -849,22 +849,13 @@ var routes = [
     order: 2,
   },
   {
-    path: "/events",
-    name: "Events",
-    icon: "ni ni-tv-2 text-primary",
-    component: _Events,
-    layout: "",
-    show: "yes",
-    order: 3,
-  },
-  {
     path: "/communities",
     name: "Chapters",
     icon: "ni ni-tv-2 text-primary",
     component: _Communities,
     layout: "",
     show: "yes",
-    order: 4,
+    order: 3,
   },
   {
     path: "/candidates",
@@ -873,7 +864,7 @@ var routes = [
     component: _Candidates,
     layout: "",
     show: "yes",
-    order: 5,
+    order: 4,
   },
   {
     path: "/parties",
@@ -882,7 +873,7 @@ var routes = [
     component: _Parties,
     layout: "",
     show: "yes",
-    order: 6,
+    order: 5,
   },
   {
     path: "/convenors",
@@ -891,6 +882,15 @@ var routes = [
     component: _Convenors,
     layout: "",
     show: "yes",
+    order: 6,
+  },
+  {
+    path: "/events",
+    name: "Events",
+    icon: "ni ni-tv-2 text-primary",
+    component: _Events,
+    layout: "",
+    show: "no",
     order: 7,
   },
   {
