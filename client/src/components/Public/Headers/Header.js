@@ -60,24 +60,30 @@ const Header = () => {
     return (
         <>
             {
-                (loading) ? '' : <>
+                <>
                     <header id="header">
                         <Container fluid>
                             <Navbar as="nav" variant="dark" expand="lg">
                                 <Link className="navbar-brand" to="/">
-                                    <Image src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} alt="" fluid />
+                                    {
+                                        (loading) ? '' : <Image src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} alt="" fluid />
+                                    }
                                 </Link>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <div className="navbar-collapse-header d-md-none mb-3">
                                         <Row>
-                                            {siteSetting.logo ? (
-                                                <Col className="collapse-brand" xs="6">
-                                                    <Link to='/'>
-                                                        <img alt='' src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} />
-                                                    </Link>
-                                                </Col>
-                                            ) : null}
+                                            {
+                                                (loading) ? '' : <>{
+                                                    siteSetting.logo ? (
+                                                        <Col className="collapse-brand" xs="6">
+                                                            <Link to='/'>
+                                                                <img alt='' src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} />
+                                                            </Link>
+                                                        </Col>
+                                                    ) : null
+                                                }</>
+                                            }
                                             <Col className="collapse-close" xs="6">
                                                 <Navbar.Toggle aria-controls="basic-navbar-nav">
 
@@ -117,9 +123,13 @@ const Header = () => {
                                                 </NavItem>
                                             </Dropdown.Menu>
                                         </Dropdown> */}
-                                        <Nav.Item className="btn" as="li" >
-                                            <Nav.Link href={siteSetting.donateURL} target="_BLANK">Donate</Nav.Link>
-                                        </Nav.Item>
+                                        {
+                                            (loading) ? '' : <>{
+                                                <Nav.Item className="btn" as="li" >
+                                                    <Nav.Link href={siteSetting.donateURL} target="_BLANK">Donate</Nav.Link>
+                                                </Nav.Item>
+                                            }</>
+                                        }
                                     </Nav>
                                 </Navbar.Collapse>
                             </Navbar>
