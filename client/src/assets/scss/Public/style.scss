@@ -17,8 +17,8 @@ body {
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
-      // background-color: #ff9800;
-      // border: 1px solid #ff9800;
+      // background-color: #FFABC2;
+      // border: 1px solid #FFABC2;
       border-radius: 10px;
       padding: 5px 30px;
       font-size: 20px;
@@ -27,8 +27,13 @@ body {
   }
 }
 header#header {
-  background-color: #ff9800;
+  background-color: #ffabc2;
   padding: 5px 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
   nav.navbar {
     a.navbar-brand {
       width: 20%;
@@ -174,7 +179,7 @@ main#main_content {
     }
     h1 {
       text-transform: uppercase;
-      color: #FF5EC1;
+      color: #ff5ec1;
       margin: 0 0 30px;
     }
     .btn-default {
@@ -256,7 +261,7 @@ footer#footer {
   text-align: center;
 }
 .link {
-  background-color: #FF5EC1 !important;
+  background-color: #ff5ec1 !important;
   border-radius: 13px;
   font-size: 15px;
   color: #fff !important;
@@ -472,7 +477,7 @@ footer#footer {
     font-weight: 600;
     color: white;
     border-radius: 50%;
-    background: #FF5EC1;
+    background: #ff5ec1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -612,7 +617,7 @@ footer#footer {
   }
   .kmj {
     width: 94%;
-    height: 57%;  
+    height: 57%;
   }
 }
 @media (max-width: 1511.98px) {
@@ -750,30 +755,31 @@ footer#footer {
     font-size: 13px;
     font-weight: 500;
   }
-  main#main_content .bigVideo,main#main_content .latest_posts{
+  main#main_content .bigVideo,
+  main#main_content .latest_posts {
     padding: 30px 0;
   }
-  main#main_content .latest_posts .card .card-body img{
+  main#main_content .latest_posts .card .card-body img {
     width: 100%;
   }
-  footer#footer p{
+  footer#footer p {
     margin-top: 30px;
   }
   .lim {
     bottom: 0;
     width: 100%;
-}
+  }
 
-.lim a.link.btn {
+  .lim a.link.btn {
     margin: 0;
     width: 100%;
     border-radius: 0;
-}
+  }
 
-.footer_copyright {
-  padding-bottom: 40px;
-}
-  footer#footer{
+  .footer_copyright {
+    padding-bottom: 40px;
+  }
+  footer#footer {
     padding: 30px 0 20px;
   }
   header#header nav.navbar ul.navbar-nav li a {
@@ -893,7 +899,6 @@ footer#footer {
   }
 }
 @media (max-width: 374.98px) {
-
   .section-3 h1 {
     font-size: 30px;
   }
@@ -909,10 +914,9 @@ footer#footer {
   }
 }
 @media (max-width: 350.98px) {
-  
-.lim a.link.btn {
-  font-size: 12px;
-}
+  .lim a.link.btn {
+    font-size: 12px;
+  }
   .link {
     position: fixed;
     font-size: 14px;
