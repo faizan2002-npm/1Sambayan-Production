@@ -18,6 +18,7 @@ import 'swiper/components/pagination/pagination.min.css'
 
 import store from './redux/store';
 import { Provider } from "react-redux";
+import PartyLayout from './layouts/Party/index';
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
     if (prop.subMenu) {
@@ -37,6 +38,7 @@ ReactDOM.render(<Provider store={store}>
   <Router>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/party" render={(props) => <PartyLayout {...props} />} />
       <Route path="/auth" render={(props) => <Auth {...props} />} />
       <Route path="/public" exact render={(props) => <PublicLayout {...props} />} />
       {

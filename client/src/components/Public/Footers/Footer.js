@@ -103,7 +103,7 @@ const Footer = () => {
                     </div>
                     <div className="lim">
                         <a target="_BLANK" href="https://play.google.com/store/apps/details?id=com.sambayan" className="link btn">
-                            Membership Form Application Here
+                        Membership Form
                         </a>
                     </div>
 

@@ -14,6 +14,7 @@ import "../../assets/plugins/nucleo/css/nucleo.css"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "../../assets/scss/argon-dashboard-react.scss"
 import "../../assets/scss/custom.scss"
+import 'react-leaf-polls/dist/index.css'
 
 
 const Admin = (props) => {
@@ -28,8 +29,10 @@ const Admin = (props) => {
   }, [location]);
   if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "user")) {
     history.push("/account");
-  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") !== "user")) {
-
+  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "party")) {
+    history.push("/party");
+  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "admin")) {
+    // history.push("/party");
   } else {
     var pathName = window.location.pathname;
     if (location.pathname.indexOf('/admin') > -1) {

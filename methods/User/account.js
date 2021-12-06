@@ -6,6 +6,7 @@ const asyncHandler = require("../../middlewares/async");
 const User = require("../../models/User/User");
 const sendEmail = require("../../services/sendEmail");
 const sendSms = require("../../services/twillio");
+const Party = require("../../models/Party/Party");
 
 //REGISTER USER API
 const methods = {
@@ -80,11 +81,21 @@ const methods = {
       next(err);
     }
   }),
+  getAllUsersByParty: asyncHandler(async (req, res, next) => {
+    let partyId = req.query.partyId;
+
+    try {
+      const users = await User.find({ role: "user", isDeleted: false,partyId });
+      return res.status(200).json({ users });
+    } catch (err) {
+      next(err);
+    }
+  }),
 
   //---- Delete USER  ----//
   deleteUser: asyncHandler(async (req, res, next) => {
     try {
-      console.log("req.body", req.body);
+      // console.log("req.body", req.body);
       const userId = req.body.userId;
       await User.findByIdAndUpdate(
         userId,
@@ -273,25 +284,31 @@ const methods = {
     if (!email || !password) {
       return res.status(400).send("Please provide email and password");
     }
-
-    // check if user exists //
     const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
-      return res.status(400).send("You are not registered, Please Sign up!");
+      const party = await Party.findOne({ email: email }).select("+password");
+      if (party) {
+        const isMatch = await party.matchPassword(password);
+        if (!isMatch) {
+          return res.status(400).send("Password is Invalid");
+        }
+        helpers.sendTokenResponse(party, 200, res);
+      } else {
+        return res.status(400).send("You are not registered, Please Sign up!");
+      }
+    } else {
+      const isMatch = await user.matchPassword(password);
+      if (!isMatch) {
+        return res.status(400).send("Password is Invalid");
+      }
+      if (expoPushToken) {
+        user.notificationPreferences.expoPushTokens.push(expoPushToken);
+      }
+      if (fcmPushToken) {
+        user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
+      }
+      helpers.sendTokenResponse(user, 200, res);
     }
-
-    const isMatch = await user.matchPassword(password);
-
-    if (!isMatch) {
-      return res.status(400).send("Password is Invalid");
-    }
-    if (expoPushToken) {
-      user.notificationPreferences.expoPushTokens.push(expoPushToken);
-    }
-    if (fcmPushToken) {
-      user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
-    }
-    helpers.sendTokenResponse(user, 200, res);
   }),
 
   // USER Logout
@@ -308,20 +325,41 @@ const methods = {
     try {
       const email = req.body.email;
       const user = await User.findOne({ email: email });
-      const resetToken = await user.getResetPasswordToken();
-      await user.save({ validateBeforeSave: false });
-      const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
+      if (user) {
+        const resetToken = await user.getResetPasswordToken();
+        await user.save({ validateBeforeSave: false });
+        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
 
-      try {
-        await sendEmail({
-          email: user.email,
-          subject: "Password reset token",
-          message: message,
-        });
-        return res.status(200).json({ success: true, data: "Email sent" });
-      } catch (error) {
-        return res.status(404).json({ message: "Internelm Error" });
+        try {
+          await sendEmail({
+            email: user.email,
+            subject: "Password reset token",
+            message: message,
+          });
+          return res.status(200).json({ success: true, data: "Email sent" });
+        } catch (error) {
+          return res.status(404).json({ message: "Internelm Error" });
+        }
+      } else {
+        const party = await Party.findOne({ email: email });
+        // console.log("party", party);
+        const resetToken = await party.getResetPasswordToken();
+        // console.log("resetToken", resetToken);
+        await party.save({ validateBeforeSave: false });
+        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
+
+        try {
+          await sendEmail({
+            email: party.email,
+            subject: "Password reset token",
+            message: message,
+          });
+          return res.status(200).json({ success: true, data: "Email sent" });
+        } catch (error) {
+          return res.status(404).json({ message: "Internelm Error" });
+        }
       }
+
     } catch (err) {
       next(err);
     }
@@ -334,13 +372,29 @@ const methods = {
       const password = req.body.password;
       const hashedPassword = await helpers.genHashPassword(password);
       let user = await User.findOne({ resetPasswordToken: resetPasswordToken });
-      user.password = hashedPassword;
-      user.resetPasswordToken = undefined;
-      user.restPasswordExpires = undefined;
-      await user.save({ validateBeforeSave: false });
-      return res
-        .status(200)
-        .json({ message: "Password has been Updated successfully" });
+      let party = await Party.findOne({ resetPasswordToken: resetPasswordToken });
+      if (user) {
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.restPasswordExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+        return res
+          .status(200)
+          .json({ message: "Password has been Updated successfully" });
+      } else if (party) {
+        party.password = hashedPassword;
+        party.resetPasswordToken = undefined;
+        party.restPasswordExpires = undefined;
+        await party.save({ validateBeforeSave: false });
+        return res
+          .status(200)
+          .json({ message: "Password has been Updated successfully" });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Register First" });
+      }
+
     } catch (error) {
       next(error);
     }
@@ -381,7 +435,7 @@ const helpers = {
       res
         .status(statusCode)
         .cookie("token", token, options)
-        .json({ token: token, user: user });
+        .json({ token: token,  user });
     } else {
       res.send("Invalid Permissions");
     }

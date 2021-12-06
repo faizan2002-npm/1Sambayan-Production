@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, CardBody, Col, Container, Row, Label, FormGroup, Input, Form } from 'reactstrap'
 import Header from '../../../components/Admin/Headers/Header'
-import EditorField from '../../../components/Admin/EditorFormik.d.tsx';
 import { postRequestForm } from '../../../api/request';
 import { Button, FormLabel, Image } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";

@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { AvForm, AvField} from 'availity-reactstrap-validation';
 import PhoneInput from 'react-phone-input-2';
+import { Link } from 'react-router-dom';
 
 const MemberEditProfile = () => {
     const [memberProfile, setMemberProfile] = useState();
@@ -407,6 +408,13 @@ const MemberEditProfile = () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row mt-4" >
+                            <div className="col text-center">
+                                <Link to="/account" className="btn ">
+                                    Back
+                                </Link>
                             </div>
                         </div>
                     </div>

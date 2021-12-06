@@ -68,6 +68,14 @@ import MemberChangePassword from './Views/Public/MemberChangePassword';
 import MemberChannels from "./Views/Public/MemberChannels";
 import MemberJoinedChannels from "./Views/Public/MemberJoinedChannels";
 import SingleEvent from './Views/Public/SingleEvent';
+import PartyDashboard from './Views/Party/PartyDashboard';
+import EditParty from "./Views/Party/EditParty";
+import { CreateUser } from './Views/Party/Users/CreateUser';
+import ListUsers from './Views/Party/Users/ListUsers';
+import CreatePosition from './Views/Admin/Positions/CreatePosition';
+import CreatePoll from './Views/Admin/Polls/CreatePoll';
+import ListPoll from './Views/Admin/Polls/ListPoll';
+import ListPosition from './Views/Admin/Positions/ListPosition';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -345,6 +353,42 @@ function _MemberJoinedChannels() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Joined Channels`)
   return <MemberJoinedChannels />
 }
+// _DashboardParty
+// _EditParty
+function _DashboardParty() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Party Dashboard`)
+  return <PartyDashboard />
+}
+function _EditParty() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Edit Party`)
+  return <EditParty />
+}
+// ListUsers
+// _CreateUser
+function _ListUsers() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List Users`)
+  return <ListUsers />
+}
+function _CreateUser() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Create User`)
+  return <CreateUser />
+}
+function _ListPositions() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List Positions`)
+  return <ListPosition   />
+}
+function _CreatePosition() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Create Position`)
+  return <CreatePosition />
+}
+function _ListPolls() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | List Polls`)
+  return <ListPoll />
+}
+function _CreatePoll() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Create Poll`)
+  return <CreatePoll />
+}
 var routes = [
   //Auth
   {
@@ -374,6 +418,52 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: _SetNewPassword,
     layout: "/auth",
+  },
+  //Party Portal
+  {
+    path: "/index",
+    name: "Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: _DashboardParty,
+    layout: "/party",
+    type: 'portal',
+    order: 1,
+  },
+  {
+    path: "/EditParty",
+    name: "Edit Party",
+    icon: "ni ni-single-02 text-yellow",
+    component: _EditParty,
+    layout: "/party",
+    type: 'portal',
+    order: 2,
+  },
+  {
+    path: "",
+    name: "Users",
+    icon: "fas fa-users  text-success",
+    component: _ListUsers,
+    layout: "/party",
+    type: 'party_user',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListUsers",
+        name: "All Users",
+        icon: "fas fa-users text-yellow",
+        component: _ListUsers,
+        layout: "/party",
+        order: 1,
+      },
+      {
+        path: "/CreateUser",
+        name: "Add User",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreateUser,
+        layout: "/party",
+        order: 2,
+      },
+    ]
   },
   //Admin Portal
   {
@@ -656,6 +746,60 @@ var routes = [
         layout: "/admin",
         order: 1,
       }
+    ]
+  },
+  {
+    path: "",
+    name: "Polls",
+    icon: "fas fa-layer-group text-default",
+    component: _ListPositions,
+    layout: "/admin",
+    type: 'post_type',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListPolls",
+        name: "All Polls",
+        icon: "fas fa-layer-group text-yellow",
+        component: _ListPolls,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreatePoll",
+        name: "Add Poll",
+        icon: "fas fa-layer-group text-yellow",
+        component: _CreatePoll,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Positions",
+    icon: "fas fa-layer-group text-default",
+    component: _ListPositions,
+    layout: "/admin",
+    type: 'post_type',
+    order: 6,
+    subMenu: [
+      {
+        path: "/ListPositions",
+        name: "All Positions",
+        icon: "fas fa-layer-group text-yellow",
+        component: _ListPositions,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreatePosition",
+        name: "Add Position",
+        icon: "fas fa-layer-group text-yellow",
+        component: _CreatePosition,
+        layout: "/admin",
+        order: 2,
+      },
     ]
   },
   //Admin SETTINGS

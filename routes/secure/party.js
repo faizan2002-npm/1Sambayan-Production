@@ -22,7 +22,7 @@ router.post(
 );
 router.put(
   "/update",
-  [protect, authorize("admin"), upload.single("image")],
+  [protect,  upload.single("image")],
   update
 );
 router.post("/delete-party", deleteParty);

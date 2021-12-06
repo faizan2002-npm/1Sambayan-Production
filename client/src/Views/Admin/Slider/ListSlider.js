@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import { getRequest, postRequest, postRequestForm, putRequest } from '../../../api/request';
 import { Link } from 'react-router-dom';
-import EditorField from '../../../components/Admin/EditorFormik.d';
 import { Button, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'

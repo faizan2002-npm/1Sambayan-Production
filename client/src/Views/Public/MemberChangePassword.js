@@ -3,10 +3,10 @@ import {
     FormGroup,
     Label
 } from "reactstrap";
-import { AvForm, AvField} from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import UserLayout from '../../layouts/User/UserLayout'
 import { postRequest } from '../../api/request';
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 const MemberChangePassword = () => {
@@ -100,6 +100,13 @@ const MemberChangePassword = () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row mt-4" >
+                            <div className="col text-center">
+                                <Link to="/account" className="btn ">
+                                    Back
+                                </Link>
                             </div>
                         </div>
                     </div>

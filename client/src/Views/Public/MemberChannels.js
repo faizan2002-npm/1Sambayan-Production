@@ -4,6 +4,7 @@ import { Container, Row, Image } from 'react-bootstrap';
 import { getRequest } from '../../api/request';
 import { useState, useEffect } from 'react';
 import { postWithParams } from './../../api/request';
+import { Link } from 'react-router-dom';
 
 const MemberChannels = () => {
     const [channelData, setChannelData] = useState([]);
@@ -110,6 +111,7 @@ const MemberChannels = () => {
     }, []);
     return (
         <UserLayout>
+        <main id="main_content">
             <section className="py-5">
                 <Container>
                     <h1 className="text-center">
@@ -142,7 +144,7 @@ const MemberChannels = () => {
                                             </Col>
                                             <Col lg={6} md={3} xs={3} className="text-right align-self-center">
                                                 <button className="btn text-white" onClick={() => onNext(e._id, localStorage.getItem("USER_ID"))} disabled={disableButton(e)} style={{
-                                                    backgroundColor: renderButtonText(e) === "Joined" ? "green" : 'orange',
+                                                    backgroundColor: renderButtonText(e) === "Joined" ? "#FF5EC1" : '#FF5EC1',
                                                 }}>
                                                     {renderButtonText(e)}
                                                 </button>
@@ -156,8 +158,16 @@ const MemberChannels = () => {
                                 <p className="text-center">Loading</p>
                             </>
                     }
+                    <div className="row mt-4" >
+                        <div className="col text-center">
+                            <Link to="/account" className="btn ">
+                                Back
+                            </Link>
+                        </div>
+                    </div>
                 </Container>
             </section>
+            </main>
         </UserLayout>
     )
 }

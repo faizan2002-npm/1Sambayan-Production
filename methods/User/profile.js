@@ -3,9 +3,6 @@ const asyncHandler = require("../../middlewares/async");
 const User = require("../../models/User/User");
 const bcrypt = require("bcryptjs");
 
-
-
-
 //REGISTER USER API
 const methods = {
   //----- Forgot Password -----//
@@ -46,6 +43,15 @@ const methods = {
       next(err);
     }
   }),
+  getProfileByID: asyncHandler(async (req, res, next) => {
+    try {
+      let userId = req.query.userId;
+      let user = await User.findById(userId);
+      return res.status(200).json({ user });
+    } catch (err) {
+      next(err);
+    }
+  }),
 
   //----- Edit Profile -----//
   editProfile: asyncHandler(async (req, res, next) => {
@@ -68,7 +74,7 @@ const methods = {
         partyId,
         userId,
       } = req.body;
-      console.log('req.body', req.body)
+
       let image;
       if (req.file) {
         image = req.file.filename;
@@ -80,7 +86,7 @@ const methods = {
       if (firstName) {
         user.firstName = firstName;
       }
-      if (middleName || middleName == '') {
+      if (middleName || middleName == "") {
         user.middleName = middleName;
       }
       if (lastName) {

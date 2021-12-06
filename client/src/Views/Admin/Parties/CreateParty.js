@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, CardBody, Col, Container, Row, Label, FormGroup, Input, Form } from 'reactstrap'
 import Header from '../../../components/Admin/Headers/Header'
-import EditorField from '../../../components/Admin/EditorFormik.d.tsx';
 import { postRequestForm } from '../../../api/request';
 import { Button, FormLabel, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -11,6 +10,8 @@ class CreateParty extends React.Component {
         super(props);
         this.state = {
             title: '',
+            email: '',
+            password: '',
             // description: '',
             image: null,
             // video: null,
@@ -34,42 +35,25 @@ class CreateParty extends React.Component {
             "title",
             e.target[0].value
         );
-        // formData.append(
-        //     "description",
-        //     e.target[1].value
-        // );
+        formData.append(
+            "email",
+            e.target[1].value
+        );
+        formData.append(
+            "password",
+            e.target[2].value
+        );
         formData.append(
             "image",
             this.state.image
         );
-        formData.append(
-            "backgroundImage",
-            this.state.backgroundImage
-        );
-        // console.log("formData", formData);
-        const featuredImage = {
-            image: formData.get('image')
-        };
-        const backgroundImage = {
-            backgroundImage: formData.get('backgroundImage')
-        };
-        const APIresponse = {
-            props: {
-                title: formData.get('title'),
-                // description: formData.get('description'),
-            },
-            ...featuredImage,
-            ...backgroundImage
-        };
-        console.log("Add Slider APIresponse", APIresponse);
         const token = localStorage.getItem("TOKEN");
 
         try {
             const response = await postRequestForm(
                 "/api/secure/party/create",
                 token,
-                formData,
-                // { "Content-Type": "multipart/form-data" }
+                formData
             );
 
             console.log("status", response);
@@ -111,6 +95,28 @@ class CreateParty extends React.Component {
                                                         name="title"
                                                         type="text"
                                                         placeholder="Name"
+                                                        className="form-control"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <FormGroup className="mb-3">
+                                                    <Label>Email</Label>
+                                                    <Input
+                                                        name="email"
+                                                        type="email"
+                                                        placeholder="Email"
+                                                        className="form-control"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <FormGroup className="mb-3">
+                                                    <Label>Password</Label>
+                                                    <Input
+                                                        name="password"
+                                                        type="password"
+                                                        placeholder="Password"
                                                         className="form-control"
                                                     />
                                                 </FormGroup>

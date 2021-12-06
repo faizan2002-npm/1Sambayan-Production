@@ -22,12 +22,8 @@ const ExpandedComponent = ({ data }) => {
         image: "https://votewatchers.co.in/views/uploads/" + data.image,
     })
     const [featuredImage, setFeaturedImage] = useState({ image: data.image, defaultImage: defaultData.image })
-    const [backgroundImage, setBackgroundImage] = useState({ backgroundImage: data.backgroundImage, defaultbackgroundImage: defaultData.backgroundImage })
     const changeFeaturedImage = (event) => {
         setFeaturedImage( { image: event.target.files[0], defaultImage: URL.createObjectURL(event.target.files[0]) })
-    }
-    const changeBackgroundImage = (event) => {
-        setBackgroundImage( { backgroundImage: event.target.files[0], defaultbackgroundImage: URL.createObjectURL(event.target.files[0]) })
     }
     const updateSlideHandler = async(e) => {
         e.preventDefault();
@@ -38,7 +34,7 @@ const ExpandedComponent = ({ data }) => {
             e.target[0].value
         );
         formData.append(
-            "description",
+            "email",
             e.target[1].value
         );
         formData.append(
@@ -46,30 +42,10 @@ const ExpandedComponent = ({ data }) => {
             featuredImage.image
         );
         formData.append(
-            "backgroundImage",
-            backgroundImage.backgroundImage
-        );
-        formData.append(
             "partyId",
             data._id
         );
-        const APIfeaturedImage = {
-            image: formData.get('image')
-        };
-        const APIbackgroundImage = {
-            backgroundImage: formData.get('backgroundImage')
-        };
-        const APIresponse = {
-            props: {
-                title: formData.get('title'),
-                description: formData.get('description'),
-            },
-            ...APIfeaturedImage,
-            ...APIbackgroundImage
-        };
-        // console.log("Update Slider APIresponse", APIresponse);
         const token = localStorage.getItem("TOKEN");
-        console.log('Update Post APIresponse', APIresponse);
         try {
             const response = await putRequest(
                 "/api/secure/party/update",
@@ -108,6 +84,18 @@ const ExpandedComponent = ({ data }) => {
                             placeholder="Name"
                             className="form-control"
                             defaultValue={data.title}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col xs={12}>
+                    <FormGroup className="mb-3">
+                        <Label>Email</Label>
+                        <Input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            className="form-control"
+                            defaultValue={data.email}
                         />
                     </FormGroup>
                 </Col>

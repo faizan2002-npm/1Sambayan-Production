@@ -11,13 +11,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 var cors = require("cors");
-var mustacheExpress = require('mustache-express');
+var mustacheExpress = require("mustache-express");
 
 const app = express();
 app.use(cors());
 
-app.engine('html', mustacheExpress());
-app.set('view engine', 'html');
+app.engine("html", mustacheExpress());
+app.set("view engine", "html");
 
 //// Body Parser Middleware ////
 app.use(bodyParser.json());
@@ -54,7 +54,10 @@ const candidate = require("./routes/secure/candidate");
 const party = require("./routes/secure/party");
 const convenor = require("./routes/secure/convenor");
 const channel = require("./routes/secure/channel");
+const poll = require("./routes/secure/poll");
+const position = require("./routes/secure/position");
 const notification = require("./routes/secure/notification");
+const aws_s3 = require("./routes/pub/s3");
 
 //----- Mount Routers -----//
 
@@ -67,8 +70,11 @@ app.use("/api/secure/community", community);
 app.use("/api/secure/candidate", candidate);
 app.use("/api/secure/party", party);
 app.use("/api/secure/channel", channel);
+app.use("/api/secure/poll", poll);
+app.use("/api/secure/position", position);
 app.use("/api/secure/convenor", convenor);
 app.use("/api/secure/notification", notification);
+app.use("/api/pub/aws-s3", aws_s3);
 
 //// Error Handler
 app.use((error, req, res, next) => {

@@ -559,7 +559,7 @@ const Home = () => {
                                                         <Row className="justify-content-center">
                                                             <Col lg={10} md={10} xs={12}>
                                                                 <Image src={"https://votewatchers.co.in/views/uploads/" + e.image} alt="" fluid />
-                                                                <a class="btn btn-default" href={e.buttonURL}>Click to know more</a>
+                                                                <a class="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a>
                                                             </Col>
                                                         </Row>
                                                     </Container>
@@ -919,7 +919,7 @@ const Home = () => {
                                                             
                                                         </FormGroup>
                                                         <div className="text-center">
-                                                            <Button className="mt-4" color="primary" type="submit">
+                                                            <Button  className="mt-4 link" type="submit">
                                                                 Sign in
                                                             </Button>
                                                         </div>

@@ -94,6 +94,14 @@ const Header = () => {
                                         </Row>
                                     </div>
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
+                                        <NavDropdown as="li" title="1Sambilita" id="basic-nav-dropdown-1">
+                                            <Link className="nav-link" to="/news">Posts</Link>
+                                            <Link className="nav-link" to="/communities">Chapters</Link>
+                                            <Link className="nav-link" to="/candidates">Candidates</Link>
+                                            <Link className="nav-link" to="/parties">Member Organizations</Link>
+                                            <Link className="nav-link" to="/convenors">Conveners</Link>
+                                            <Link className="nav-link" to="/contact">Contact Us</Link>
+                                        </NavDropdown>
                                         <NavDropdown as="li" title="About" id="basic-nav-dropdown-1">
                                             <Link className="nav-link" to="/about">About Us</Link>
                                             <Link className="nav-link" to="/convenors">List Convenors</Link>
@@ -107,22 +115,6 @@ const Header = () => {
                                             <Link className="nav-link" to="/selectionProcess">Selection Process</Link>
                                             <Link className="nav-link" to="/FAQ">FAQs</Link>
                                         </NavDropdown>
-                                        {/* <Dropdown className="nav-item" as="li">
-                                            <Dropdown.Toggle as="a" className="nav-link d-block" id="dropdown-More">
-                                                More
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu as="ul">
-                                                <NavItem>
-                                                    <Link className="nav-link" to="/participate">How to Participate</Link>
-                                                </NavItem>
-                                                <NavItem>
-                                                    <Link className="nav-link" to="/selectionProcess">Selection Process</Link>
-                                                </NavItem>
-                                                <NavItem>
-                                                    <Link className="nav-link" to="/FAQ">FAQs</Link>
-                                                </NavItem>
-                                            </Dropdown.Menu>
-                                        </Dropdown> */}
                                         {
                                             (loading) ? '' : <>{
                                                 <Nav.Item className="btn" as="li" >
