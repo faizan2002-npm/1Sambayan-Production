@@ -66,7 +66,7 @@ const Header = () => {
                             <Navbar as="nav" variant="dark" expand="lg">
                                 <Link className="navbar-brand" to="/">
                                     {
-                                        (loading) ? '' : <Image src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} alt="" fluid />
+                                        (loading) ? '' : <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + siteSetting.logo} alt="" fluid />
                                     }
                                 </Link>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -78,7 +78,7 @@ const Header = () => {
                                                     siteSetting.logo ? (
                                                         <Col className="collapse-brand" xs="6">
                                                             <Link to='/'>
-                                                                <img alt='' src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} />
+                                                                <img alt='' src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + siteSetting.logo} />
                                                             </Link>
                                                         </Col>
                                                     ) : null
@@ -96,19 +96,21 @@ const Header = () => {
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
                                         <NavDropdown as="li" title="1Sambilita" id="basic-nav-dropdown-1">
                                             <Link className="nav-link" to="/news">Posts</Link>
-                                            <Link className="nav-link" to="/communities">Chapters</Link>
+                                            <Link className="nav-link" to="/events">Events</Link>
+                                            <Link className="nav-link" to="/chapters">Chapters</Link>
                                             <Link className="nav-link" to="/candidates">Candidates</Link>
                                             <Link className="nav-link" to="/parties">Member Organizations</Link>
                                             <Link className="nav-link" to="/convenors">Conveners</Link>
                                             <Link className="nav-link" to="/contact">Contact Us</Link>
+                                            <Link className="nav-link" to="/1Sambilita">1Sambilitas</Link>
                                         </NavDropdown>
                                         <NavDropdown as="li" title="About" id="basic-nav-dropdown-1">
                                             <Link className="nav-link" to="/about">About Us</Link>
                                             <Link className="nav-link" to="/convenors">List Convenors</Link>
-                                            <Link className="nav-link" to="/communities">Chapters</Link>
+                                            <Link className="nav-link" to="/chapters">Chapters</Link>
                                         </NavDropdown>
                                         {
-                                            getRoutes(routes)
+                                            // getRoutes(routes)
                                         }
                                         <NavDropdown as="li" title="More" id="basic-nav-dropdown">
                                             <Link className="nav-link" to="/participate">How to Participate</Link>

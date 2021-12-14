@@ -17,10 +17,10 @@ const methods = {
       let image, video;
 
       if (req.files.video) {
-        video = req.files.video[0].filename;
+        video = req.files.video[0].key;
       }
       if (req.files.image) {
-        image = req.files.image[0].filename;
+        image = req.files.image[0].key;
       }
       const ownerId = req.user._id;
 
@@ -48,10 +48,10 @@ const methods = {
       let image, video;
 
       if (req.files.video) {
-        video = req.files.video[0].filename;
+        video = req.files.video[0].key;
       }
       if (req.files.image) {
-        image = req.files.image[0].filename;
+        image = req.files.image[0].key;
       }
       let post = await Post.findById(postId);
       if (title) {

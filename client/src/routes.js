@@ -76,6 +76,9 @@ import CreatePosition from './Views/Admin/Positions/CreatePosition';
 import CreatePoll from './Views/Admin/Polls/CreatePoll';
 import ListPoll from './Views/Admin/Polls/ListPoll';
 import ListPosition from './Views/Admin/Positions/ListPosition';
+import { MemberPollsAndPositions } from './Views/Public/MemberPollsAndPositions';
+import SinglePosition from './Views/Public/SinglePosition';
+import SinglePoll from './Views/Public/SinglePoll';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -388,6 +391,26 @@ function _ListPolls() {
 function _CreatePoll() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Create Poll`)
   return <CreatePoll />
+}
+// MemberPollsAndPositions
+function _MemberPollsAndPositions() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Polls And Positions`)
+  return <MemberPollsAndPositions />
+}
+// singlePosition
+function _singlePosition() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Position`)
+  return <SinglePosition />
+}
+// singlePoll
+function _singlePoll() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Poll`)
+  return <SinglePoll />
+}
+// _1Sambilita
+function _1Sambilita() {
+  window.location.href = 'http://socialwolf.co.in/'; 
+  return null;
 }
 var routes = [
   //Auth
@@ -993,7 +1016,7 @@ var routes = [
     order: 2,
   },
   {
-    path: "/communities",
+    path: "/chapters",
     name: "Chapters",
     icon: "ni ni-tv-2 text-primary",
     component: _Communities,
@@ -1163,6 +1186,30 @@ var routes = [
     show: "no",
   },
   {
+    path: "/MemberPollsAndPositions",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _MemberPollsAndPositions,
+    layout: "",
+    show: "no",
+  },
+  { 
+    path: "/singlePoll",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _singlePoll,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/singlePosition",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _singlePosition,
+    layout: "",
+    show: "no",
+  },
+  {
     path: "/MemberChangePassword",
     name: "Member Change Password",
     icon: "ni ni-tv-2 text-primary",
@@ -1183,6 +1230,14 @@ var routes = [
     name: "Member Edit Profile",
     icon: "ni ni-tv-2 text-primary",
     component: _MemberJoinedChannels,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/1Sambilita",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _1Sambilita,
     layout: "",
     show: "no",
   },

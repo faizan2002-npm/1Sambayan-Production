@@ -52,7 +52,7 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={"https://votewatchers.co.in/views/uploads/" + profileImage}
+                      src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + profileImage}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">

@@ -76,8 +76,9 @@ const methods = {
       } = req.body;
 
       let image;
+      console.log('req.file',req.file)
       if (req.file) {
-        image = req.file.filename;
+        image = req.file.key;
       }
 
       // let user = req.user;

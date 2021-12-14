@@ -19,7 +19,7 @@ const ExpandedComponent = ({ data }) => {
         phone: data.phone,
         fbLink: data.fbLink,
         profession: data.profession,
-        profileImage: "https://votewatchers.co.in/views/uploads/" + data.profileImage,
+        profileImage: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + data.profileImage,
         country: data.country,
         city: data.city,
         province: data.province,

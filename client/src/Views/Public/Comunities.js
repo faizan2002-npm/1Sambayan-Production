@@ -38,7 +38,7 @@ const Comunities = () => {
                                     {
                                         comunitiesData.map((e, index) => (
                                             <Col lg={4} md={4} xs={12} key={`id_${e._id}_${index}`} >
-                                                <PostCard heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://votewatchers.co.in/views/uploads/" + e.image} grid={true} row={false} />
+                                                <PostCard heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={true} row={false} />
                                             </Col>
                                         ))
                                     }

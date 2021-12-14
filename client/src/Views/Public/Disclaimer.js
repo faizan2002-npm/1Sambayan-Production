@@ -25,11 +25,13 @@ const Disclaimer = () => {
     }, []);
     return (
         <PublicLayout>
+        <main id="main_content">
             {
                 (content) ? <Container className="my-5" dangerouslySetInnerHTML={{
                     __html: content,
                 }} /> : ''
             }
+            </main>
         </PublicLayout>
     )
 }

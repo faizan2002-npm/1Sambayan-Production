@@ -3,7 +3,8 @@ import { Card, Row, Col, Image } from 'react-bootstrap'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-export const PostCard = ({ heading, text, time, video, image, grid = true, row = true, CPTtype, link }) => {
+export const PostCard = ({ heading, text, time, video, image, grid = true, row = true, CPTtype, link, readMore = false }) => {
+    var count = 250;
     return (
         <>
             <Card>
@@ -29,34 +30,40 @@ export const PostCard = ({ heading, text, time, video, image, grid = true, row =
                             }
                             {
                                 (video) ? <>
-                                    <Col lg={7} md={12} xs={12} className="justify-content-around d-flex flex-column">
+                                    <Col lg={7} md={12} xs={12} className="justify-content-around d-flex flex-column align-items-start">
 
                                         {
                                             (link) ? <>
                                                 <Link to={link}>
                                                     {
                                                         (heading) ? <h2>
-                                                            {heading}
+                                                            {heading.slice(0, 45) + (heading.length > 45 ? "..." : "")}
                                                         </h2> : ''
                                                     }
                                                 </Link>
                                             </> : <>
                                                 {
                                                     (heading) ? <h2>
-                                                        {heading}
+                                                        {heading.slice(0, 45) + (heading.length > 45 ? "..." : "")}
                                                     </h2> : ''
                                                 }
                                             </>
                                         }
                                         {
                                             (text) ? <p>
-                                                {text}
+                                                {text.slice(0, count) + (text.length > count ? "..." : "")}
                                             </p> : ''
                                         }
                                         {
                                             (time) ? <h5>
                                                 {moment(time).format("dddd, MMMM Do YYYY")}
                                             </h5> : ''
+                                        }
+                                        {
+                                            (readMore) ?
+                                                <Link className="d-inline btn text-left px-2" to={link}>
+                                                    Read more
+                                                </Link> : ''
                                         }
                                     </Col>
                                 </> : (image) ? <>

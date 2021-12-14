@@ -19,7 +19,7 @@ function camelize(str) {
 const ExpandedComponent = ({ data }) => {
     const [defaultData, setDefaultSlideData] = useState({
         title: data.title,
-        image: "https://votewatchers.co.in/views/uploads/" + data.image,
+        image: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + data.image,
     })
     const [featuredImage, setFeaturedImage] = useState({ image: data.image, defaultImage: defaultData.image })
     const changeFeaturedImage = (event) => {

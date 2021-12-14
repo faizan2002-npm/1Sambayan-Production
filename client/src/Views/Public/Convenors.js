@@ -38,17 +38,13 @@ const Convenors = () => {
                 }>
                     <div className="container">
                         <div className="row justify-content-center">
-                            <div className="col-lg-10 col-md-10 col-12 ">
-                                <p>
-                                    <b>THE CONVENORS</b> lorem ipsum sit dolor nobis exceperibus et audit fugit que repudig
-                                    nimusci iur moluptate
-                                    maximinum que quate optatur? Quia as aut assim quia verume nonsequam iusam volupti con eos
-                                    sum quam,
-                                    comnis ut odigeni hicienis exped qui volorro molectum aut expernam re nit quo magnis mod
-                                    quodiost que nem
-                                    id maiore, offici volupid erspicto corerfera cupti omnihil in remquas sed endit voloris
-                                    maiorecerro coresciet
-                                </p>
+                            <div className="col-lg-10 col-md-10 col-12 text-center ">
+                                <h1>
+                                    CONVENORS
+                                </h1>
+                                <h4>
+                                    SERVANT / LEADERS
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -64,14 +60,14 @@ const Convenors = () => {
                                                 <div className="col-lg-3 col-md-6 col-12  my-3" key={`id_${e._id}_${index}`}>
                                                     <div className="card border-0">
                                                         <Link to={`/singleConvenor?_id=${e._id}`}>
-                                                            <img src={"https://votewatchers.co.in/views/uploads/" + e.image} className="card-img-top" alt="..." />
+                                                            <img src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} className="card-img-top" alt="..." />
                                                         </Link>
                                                         <div className="card-body">
-                                                        <Link to={`/singleConvenor?_id=${e._id}`}>
-                                                            <h6 className="card-title">
-                                                                {e.title}
-                                                            </h6>
-                                                        </Link>
+                                                            <Link to={`/singleConvenor?_id=${e._id}`}>
+                                                                <h6 className="card-title">
+                                                                    {e.title}
+                                                                </h6>
+                                                            </Link>
                                                             <p className="card-text">
                                                                 {e.desigination}
                                                             </p>

@@ -12,9 +12,15 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 var cors = require("cors");
 var mustacheExpress = require("mustache-express");
+const http = require("http");
 
 const app = express();
 app.use(cors());
+
+const server = http.createServer(app);
+//configuring socket io
+const socketIO = require("./services/socketIO");
+require("./socket.io/configure")(socketIO.initialize(server));
 
 app.engine("html", mustacheExpress());
 app.set("view engine", "html");
@@ -57,7 +63,10 @@ const channel = require("./routes/secure/channel");
 const poll = require("./routes/secure/poll");
 const position = require("./routes/secure/position");
 const notification = require("./routes/secure/notification");
-const aws_s3 = require("./routes/pub/s3");
+const chatMessage = require("./routes/secure/chat/messages");
+const chatRoom = require("./routes/secure/chat/rooms");
+
+// const aws_s3 = require("./routes/pub/s3");
 
 //----- Mount Routers -----//
 
@@ -74,7 +83,10 @@ app.use("/api/secure/poll", poll);
 app.use("/api/secure/position", position);
 app.use("/api/secure/convenor", convenor);
 app.use("/api/secure/notification", notification);
-app.use("/api/pub/aws-s3", aws_s3);
+app.use("/api/secure/chat-message", chatMessage);
+app.use("/api/secure/chat-room", chatRoom);
+
+// app.use("/api/pub/aws-s3", aws_s3);
 
 //// Error Handler
 app.use((error, req, res, next) => {
@@ -103,7 +115,7 @@ if (app.get("env") === "production") {
   });
 }
 var port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("Listening to port " + `${port}`);
 });
 

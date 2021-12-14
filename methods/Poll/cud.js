@@ -124,6 +124,30 @@ const methods = {
       next(err);
     }
   }),
+
+  getChoiceIdByName: asyncHandler(async (req, res, next) => {
+    try {
+      const pollId = req.query.pollId;
+      const choiceName = req.query.choiceName;
+      let choiceId;
+      let initialPoll = await Poll.findById({
+        _id: pollId,
+        choices: { $elemMatch: { choice: choiceName } },
+      });
+      await Promise.all(
+        initialPoll.choices.map((e) => {
+          if (e.choice == choiceName) {
+            choiceId = e._id
+          }
+        })
+      );
+
+      return res.status(200).json({ choiceId });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }),
 };
 
 module.exports = methods;

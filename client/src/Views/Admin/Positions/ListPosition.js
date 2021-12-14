@@ -14,7 +14,7 @@ import { CardTitle } from 'reactstrap';
 const ExpandedComponent = ({ data }) => {
     const [defaultData, setDefaultSlideData] = useState({
         title: data.title,
-        image: "https://votewatchers.co.in/views/uploads/" + data.image,
+        image: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + data.image,
     })
     const [userData, setUserData] = useState({})
     const updateSlideHandler = async (e) => {
@@ -48,7 +48,7 @@ const ExpandedComponent = ({ data }) => {
         }
     }
     const getUserDataById = async () => {
-        await   Promise.all(
+        const usrData = await Promise.all(
             data.members.map(async (e, key) => {
                 try {
                     const token = localStorage.getItem("TOKEN");
@@ -56,11 +56,15 @@ const ExpandedComponent = ({ data }) => {
                         `/api/secure/user/profile-by-ID/?userId=${e.userId}`,
                         token
                     );
-                    setUserData([...userData, response.result.data.user]);
+                    return response.result.data.user;
+                    // usrData.push(response.result.data.user);
+                    // setUserData(usrData);
                 } catch (error) {
                     console.log("Get Member Profile error", error);
                 }
             }));
+        setUserData(usrData);
+        // console.log("usrData",usrData) 
     }
     useEffect(() => {
         getUserDataById()
@@ -98,11 +102,10 @@ const ExpandedComponent = ({ data }) => {
                 <Col lg={6} md={6} xs={12}>
                     <FormGroup className="mb-3">
                         <Label>Applied {data.members.length}</Label>
-                        <pre>{JSON.stringify(userData, null, 2)}</pre>
-                        <pre>{data.members.map((e, key) => (<>{e.userId}</>))}</pre>
                         <Row>
-                            {/* {
-                                userData.map((e, key) => (<Col key={key} lg="6" xl="3">
+                            {
+                                // (userData.length>0) ? console.log("usrData state",userData):''
+                                (userData.length>0) ? userData.map((e, key) => (<Col key={key} lg="6" xl="6" xs={12}>
                                     <Card className="card-stats mb-4 mb-xl-0">
                                         <CardBody>
                                             <Row>
@@ -113,12 +116,18 @@ const ExpandedComponent = ({ data }) => {
                                                     >
                                                         {e.firstName}  {e.lastName}
                                                     </CardTitle>
+                                                    <CardTitle
+                                                        tag="h5"
+                                                        className="text-uppercase text-muted mb-0"
+                                                    >
+                                                        {e.email}
+                                                    </CardTitle>
                                                 </div>
                                             </Row>
                                         </CardBody>
                                     </Card>
-                                </Col>))
-                            } */}
+                                </Col>)) : ''
+                            }
                         </Row>
                     </FormGroup>
                 </Col>

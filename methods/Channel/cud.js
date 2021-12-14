@@ -11,7 +11,7 @@ const methods = {
       let icon;
 
       if (req.file) {
-        icon = req.file.filename;
+        icon = req.file.key;
       }
       const ownerId = req.user._id;
 
@@ -36,7 +36,7 @@ const methods = {
       let icon;
 
       if (req.file) {
-        icon = req.file.filename;
+        icon = req.file.key;
       }
       let channel = await Channel.findById(channelId);
 

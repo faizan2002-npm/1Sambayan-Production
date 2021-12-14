@@ -174,7 +174,7 @@ const PartySidebar = (props) => {
             <img
               alt={logo.imgAlt}
               className="navbar-brand-img"
-              src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo}
+              src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + siteSetting.logo}
             />
           </NavbarBrand>
         ) : null}
@@ -186,7 +186,7 @@ const PartySidebar = (props) => {
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
-                    src={"https://votewatchers.co.in/views/uploads/" + profileImage}
+                    src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + profileImage}
                   />
                 </span>
               </Media>

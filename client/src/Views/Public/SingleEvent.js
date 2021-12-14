@@ -20,7 +20,8 @@ const SingleEvent = () => {
             // console.log("token", token);
             // var params = props.location.search.slice(5);
             const response = await getRequest(
-                `/api/secure/event/single/?eventId=${parsed._id}`,
+                // `/api/secure/event/single/?eventId=${parsed._id}`,
+                '/api/secure/event/single/?eventId='+parsed._id,
                 token
             );
             setPostData(response.result.data.event)
@@ -36,7 +37,7 @@ const SingleEvent = () => {
         <>
             {
                 (postData) ? <>
-                    <PublicLayout title={(postData.title) ? postData.title.substring(0, 50) : postData.title} description={(postData.description) ? postData.description.substring(0, 150) : postData.description} image={"https://votewatchers.co.in/views/uploads/" + postData.image} url={`https://votewatchers.co.in/singlePost?_id=${parsed._id}`}>
+                    <PublicLayout title={(postData.title) ? postData.title.substring(0, 50) : postData.title} description={(postData.description) ? postData.description.substring(0, 150) : postData.description} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + postData.image} url={`https://votewatchers.co.in/singlePost?_id=${parsed._id}`}>
 
                         <main id="main_content">
                             <section className="section-9">
@@ -46,7 +47,7 @@ const SingleEvent = () => {
 
                                             <div className="row my-10 justify-content-center">
                                                 <div className="col-lg-6 col-md-6 col-12">
-                                                    <img src={"https://votewatchers.co.in/views/uploads/" + postData.image} className="img-fluid w-100" alt="" />
+                                                    <img src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + postData.image} className="img-fluid w-100" alt="" />
                                                 </div>
                                                 <div className="col-lg-6 col-mg-6 col-12">
                                                     <h3>

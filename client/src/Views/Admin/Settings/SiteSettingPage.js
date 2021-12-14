@@ -64,8 +64,8 @@ class SiteSettingPage extends React.Component {
             zip: response.result.data.site[0].zip,
             aboutSite: response.result.data.site[0].footer,
             copyright: response.result.data.site[0].copyright,
-            siteLogo: "https://votewatchers.co.in/views/uploads/" + response.result.data.site[0].logo,
-            siteVideo: "https://votewatchers.co.in/views/uploads/" + response.result.data.site[0].video,
+            siteLogo: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + response.result.data.site[0].logo,
+            siteVideo: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + response.result.data.site[0].video,
             donateURL: response.result.data.site[0].donateURL,
         });
 

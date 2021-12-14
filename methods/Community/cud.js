@@ -9,7 +9,7 @@ const methods = {
       let image;
 
       if (req.file) {
-        image = req.file.filename;
+        image = req.file.key;
       }
       const ownerId = req.user._id;
 
@@ -34,7 +34,7 @@ const methods = {
       let image;
 
       if (req.file) {
-        image = req.file.filename;
+        image = req.file.key;
       }
       let community = await Community.findById(communityId);
 

@@ -11,7 +11,7 @@ const methods = {
       let image;
 
       if (req.files.image) {
-        image = req.files.image[0].filename;
+        image = req.files.image[0].key;
       }
       const ownerId = req.user._id;
       // Saving User in DataBase
@@ -35,7 +35,7 @@ const methods = {
       const { title, description, postId,desigination } = req.body;
       let image;
       if (req.files.image) {
-        image = req.files.image[0].filename;
+        image = req.files.image[0].key;
       }
       let convenor = await Convenor.findById(postId);
       if (title) {

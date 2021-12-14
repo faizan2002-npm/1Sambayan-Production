@@ -52,7 +52,7 @@ const MemberChannels = () => {
         // User attempts to click next when no fields have been set
 
         const success = () => {
-            this.onSuccess();
+            onSuccess();
         };
         return joinChannel(channelId, userId, success);
     };
@@ -126,7 +126,7 @@ const MemberChannels = () => {
                                             <Col lg={6} md={9} xs={9} className="align-self-center">
                                                 <Row>
                                                     <Col lg={3} md={3} xs={4} className="align-self-center">
-                                                        <Image src={"https://votewatchers.co.in/views/uploads/" + e.icon} fluid style={{
+                                                        <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.icon} fluid style={{
                                                             width: "55px",
                                                             height: "55px",
                                                             objectFit: "cover",

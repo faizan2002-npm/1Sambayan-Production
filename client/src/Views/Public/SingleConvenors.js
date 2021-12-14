@@ -52,7 +52,7 @@ const SingleConvenors = (props) => {
                                     </p>
                                         <div className="row my-10 justify-content-center">
                                             <div className="col-lg-6 col-md-6 col-12">
-                                                <img src={"https://votewatchers.co.in/views/uploads/" + convenorData.image} className="img-fluid w-100" alt="" />
+                                                <img src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + convenorData.image} className="img-fluid w-100" alt="" />
                                             </div>
                                             <div className="col-lg-6 col-mg-6 col-12">
                                                 <h3>

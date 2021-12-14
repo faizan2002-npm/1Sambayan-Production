@@ -21,7 +21,7 @@ const ExpandedComponent = ({ data }) => {
         title: data.title,
         desigination: data.desigination,
         description: data.description,
-        image: "https://votewatchers.co.in/views/uploads/" + data.image,
+        image: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + data.image,
     })
     const [featuredImage, setFeaturedImage] = useState({ image: data.image, defaultImage: defaultData.image })
     const [backgroundImage, setBackgroundImage] = useState({ backgroundImage: data.backgroundImage, defaultbackgroundImage: defaultData.backgroundImage })

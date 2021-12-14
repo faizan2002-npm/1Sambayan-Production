@@ -97,7 +97,7 @@ const Events = () => {
                             <Col lg={10} md={10} xs={12}>
                                 {
                                     eventsData.map((e, index) => (
-                                        <PostCard link={`/singleEvent?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                        <PostCard link={`/singleEvent?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
                                     ))
                                 }
                             </Col>

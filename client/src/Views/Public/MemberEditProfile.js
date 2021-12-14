@@ -11,7 +11,7 @@ import {
     FormGroup,
     Label
 } from "reactstrap";
-import { AvForm, AvField} from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import PhoneInput from 'react-phone-input-2';
 import { Link } from 'react-router-dom';
 
@@ -133,6 +133,7 @@ const MemberEditProfile = () => {
                 `/api/secure/party/party-list`,
                 token
             );
+            console.log("response", response)
             setParties(response.result.data.parties)
 
 
@@ -143,7 +144,7 @@ const MemberEditProfile = () => {
     const defaultParty = () => {
         return parties.filter((e) => {
             if (e._id === memberProfile.partyId) {
-                return e
+                return e[0].title
             }
         })
     }
@@ -234,16 +235,16 @@ const MemberEditProfile = () => {
             console.log("status", response);
             if (response.result.status === 200) {
                 localStorage.setItem(
-                  "USER_FIRSTNAME",
-                  APIresponse.firstName
+                    "USER_FIRSTNAME",
+                    APIresponse.firstName
                 );
                 localStorage.setItem(
-                  "USER_LASTNAME",
-                  APIresponse.lastName
+                    "USER_LASTNAME",
+                    APIresponse.lastName
                 );
                 localStorage.setItem(
-                  "USER_EMAIL",
-                  APIresponse.email
+                    "USER_EMAIL",
+                    APIresponse.email
                 );
                 toast.success('Profile Updated', {
                     position: "bottom-right",
@@ -384,7 +385,7 @@ const MemberEditProfile = () => {
                                                     </FormGroup>
                                                     <FormGroup className="mb-4">
                                                         <Label>Member Organization</Label>
-                                                        {
+                                                        {/* {
                                                             (parties) ? <Select
                                                                 onChange={partiesChange}
                                                                 defaultValue={{ value: true, label: defaultParty()[0].title }}
@@ -392,6 +393,15 @@ const MemberEditProfile = () => {
                                                                     parties.map((e, index) => {
                                                                         return { value: e._id, label: e.title }
                                                                     })
+                                                                } /> : ''
+                                                        } */}
+                                                        {
+                                                            (parties) ? <Select
+                                                                onChange={partiesChange}
+                                                                defaultValue={{ value: true, label: defaultParty() }}
+                                                                options={parties.map((e, index) => {
+                                                                    return { value: e._id, label: `${e.title}` }
+                                                                })
                                                                 } /> : ''
                                                         }
 

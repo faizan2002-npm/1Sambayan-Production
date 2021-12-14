@@ -39,10 +39,13 @@ const Selection = () => {
                                     <div className="carousel-caption">
                                         <Container>
                                             <Row className="justify-content-center">
-                                                <Col lg={10} md={10} xs={12}>
-                                                    <p>
-                                                        {banner.heading}
-                                                    </p>
+                                                <Col lg={10} md={10} xs={12} className="text-center">
+                                                    <h1>
+                                                        SELECTION PROCESS
+                                                    </h1>
+                                                    <h4>
+                                                        FINDING / THE ONE
+                                                    </h4>
                                                 </Col>
                                             </Row>
                                         </Container>
@@ -57,9 +60,9 @@ const Selection = () => {
                         <Container>
                             <Row className="justify-content-center">
                                 <Col lg={10} md={10} xs={12}>
-                                    <h1>
-                                        {afterBanner.heading}
-                                    </h1>
+                                    <div dangerouslySetInnerHTML={{
+                                        __html: afterBanner.heading,
+                                    }} ></div>
                                     <Row className="justify-content-center my-5">
                                         <Col lg={6} md={6} xs={12} dangerouslySetInnerHTML={{
                                             __html: leftSideContent.sectionContentBox,

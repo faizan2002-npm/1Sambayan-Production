@@ -35,7 +35,7 @@ const Footer = () => {
                         <Row className="justify-content-center">
                             <Col lg={5} md={5} xs={12}>
                                 <Link className="site-logo" to="/">
-                                    <img src={"https://votewatchers.co.in/views/uploads/" + siteSetting.logo} alt="" className="img-fluid" />
+                                    <img src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + siteSetting.logo} alt="" className="img-fluid" />
                                 </Link>
                                 <Nav className="social" as="ul">
                                     <Nav.Item as="li">

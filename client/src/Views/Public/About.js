@@ -39,8 +39,8 @@ const About = () => {
                                     <div className="carousel-caption">
                                         <Container>
                                             <Row className="justify-content-center">
-                                                <Col lg={10} md={10} xs={12}>
-                                                    <h2>
+                                                <Col lg={10} md={10} xs={12} className="text-center">
+                                                    <h2 className="text-center">
                                                         {banner.heading}
                                                     </h2>
                                                 </Col>

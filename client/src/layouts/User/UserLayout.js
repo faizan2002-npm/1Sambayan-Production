@@ -25,9 +25,6 @@ const UserLayout = ({ children }) => {
         document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("main_content").style.paddingTop = `${document.getElementById("header").offsetHeight}px`;
         });
-        window.addEventListener('resize', function (event) {
-            document.getElementById("main_content").style.paddingTop = `${document.getElementById("header").offsetHeight}px`;
-        }, true);
     }
     useEffect(() => {
         adjuster();

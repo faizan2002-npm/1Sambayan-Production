@@ -73,7 +73,7 @@ const News = () => {
                                         {
                                             postData.map((e, index) => (
                                                 <div key={`id_${e._id}_${index}`} className="card" style={{
-                                                    backgroundImage: `url('${"https://votewatchers.co.in/views/uploads/" + e.image}')`
+                                                    backgroundImage: `url('${"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image}')`
                                                 }}>
                                                     <div className="card-body">
 
@@ -92,7 +92,7 @@ const News = () => {
                                     </OwlCarousel> */}
                                         {
                                             postData.map((e, index) => (
-                                                <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
+                                                <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
                                             ))
                                         }
                                     </> : <h2>

@@ -35,14 +35,14 @@ class EditProfile extends React.Component {
             `/api/secure/user/profile`,
             token
         );
-        // console.log("Get ProfileData", response);
+        console.log("Get ProfileData", response);
         this.setState({
             admin_id:response.result.data.user._id,
             admin_firstName: response.result.data.user.firstName,
             admin_lastName: response.result.data.user.lastName,
             admin_email: response.result.data.user.email,
             admin_phone: response.result.data.user.phone,
-            admin_pic: "https://votewatchers.co.in/views/uploads/" + response.result.data.user.profileImage,
+            admin_pic: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + response.result.data.user.profileImage,
         });
     }
 

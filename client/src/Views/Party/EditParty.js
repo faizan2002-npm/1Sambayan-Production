@@ -17,7 +17,7 @@ const EditParty = () => {
             `/api/secure/party/?partyId=${partyId}`
         );
         setParty(response.result.data.party);
-        setFeaturedImage({ image: response.result.data.party.image, defaultImage: "https://votewatchers.co.in/views/uploads/" + response.result.data.party.image })
+        setFeaturedImage({ image: response.result.data.party.image, defaultImage: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + response.result.data.party.image })
     }
     const changeFeaturedImage = (event) => {
         setFeaturedImage({ image: event.target.files[0], defaultImage: URL.createObjectURL(event.target.files[0]) })

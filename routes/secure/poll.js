@@ -8,7 +8,8 @@ const {
     deletePoll, //Delete Poll via Admin
     getPoll, //Get Single Poll
     getPolls, // Get All Polls 
-    votePoll,  // Vote a Poll 
+    votePoll,  // Vote a Poll
+    getChoiceIdByName 
 } = require("../../methods/Poll/cud");
 const { protect, authorize } = require("../../middlewares/auth");
 
@@ -31,6 +32,7 @@ router.post("/delete-poll",
 );
 
 router.get("/", protect, getPoll);
+router.get("/choiceIdByName", protect, getChoiceIdByName);
 router.get("/poll-list", protect, getPolls);
 router.post("/vote-poll", protect, votePoll);
 

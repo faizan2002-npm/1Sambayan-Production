@@ -21,7 +21,7 @@ router.get("/profile-by-ID", protect, getProfileByID);
 //----- Get All users -----//
 router.get(
   "/get-all-users",
-  [protect, authorize("admin")],
+  [protect],
   accountMethods.getAllUsers
 );
 router.get(

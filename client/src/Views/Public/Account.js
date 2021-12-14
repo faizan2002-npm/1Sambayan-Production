@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const Account = () => {
     const [profileImage, setProfileImage] = useState();
     const [images, setImages] = React.useState([]);
-    const [pictures, setPictures] = useState(['https://votewatchers.co.in/views/uploads/logo.png']);
+    const [pictures, setPictures] = useState(['https://sambayan-1.s3.ap-south-1.amazonaws.com/logo.png']);
 
     const onDrop = picture => {
         setPictures([...pictures, picture]);
@@ -26,7 +26,7 @@ const Account = () => {
             console.log("response.result.data.user", response.result.data.user.profileImage);
             if (response.result.data.user.profileImage) {
                 setImages([{
-                    data_url: "https://votewatchers.co.in/views/uploads/" + response.result.data.user.profileImage
+                    data_url: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + response.result.data.user.profileImage
                 }])
             } else {
                 setImages();
@@ -182,6 +182,23 @@ const Account = () => {
                                         </div>
                                         <p className="p_3">
                                             My Channels
+                                        </p>
+                                    </div>
+                                </button>
+                                <hr className="mb-1 mt-3" />
+                            </div>
+                        </div>
+                        <div className="row my-3  d-flex justify-content-center">
+                            <div className="col-lg-4 col-md-4 col-12">
+                                <button className="btn w-100" onClick={() => {
+                                    history.push("/MemberPollsAndPositions");
+                                }}>
+                                    <div className="d-flex">
+                                        <div className="back text-white">
+                                            <i class="fal fa-bars"></i>
+                                        </div>
+                                        <p className="p_3">
+                                            Polls And Positions
                                         </p>
                                     </div>
                                 </button>

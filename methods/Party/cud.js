@@ -21,7 +21,7 @@ const methods = {
       } else {
         let image;
         if (req.file) {
-          image = req.file.filename;
+          image = req.file.key;
         }
 
         const ownerId = req.user._id;
@@ -48,7 +48,7 @@ const methods = {
       const { title,email, partyId } = req.body;
       let image;
       if (req.file) {
-        image = req.file.filename;
+        image = req.file.key;
       }
       let party = await Party.findById(partyId);
 

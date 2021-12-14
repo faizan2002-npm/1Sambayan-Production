@@ -24,7 +24,7 @@ const ExpandedComponent = ({ data }) => {
     let channelId = parsed._id;
     const [defaultData, setDefaultSlideData] = useState({
         title: data.title,
-        image: "https://votewatchers.co.in/views/uploads/" + data.icon,
+        image: "https://sambayan-1.s3.ap-south-1.amazonaws.com/" + data.icon,
     })
     const [featuredImage, setFeaturedImage] = useState({ image: data.image, defaultImage: defaultData.image })
     const [backgroundImage, setBackgroundImage] = useState({ backgroundImage: data.backgroundImage, defaultbackgroundImage: defaultData.backgroundImage })

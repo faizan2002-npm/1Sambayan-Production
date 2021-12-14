@@ -9,6 +9,7 @@ import { getRequest, postRequest } from "../../api/request";
 import ReactPlayer from 'react-player'
 import { useHistory } from "react-router-dom";
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import Select from 'react-select'
 
 import PhoneInput from 'react-phone-input-2';
 import {
@@ -224,6 +225,10 @@ const Home = () => {
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
+    const [changeAge, setChangeAge] = useState()
+    const [changeProfession, setChangeProfession] = useState()
+    const [changeParty, setChangeParty] = useState()
+
     const carouselOptions = {
         margin: 100,
         responsiveClass: true,
@@ -260,6 +265,108 @@ const Home = () => {
             }
         },
     };
+
+    const ageOptions = [
+        { value: '15', label: '15' },
+        { value: '16', label: '16' },
+        { value: '17', label: '17' },
+        { value: '18', label: '18' },
+        { value: '19', label: '19' },
+        { value: '20', label: '20' },
+        { value: '21', label: '21' },
+        { value: '22', label: '22' },
+        { value: '23', label: '23' },
+        { value: '24', label: '24' },
+        { value: '25', label: '25' },
+        { value: '26', label: '26' },
+        { value: '27', label: '27' },
+        { value: '28', label: '28' },
+        { value: '29', label: '29' },
+        { value: '30', label: '30' },
+        { value: '31', label: '31' },
+        { value: '32', label: '32' },
+        { value: '33', label: '33' },
+        { value: '34', label: '34' },
+        { value: '35', label: '35' },
+        { value: '36', label: '36' },
+        { value: '37', label: '37' },
+        { value: '38', label: '38' },
+        { value: '39', label: '39' },
+        { value: '40', label: '40' },
+        { value: '41', label: '41' },
+        { value: '42', label: '42' },
+        { value: '43', label: '43' },
+        { value: '44', label: '44' },
+        { value: '45', label: '45' },
+        { value: '46', label: '46' },
+        { value: '47', label: '47' },
+        { value: '48', label: '48' },
+        { value: '49', label: '49' },
+        { value: '50', label: '50' },
+        { value: '51', label: '51' },
+        { value: '52', label: '52' },
+        { value: '53', label: '53' },
+        { value: '54', label: '54' },
+        { value: '55', label: '55' },
+        { value: '56', label: '56' },
+        { value: '57', label: '57' },
+        { value: '58', label: '58' },
+        { value: '59', label: '59' },
+        { value: '60', label: '60' },
+        { value: '61', label: '61' },
+        { value: '62', label: '62' },
+        { value: '63', label: '63' },
+        { value: '64', label: '64' },
+        { value: '65', label: '65' },
+        { value: '66', label: '66' },
+        { value: '67', label: '67' },
+        { value: '68', label: '68' },
+        { value: '69', label: '69' },
+        { value: '70', label: '70' },
+        { value: '71', label: '71' },
+        { value: '72', label: '72' },
+        { value: '73', label: '73' },
+        { value: '74', label: '74' },
+        { value: '75', label: '75' },
+        { value: '76', label: '76' },
+        { value: '77', label: '77' },
+        { value: '78', label: '78' },
+        { value: '79', label: '79' },
+        { value: '80', label: '80' },
+        { value: '81', label: '81' },
+        { value: '82', label: '82' },
+        { value: '83', label: '83' },
+        { value: '84', label: '84' },
+        { value: '85', label: '85' },
+        { value: '86', label: '86' },
+        { value: '87', label: '87' },
+        { value: '88', label: '88' },
+        { value: '89', label: '89' },
+        { value: '90', label: '90' },
+        { value: '91', label: '91' },
+        { value: '92', label: '92' },
+        { value: '93', label: '93' },
+        { value: '94', label: '94' },
+        { value: '95', label: '95' },
+        { value: '96', label: '96' },
+        { value: '97', label: '97' },
+        { value: '98', label: '98' },
+        { value: '99', label: '99' },
+        { value: '100', label: '100' },
+    ]
+    const professionOptions = [
+        { value: 'Self Employed', label: 'Self Employed' },
+        { value: 'Government', label: 'Government' }
+    ]
+    const ageChange = (selectedOption) => {
+        setChangeAge(selectedOption);
+    }
+    const professionChange = (selectedOption) => {
+        setChangeProfession(selectedOption);
+    }
+    const partiesChange = (selectedOption) => {
+        setChangeParty(selectedOption);
+    }
     const getPageVideo = async () => {
         try {
             const token = localStorage.getItem("TOKEN");
@@ -441,10 +548,12 @@ const Home = () => {
             "phone",
             e.target[4].value
         );
-        formData.append(
-            "age",
-            e.target[5].value
-        );
+        if (changeAge) {
+            formData.append(
+                "age",
+                changeAge.value
+            );
+        }
         formData.append(
             "address",
             e.target[6].value
@@ -453,14 +562,18 @@ const Home = () => {
             "fbLink",
             e.target[7].value
         );
-        formData.append(
-            "profession",
-            e.target[8].value
-        );
-        formData.append(
-            "partyId",
-            e.target[9].value
-        );
+        if (changeProfession) {
+            formData.append(
+                "profession",
+                changeProfession.value
+            );
+        }
+        if (changeParty) {
+            formData.append(
+                "partyId",
+                changeParty.value
+            );
+        }
         formData.append(
             "password",
             e.target[10].value
@@ -520,6 +633,7 @@ const Home = () => {
                     "USER_ID",
                     response.result.data.user._id
                 );
+                history.push("/account");
             }
 
         } catch (error) {
@@ -551,14 +665,14 @@ const Home = () => {
                                 // console.log("slides", e);
                                 return (
                                     <Carousel.Item key={`id_${e._id}_${index}`}>
-                                        <Image src={"https://votewatchers.co.in/views/uploads/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
+                                        <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
                                         {
                                             (e.image) ? <>
                                                 <Carousel.Caption>
                                                     <Container>
                                                         <Row className="justify-content-center">
                                                             <Col lg={10} md={10} xs={12}>
-                                                                <Image src={"https://votewatchers.co.in/views/uploads/" + e.image} alt="" fluid />
+                                                                <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} alt="" fluid />
                                                                 <a class="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a>
                                                             </Col>
                                                         </Row>
@@ -592,7 +706,7 @@ const Home = () => {
                                         objectFit: "cover",
                                         borderRadius: "20px"
                                     }} width='100%'
-                                    height='100%' url={"https://votewatchers.co.in/views/uploads/" + bigVideo.video} /> : ''
+                                    height='100%' url={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + bigVideo.video} /> : ''
                             }
 
 
@@ -606,63 +720,70 @@ const Home = () => {
                         </div>
                     </Container>
                 </section>
-                <section className="latest_posts">
-                    <Container>
-                        <Row className="justify-content-center">
-                            <Col lg={10} md={10} xs={12}>
-                                <h1>{latestPostsSection.heading}</h1>
-                                {
-                                    latestPosts.map((e, index) => (
-                                        <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
-                                    ))
-                                }
-                                <Row>
-                                    <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
-                                        <Link to={latestPostsSection.button} className="btn btn-default">View All</Link>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
-                <section className="latest_posts bg-white">
-                    <Container>
-                        <Row className="justify-content-center">
-                            <Col lg={10} md={10} xs={12}>
-                                <h1>{eventUpdatesSection.heading}</h1>
-                                {
-                                    eventUpdates.map((e, index) => (
-                                        <PostCard link={`/singleEvent?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://votewatchers.co.in/views/uploads/" + e.image} image={false} grid={true} />
-                                    ))
-                                }
-                                <Row>
-                                    <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
-                                        <Link to={eventUpdatesSection.button} className="btn btn-default">View All</Link>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
-                <section className="latest_posts v2">
-                    <Container>
-                        <Row className="justify-content-center">
-                            <Col lg={10} md={10} xs={12}>
-                                <h1>{communitiesSection.heading}</h1>
-                                {
-                                    communities.map((e, index) => (
-                                        <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://votewatchers.co.in/views/uploads/" + e.image} grid={true} />
-                                    ))
-                                }
-                                <Row>
-                                    <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
-                                        <Link to={communitiesSection.button} className="btn btn-default">View All</Link>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
+                {
+                    (latestPosts) ? <section className="latest_posts">
+                        <Container>
+                            <Row className="justify-content-center">
+                                <Col lg={10} md={10} xs={12}>
+                                    <h1>{latestPostsSection.heading}</h1>
+                                    {
+                                        latestPosts.slice(0, 4).map((e, index) => (
+                                            <PostCard readMore={true} link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
+                                        ))
+                                    }
+                                    <Row>
+                                        <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
+                                            <Link to={latestPostsSection.button} className="btn btn-default">View All</Link>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section> : ""
+                }
+                {
+                    (eventUpdates) ? <section className="latest_posts bg-white">
+                        <Container>
+                            <Row className="justify-content-center">
+                                <Col lg={10} md={10} xs={12}>
+                                    <h1>{eventUpdatesSection.heading}</h1>
+                                    {
+                                        eventUpdates.slice(0, 4).map((e, index) => (
+                                            <PostCard readMore={true} link={`/singleEvent?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
+                                        ))
+                                    }
+                                    <Row>
+                                        <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
+                                            <Link to={eventUpdatesSection.button} className="btn btn-default">View All</Link>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section> : ''
+                }
+                {
+                    (communities) ? <section className="latest_posts v2">
+                        <Container>
+                            <Row className="justify-content-center">
+                                <Col lg={10} md={10} xs={12}>
+                                    <h1>{communitiesSection.heading}</h1>
+                                    {
+                                        communities.slice(0, 4).map((e, index) => (
+                                            <PostCard key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={false} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={true} />
+                                        ))
+                                    }
+                                    <Row>
+                                        <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">
+                                            <Link to={communitiesSection.button} className="btn btn-default">View All</Link>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section> : ''
+                }
+
                 <section className="latest_posts bg-white">
                     <Container>
                         <Row className="justify-content-center">
@@ -686,7 +807,7 @@ const Home = () => {
                                 >
                                     {
                                         candidates.map((e, index) => (
-                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://votewatchers.co.in/views/uploads/" + e.image} grid={false} row={false} />
+                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
                                         ))
                                     }
                                 </OwlCarousel>
@@ -718,7 +839,7 @@ const Home = () => {
 
                                     {
                                         parties.map((e, index) => (
-                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://votewatchers.co.in/views/uploads/" + e.image} grid={false} row={false} />
+                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
                                         ))
                                     }
                                 </OwlCarousel>
@@ -752,175 +873,153 @@ const Home = () => {
                                                     <AvForm className="form" encType="multipart/form-data" method="post" onValidSubmit={signUpHandler}>
                                                         <FormGroup className="mb-4">
                                                             <Label>First Name</Label>
-                                                            
-                                                                <AvField
-                                                                    name="firstName"
-                                                                    type="text"
-                                                                    placeholder="First Name"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="firstName"
+                                                                type="text"
+                                                                placeholder="First Name"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Middle Name</Label>
-                                                            
-                                                                <AvField
-                                                                    name="middleName"
-                                                                    type="text"
-                                                                    placeholder="Middle Name"
-                                                                    className="form-control"
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="middleName"
+                                                                type="text"
+                                                                placeholder="Middle Name"
+                                                                className="form-control"
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Last Name</Label>
-                                                            
-                                                                <AvField
-                                                                    name="lastName"
-                                                                    type="text"
-                                                                    placeholder="Last Name"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="lastName"
+                                                                type="text"
+                                                                placeholder="Last Name"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Email</Label>
-                                                            
-                                                                <AvField
-                                                                    name="email"
-                                                                    type="email"
-                                                                    placeholder="Email"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="email"
+                                                                type="email"
+                                                                placeholder="Email"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Phone Number</Label>
-                                                            
-                                                                <PhoneInput
-                                                                    country={'ph'}
-                                                                    enableAreaCodes={true}
-                                                                    enableAreaCodeStretch
-                                                                    enableSearch={true}
-                                                                    inputProps={{
-                                                                        name: 'phone',
-                                                                        required: true,
-                                                                        autoFocus: true
-                                                                    }}
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <PhoneInput
+                                                                country={'ph'}
+                                                                enableAreaCodes={true}
+                                                                enableAreaCodeStretch
+                                                                enableSearch={true}
+                                                                inputProps={{
+                                                                    name: 'phone',
+                                                                    required: true,
+                                                                    autoFocus: true
+                                                                }}
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Age</Label>
-                                                            
-                                                                <AvField
-                                                                    id="age"
-                                                                    name="age"
-                                                                    type="select"
-                                                                    placeholder="Select Age"
-                                                                    required
-                                                                >
-                                                                    <option>15</option>
-                                                                    <option>16</option>
-                                                                    <option>17</option>
-                                                                    <option>18</option>
-                                                                    <option>19</option>
-                                                                    <option>20</option>
-                                                                    <option>21</option>
-                                                                    <option>22</option>
-                                                                    <option>23</option>
-                                                                </AvField>
-                                                            
+
+                                                            <Select
+                                                                onChange={ageChange}
+                                                                options={ageOptions} />
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <Label>Address</Label>
-                                                            
-                                                                <AvField
-                                                                    name="address"
-                                                                    type="text"
-                                                                    placeholder="Address"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="address"
+                                                                type="text"
+                                                                placeholder="Address"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <Label>Facebook Link</Label>
-                                                            
-                                                                <AvField
-                                                                    name="fbLink"
-                                                                    type="url"
-                                                                    placeholder="Facebook Link"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="fbLink"
+                                                                type="url"
+                                                                placeholder="Facebook Link"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Professional / Field of Experties</Label>
-                                                            
-                                                                <AvField
-                                                                    id="profession"
-                                                                    name="profession"
-                                                                    type="select"
-                                                                    placeholder="Professional / Field of Experties"
-                                                                    placeholder="Select Field"
-                                                                    required
-                                                                >
-                                                                    <option>Self Employed</option>
-                                                                    <option>Government</option>
-                                                                </AvField>
-                                                            
+
+                                                            <Select
+                                                                onChange={professionChange}
+                                                                options={professionOptions}
+                                                            />
                                                         </FormGroup>
                                                         <FormGroup className="mb-4">
                                                             <Label>Select Member Organization</Label>
-                                                            
-                                                                <AvField
-                                                                    id="partyId"
-                                                                    name="partyId"
-                                                                    type="select"
-                                                                    placeholder="Select Party"
-                                                                    required
-                                                                >
-                                                                    {
-                                                                        parties.map((e, index) => (
-                                                                            <option key={index} value={e._id}>{e.title}</option>
-                                                                        ))
-                                                                    }
-                                                                </AvField>
-                                                            
+
+                                                            {
+                                                                (parties) ? <Select
+                                                                    onChange={partiesChange}
+                                                                    options={
+                                                                        parties.map((e, index) => {
+                                                                            return { value: e._id, label: e.title }
+                                                                        })
+                                                                    } /> : ''
+                                                            }
+
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <Label>Password</Label>
-                                                            
-                                                                <AvField
-                                                                    name="password"
-                                                                    type="password"
-                                                                    placeholder="Password"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="password"
+                                                                type="password"
+                                                                placeholder="Password"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <Label>Confirm Password</Label>
-                                                            
-                                                                <AvField
-                                                                    name="confirm_password"
-                                                                    type="password"
-                                                                    placeholder="Confirm Password"
-                                                                    className="form-control"
-                                                                    required
-                                                                />
-                                                            
+
+                                                            <AvField
+                                                                name="confirm_password"
+                                                                type="password"
+                                                                placeholder="Confirm Password"
+                                                                className="form-control"
+                                                                required
+                                                            />
+
                                                         </FormGroup>
                                                         <div className="text-center">
-                                                            <Button  className="mt-4 link" type="submit">
-                                                                Sign in
+                                                            <Link to="/login" className=" btn mt-4">
+                                                                Already Have an Account? Login Now
+                                                            </Link>
+                                                        </div>
+                                                        <div className="text-center mt-3">
+                                                            <Button className="mt-4 link" type="submit">
+                                                                Sign Up
                                                             </Button>
                                                         </div>
                                                     </AvForm>
@@ -943,5 +1042,5 @@ export default Home;
 
 
 
-// josephzambri@hotmail.com	
+// josephzambri@hotmail.com
 // joseph2021!!
