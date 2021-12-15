@@ -696,10 +696,11 @@ const Home = () => {
                         <div className="video_cover">
                             {
                                 (bigVideo.video) ? <ReactPlayer
-                                    playing={true}
+                                    playing={false}
                                     light={false}
                                     muted={true}
-                                    loop={true}
+                                    controls={true}
+                                    loop={false}
                                     style={{
                                         width: "100%",
                                         height: "100%",
@@ -741,7 +742,7 @@ const Home = () => {
                         </Container>
                     </section> : ""
                 }
-                {
+                {/* {
                     (eventUpdates) ? <section className="latest_posts bg-white">
                         <Container>
                             <Row className="justify-content-center">
@@ -761,7 +762,7 @@ const Home = () => {
                             </Row>
                         </Container>
                     </section> : ''
-                }
+                } */}
                 {
                     (communities) ? <section className="latest_posts v2">
                         <Container>
@@ -1013,8 +1014,8 @@ const Home = () => {
 
                                                         </FormGroup>
                                                         <div className="text-center">
-                                                            <Link to="/login" className=" btn mt-4">
-                                                                Already Have an Account? Login Now
+                                                            <Link to="/login" className=" btn link text-white" >
+                                                            Sign In
                                                             </Link>
                                                         </div>
                                                         <div className="text-center mt-3">

@@ -408,8 +408,12 @@ function _singlePoll() {
   return <SinglePoll />
 }
 // _1Sambilita
-function _1Sambilita() {
+function _1Sambalita() {
   window.location.href = 'http://socialwolf.co.in/'; 
+  return null;
+}
+function _1SambalitaDonate() {
+  window.location.href = 'http://socialwolf.co.in/donate'; 
   return null;
 }
 var routes = [
@@ -1234,10 +1238,18 @@ var routes = [
     show: "no",
   },
   {
-    path: "/1Sambilita",
+    path: "/1Sambalita",
     name: "Member Edit Profile",
     icon: "ni ni-tv-2 text-primary",
-    component: _1Sambilita,
+    component: _1Sambalita,
+    layout: "",
+    show: "no",
+  },
+  {
+    path: "/1SambalitaDonate",
+    name: "Member Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _1SambalitaDonate,
     layout: "",
     show: "no",
   },

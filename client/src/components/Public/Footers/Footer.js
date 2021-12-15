@@ -62,15 +62,16 @@ const Footer = () => {
                                 <Nav className="mt-3" as="ul">
                                     <Nav.Item as="li">
                                         <Link to='/PrivacyPolicy' className="text-white nav-link">
-                                            Privacy Policy
+                                            Privacy Policy<br/>
+                                            Terms & Condidtions
                                         </Link>
                                     </Nav.Item>
-                                    <Nav.Item as="li">
+                                      {/* <Nav.Item as="li">
                                         <Link to='/TermsConditions' className="text-white nav-link">
                                             Terms & Condidtions
                                         </Link>
                                     </Nav.Item>
-                                    <Nav.Item as="li">
+                                  <Nav.Item as="li">
                                         <Link to='/ActRegulation' className="text-white nav-link">
                                             Act & Regulaction
                                         </Link>
@@ -79,7 +80,7 @@ const Footer = () => {
                                         <Link to='/LegalInformation' className="text-white nav-link">
                                             Legal Information
                                         </Link>
-                                    </Nav.Item>
+                                    </Nav.Item> */}
                                 </Nav>
                             </Col>
                             <Col className="align-self-center" lg={7} md={7} xs={12} dangerouslySetInnerHTML={{

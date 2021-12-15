@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
 
   .video {
     width: 100%;
@@ -138,7 +138,7 @@ main#main_content {
       }
       a.btn {
         font-size: 18px;
-        color: #828282 !important;
+        // color: #828282 !important;
       }
       input[type="submit"] {
         background-image: url(../../img/Public/btn_bg.png);

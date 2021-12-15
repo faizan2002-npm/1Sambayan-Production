@@ -4,6 +4,7 @@ import Footer from '../../components/Public/Footers/Footer';
 import "../../assets/scss/Public/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-phone-input-2/lib/style.css'
+import { Redirect } from 'react-router-dom';
 
 const PublicLayout = ({ children }) => {
     const adjuster = () => {
@@ -21,6 +22,7 @@ const PublicLayout = ({ children }) => {
     return (
         <>
             <Header />
+          {/* <Redirect exact from="/events" to="/" /> */}
             {children}
             <Footer />
         </>
