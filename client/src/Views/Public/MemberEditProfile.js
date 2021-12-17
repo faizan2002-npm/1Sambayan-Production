@@ -120,8 +120,8 @@ const MemberEditProfile = () => {
                 `/api/secure/user/profile`,
                 token
             );
-            console.log("response.result.data.user", response.result.data.user)
-            setMemberProfile(response.result.data.user)
+            console.log("response.result.data.user", response.result.data.user);
+            setMemberProfile(response.result.data.user);
         } catch (error) {
             console.log("Get Member Profile error", error);
         }
@@ -133,20 +133,28 @@ const MemberEditProfile = () => {
                 `/api/secure/party/party-list`,
                 token
             );
-            console.log("response", response)
-            setParties(response.result.data.parties)
-
-
+            console.log("response", response.result.data.parties);
+            setParties(response.result.data.parties);
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
     };
-    const defaultParty = () => {
-        return parties.filter((e) => {
-            if (e._id === memberProfile.partyId) {
-                return e[0].title
-            }
-        })
+    const defaultParty = async () => {
+        try {
+            const token = localStorage.getItem("TOKEN");
+            const response = await getRequest(
+                `/api/secure/party/party-list`,
+                token
+            );
+            console.log('memberProfile.partyId',memberProfile.partyId)
+            return response.result.data.parties.filter(async (e) => {
+                if (e._id === memberProfile.partyId) {
+                    return e.title
+                }
+            })
+        } catch (error) {
+            console.log("Get Site Setting Error", error);
+        }
     }
     const ageChange = (selectedOption) => {
         setChangeAge(selectedOption);

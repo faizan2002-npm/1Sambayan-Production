@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getRequest } from '../../../api/request';
 import { ToastContainer } from 'react-toastify';
+import { HashLink } from 'react-router-hash-link';
 
 const Footer = () => {
     const [loading, setLoading] = useState(true);
@@ -62,8 +63,7 @@ const Footer = () => {
                                 <Nav className="mt-3" as="ul">
                                     <Nav.Item as="li">
                                         <Link to='/PrivacyPolicy' className="text-white nav-link">
-                                            Privacy Policy<br/>
-                                            Terms & Condidtions
+                                        Privacy Policy and Terms of Use
                                         </Link>
                                     </Nav.Item>
                                       {/* <Nav.Item as="li">
@@ -103,9 +103,9 @@ const Footer = () => {
                         </Container>
                     </div>
                     <div className="lim">
-                        <a target="_BLANK" href="https://play.google.com/store/apps/details?id=com.sambayan" className="link btn">
+                        <HashLink smooth to='/#Register' className="link btn">
                         Membership Form
-                        </a>
+                        </HashLink>
                     </div>
 
                     <ToastContainer

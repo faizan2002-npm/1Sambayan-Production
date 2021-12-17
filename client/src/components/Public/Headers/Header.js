@@ -94,16 +94,16 @@ const Header = () => {
                                         </Row>
                                     </div>
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
-                                        <NavDropdown as="li" title="1Sambalita " id="basic-nav-dropdown-1">
+                                        <NavDropdown as="li" title="1SAMBAYAN " id="basic-nav-dropdown-1">
                                             <Link className="nav-link" to="/news">Posts</Link>
                                             {/* <Link className="nav-link" to="/events">Events</Link> */}
-                                            <Link className="nav-link" to="/chapters">Chapters</Link>
-                                            <Link className="nav-link" to="/candidates">Candidates</Link>
-                                            <Link className="nav-link" to="/parties">Member Organizations</Link>
+                                            {/* <Link className="nav-link" to="/chapters">Chapters</Link> */}
+                                            {/* <Link className="nav-link" to="/candidates">Candidates</Link> */}
+                                            {/* <Link className="nav-link" to="/parties">Member Organizations</Link> */}
                                             <Link className="nav-link" to="/convenors">Conveners</Link>
                                             <Link className="nav-link" to="/contact">Contact Us</Link>
-                                            <Link className="nav-link" to="/1Sambalita">1SAMBAYAN</Link>
-                                            <Link className="nav-link" to="/FAQ">FAQs</Link>
+                                            {/* <Link className="nav-link" to="/1Sambalita">1Sambilita</Link> */}
+                                            {/* <Link className="nav-link" to="/FAQ">FAQs</Link> */}
                                         </NavDropdown>
                                         <Nav.Item as="li">
                                             <Link className="nav-link" to='/about'>About</Link>

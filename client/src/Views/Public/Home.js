@@ -763,7 +763,7 @@ const Home = () => {
                         </Container>
                     </section> : ''
                 } */}
-                {
+                {/* {
                     (communities) ? <section className="latest_posts v2">
                         <Container>
                             <Row className="justify-content-center">
@@ -784,70 +784,75 @@ const Home = () => {
                         </Container>
                     </section> : ''
                 }
+                {
+                    (candidates) ? <section className="latest_posts bg-white">
+                        <Container>
+                            <Row className="justify-content-center">
+                                <Col lg={10} md={10} xs={12}>
+                                    <h1>{candidatesSection.heading}</h1>
+                                    <OwlCarousel className='owl-theme owl-carousel'
+                                        // onDragged={startPosition.current}
+                                        // startPosition={startPosition.current}
+                                        margin={100}
+                                        responsiveClass={true}
+                                        nav={false}
+                                        dots={true}
+                                        loop={false}
+                                        rewind={false}
+                                        autoplay={true}
+                                        freeDrag={true}
+                                        responsive={carouselOptions.responsive}
+                                        autoplayTimeout={5000}
+                                        items={4}
+                                        autoplayHoverPause={true}
+                                    >
+                                        {
+                                            candidates.map((e, index) => (
+                                                <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
+                                            ))
+                                        }
+                                    </OwlCarousel>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section> : ''
+                }
+                {
+                    (parties) ? <section className="latest_posts">
+                        <Container>
+                            <Row className="justify-content-center">
+                                <Col lg={10} md={10} xs={12}>
+                                    <h1>{partiesSection.heading}</h1>
 
-                <section className="latest_posts bg-white">
-                    <Container>
-                        <Row className="justify-content-center">
-                            <Col lg={10} md={10} xs={12}>
-                                <h1>{candidatesSection.heading}</h1>
-                                <OwlCarousel className='owl-theme owl-carousel'
-                                    // onDragged={startPosition.current}
-                                    // startPosition={startPosition.current}
-                                    margin={100}
-                                    responsiveClass={true}
-                                    nav={false}
-                                    dots={true}
-                                    loop={false}
-                                    rewind={false}
-                                    autoplay={true}
-                                    freeDrag={true}
-                                    responsive={carouselOptions.responsive}
-                                    autoplayTimeout={5000}
-                                    items={4}
-                                    autoplayHoverPause={true}
-                                >
-                                    {
-                                        candidates.map((e, index) => (
-                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
-                                        ))
-                                    }
-                                </OwlCarousel>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
-                <section className="latest_posts">
-                    <Container>
-                        <Row className="justify-content-center">
-                            <Col lg={10} md={10} xs={12}>
-                                <h1>{partiesSection.heading}</h1>
+                                    <OwlCarousel
+                                        className='owl-theme owl-carousel'
+                                        margin={100}
+                                        responsiveClass={true}
+                                        nav={false}
+                                        dots={true}
+                                        loop={false}
+                                        rewind={false}
+                                        autoplay={true}
+                                        freeDrag={true}
+                                        responsive={carouselOptions.responsive}
+                                        // smartSpeed={1500}
+                                        // autoplayTimeout={1000}
+                                        items={4}
+                                        autoplayHoverPause={true}>
 
-                                <OwlCarousel
-                                    className='owl-theme owl-carousel'
-                                    margin={100}
-                                    responsiveClass={true}
-                                    nav={false}
-                                    dots={true}
-                                    loop={false}
-                                    rewind={false}
-                                    autoplay={true}
-                                    freeDrag={true}
-                                    responsive={carouselOptions.responsive}
-                                    // smartSpeed={1500}
-                                    // autoplayTimeout={1000}
-                                    items={4}
-                                    autoplayHoverPause={true}>
+                                        {
+                                            parties.map((e, index) => (
+                                                <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
+                                            ))
+                                        }
+                                    </OwlCarousel>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section> : ''
+                } */}
 
-                                    {
-                                        parties.map((e, index) => (
-                                            <PostCard key={`id_${e._id}_${index}`} text={e.title} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} grid={false} row={false} />
-                                        ))
-                                    }
-                                </OwlCarousel>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
+
                 {
                     (localStorage.getItem("TOKEN")) ? <>
                         <section className="latest_posts  bg-white v2">
@@ -862,7 +867,7 @@ const Home = () => {
                             </div>
                         </section>
                     </> : <>
-                        <section className="latest_posts  bg-white v2">
+                        <section className="latest_posts  bg-white v2" id="Register">
                             <div className="container">
                                 <div className="row justify-content-center">
                                     <div className="col-lg-10 col-md-10 col-12">
@@ -884,7 +889,7 @@ const Home = () => {
                                                             />
 
                                                         </FormGroup>
-                                                        <FormGroup className="mb-4">
+                                                        <FormGroup className="mb-4 d-none">
                                                             <Label>Middle Name</Label>
 
                                                             <AvField
@@ -895,7 +900,7 @@ const Home = () => {
                                                             />
 
                                                         </FormGroup>
-                                                        <FormGroup className="mb-4">
+                                                        <FormGroup className="mb-4 d-none">
                                                             <Label>Last Name</Label>
 
                                                             <AvField
@@ -903,7 +908,7 @@ const Home = () => {
                                                                 type="text"
                                                                 placeholder="Last Name"
                                                                 className="form-control"
-                                                                required
+                                                                // required
                                                             />
 
                                                         </FormGroup>
@@ -936,14 +941,14 @@ const Home = () => {
                                                             />
 
                                                         </FormGroup>
-                                                        <FormGroup className="mb-4">
+                                                        <FormGroup className="mb-4 d-none">
                                                             <Label>Age</Label>
 
                                                             <Select
                                                                 onChange={ageChange}
                                                                 options={ageOptions} />
                                                         </FormGroup>
-                                                        <FormGroup>
+                                                        <FormGroup className=" d-none">
                                                             <Label>Address</Label>
 
                                                             <AvField
@@ -951,11 +956,11 @@ const Home = () => {
                                                                 type="text"
                                                                 placeholder="Address"
                                                                 className="form-control"
-                                                                required
+                                                                // required
                                                             />
 
                                                         </FormGroup>
-                                                        <FormGroup>
+                                                        <FormGroup className=" d-none">
                                                             <Label>Facebook Link</Label>
 
                                                             <AvField
@@ -963,11 +968,11 @@ const Home = () => {
                                                                 type="url"
                                                                 placeholder="Facebook Link"
                                                                 className="form-control"
-                                                                required
+                                                                // required
                                                             />
 
                                                         </FormGroup>
-                                                        <FormGroup className="mb-4">
+                                                        <FormGroup className="mb-4  d-none">
                                                             <Label>Professional / Field of Experties</Label>
 
                                                             <Select
@@ -1013,16 +1018,18 @@ const Home = () => {
                                                             />
 
                                                         </FormGroup>
-                                                        <div className="text-center">
-                                                            <Link to="/login" className=" btn link text-white" >
-                                                            Sign In
-                                                            </Link>
-                                                        </div>
-                                                        <div className="text-center mt-3">
-                                                            <Button className="mt-4 link" type="submit">
+                                                        <Row className="mt-5">
+                                                            <Col xs={6}>
+                                                            <Button className="link btn-md w-100" type="submit">
                                                                 Sign Up
                                                             </Button>
-                                                        </div>
+                                                            </Col>
+                                                            <Col xs={6}>
+                                                            <Link to="/login" className="btn-md btn link text-white w-100" >
+                                                                Sign In
+                                                            </Link>
+                                                            </Col>
+                                                        </Row>
                                                     </AvForm>
 
                                                 </div>

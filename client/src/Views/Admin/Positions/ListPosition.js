@@ -99,29 +99,45 @@ const ExpandedComponent = ({ data }) => {
                         />
                     </FormGroup>
                 </Col>
-                <Col lg={6} md={6} xs={12}>
+                <Col xs={12}>
                     <FormGroup className="mb-3">
                         <Label>Applied {data.members.length}</Label>
                         <Row>
                             {
                                 // (userData.length>0) ? console.log("usrData state",userData):''
-                                (userData.length>0) ? userData.map((e, key) => (<Col key={key} lg="6" xl="6" xs={12}>
+                                (userData.length > 0) ? userData.map((e, key) => (<Col key={key} className="mb-3" xs={12}>
                                     <Card className="card-stats mb-4 mb-xl-0">
                                         <CardBody>
                                             <Row>
                                                 <div className="col">
-                                                    <CardTitle
-                                                        tag="h5"
-                                                        className="text-uppercase text-muted mb-0"
-                                                    >
-                                                        {e.firstName}  {e.lastName}
-                                                    </CardTitle>
-                                                    <CardTitle
-                                                        tag="h5"
-                                                        className="text-uppercase text-muted mb-0"
-                                                    >
-                                                        {e.email}
-                                                    </CardTitle>
+                                                    <Row>
+                                                        <Col lg={6} md={6} xs={12}>
+                                                            <h4>
+                                                                <b>
+                                                                    Name
+                                                                </b>
+                                                            </h4>
+                                                            <CardTitle
+                                                                tag="h5"
+                                                                className="text-uppercase text-muted mb-0"
+                                                            >
+                                                                {e.firstName}  {e.lastName}
+                                                            </CardTitle>
+                                                        </Col>
+                                                        <Col lg={6} md={6} xs={12}>
+                                                            <h4>
+                                                                <b>
+                                                                    Email
+                                                                </b>
+                                                            </h4>
+                                                            <CardTitle
+                                                                tag="h5"
+                                                                className="text-uppercase text-muted mb-0"
+                                                            >
+                                                                {e.email}
+                                                            </CardTitle>
+                                                        </Col>
+                                                    </Row>
                                                 </div>
                                             </Row>
                                         </CardBody>
