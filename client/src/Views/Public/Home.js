@@ -4,7 +4,7 @@ import { Carousel, Image, Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { PostCard } from "../../components/Public/PostCard";
 import OwlCarousel from "react-owl-carousel";
-import PublicLayout from './../../layouts/Public/PublicLayout';
+import PublicLayout from '../../layouts/Public/PublicLayout';
 import { getRequest, postRequest } from "../../api/request";
 import ReactPlayer from 'react-player'
 import { useHistory } from "react-router-dom";
@@ -367,18 +367,6 @@ const Home = () => {
     const partiesChange = (selectedOption) => {
         setChangeParty(selectedOption);
     }
-    const getPageVideo = async () => {
-        try {
-            const token = localStorage.getItem("TOKEN");
-            const response = await getRequest(
-                `/api/secure/site/`,
-                token
-            );
-            setBigVideo(response.result.data.site[0]);
-        } catch (error) {
-            console.log("Get Site Setting Error", error);
-        }
-    };
     const getAllSlides = async () => {
         try {
             const token = localStorage.getItem("TOKEN");
@@ -386,7 +374,21 @@ const Home = () => {
                 `/api/secure/site/header-list`,
                 token
             );
+            
             setSlides(response.result.data.headers)
+        } catch (error) {
+            console.log("Get Site Setting Error", error);
+        }
+    };
+    const getPageVideo = async () => {
+        try {
+            const token = localStorage.getItem("TOKEN");
+            const response = await getRequest(
+                `/api/secure/site/`,
+                token
+            );
+            
+            setBigVideo(response.result.data.site[0]);
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
@@ -398,7 +400,9 @@ const Home = () => {
                 `/api/secure/post/post-list`,
                 token
             );
+            
             setLatestPosts(response.result.data.posts)
+
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
@@ -658,71 +662,75 @@ const Home = () => {
     return (
         <PublicLayout>
             <main id="main_content">
-                <section className="home_banner">
-                    <Carousel activeIndex={index} onSelect={handleSelect} controls={false} fade={true}>
-                        {
-                            slides.map((e, index) => {
-                                // console.log("slides", e);
-                                return (
-                                    <Carousel.Item key={`id_${e._id}_${index}`}>
-                                        <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
-                                        {
-                                            (e.image) ? <>
-                                                <Carousel.Caption>
-                                                    <Container>
-                                                        <Row className="justify-content-center">
-                                                            <Col lg={10} md={10} xs={12}>
-                                                                <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} alt="" fluid />
-                                                                <a class="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a>
-                                                            </Col>
-                                                        </Row>
-                                                    </Container>
-                                                </Carousel.Caption>
-                                            </> : <>
-                                                <Carousel.Caption>
-                                                    <h2>{e.description}</h2>
-                                                    <p>{e.title}</p>
-                                                </Carousel.Caption>
-                                            </>
-                                        }
-                                    </Carousel.Item>
-                                );
-                            })
-                        }
-                    </Carousel>
-                </section>
-                <section className="bigVideo">
-                    <Container>
-                        <div className="video_cover">
-                            {
-                                (bigVideo.video) ? <ReactPlayer
-                                    playing={false}
-                                    light={false}
-                                    muted={true}
-                                    controls={true}
-                                    loop={false}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        borderRadius: "20px"
-                                    }} width='100%'
-                                    height='100%' url={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + bigVideo.video} /> : ''
-                            }
-
-
-                            {/* <div className="button_cover">
-                                <Row>
-                                    <Col xs={12} className="w-100 d-flex justify-content-center">
-                                        <Link to={bigVideo.rigisterBtnUrl} className="btn btn-default">{bigVideo.rigisterBtnText}</Link>
-                                    </Col>
-                                </Row>
-                            </div> */}
-                        </div>
-                    </Container>
-                </section>
                 {
-                    (latestPosts) ? <section className="latest_posts">
+                    (slides) ? <section className="home_banner">
+                        <Carousel activeIndex={index} onSelect={handleSelect} controls={false} fade={true}>
+                            {
+                                slides.map((e, index) => {
+                                    // console.log("slides", e);
+                                    return (
+                                        <Carousel.Item key={`id_${e._id}_${index}`}>
+                                            <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.backgroundImage} className="d-block w-100" alt="" fluid />
+                                            {
+                                                (e.image) ? <>
+                                                    <Carousel.Caption>
+                                                        <Container>
+                                                            <Row className="justify-content-center">
+                                                                <Col lg={10} md={10} xs={12}>
+                                                                    <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} alt="" fluid />
+                                                                    <a className="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a>
+                                                                </Col>
+                                                            </Row>
+                                                        </Container>
+                                                    </Carousel.Caption>
+                                                </> : <>
+                                                    <Carousel.Caption>
+                                                        <h2>{e.description}</h2>
+                                                        <p>{e.title}</p>
+                                                    </Carousel.Caption>
+                                                </>
+                                            }
+                                        </Carousel.Item>
+                                    );
+                                })
+                            }
+                        </Carousel>
+                    </section> : ''
+                }
+                {
+                    (bigVideo) ? <section className="bigVideo">
+                        <Container>
+                            <div className="video_cover">
+                                {
+                                    (bigVideo.video) ? <ReactPlayer
+                                        playing={false}
+                                        light={false}
+                                        muted={true}
+                                        controls={true}
+                                        loop={false}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            borderRadius: "20px"
+                                        }} width='100%'
+                                        height='100%' url={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + bigVideo.video} /> : ''
+                                }
+
+
+                                {/* <div className="button_cover">
+                                    <Row>
+                                        <Col xs={12} className="w-100 d-flex justify-content-center">
+                                            <Link to={bigVideo.rigisterBtnUrl} className="btn btn-default">{bigVideo.rigisterBtnText}</Link>
+                                        </Col>
+                                    </Row>
+                                </div> */}
+                            </div>
+                        </Container>
+                    </section> : ''
+                }
+                {
+                    (latestPosts && latestPostsSection) ? <section className="latest_posts">
                         <Container>
                             <Row className="justify-content-center">
                                 <Col lg={10} md={10} xs={12}>
@@ -794,7 +802,7 @@ const Home = () => {
                                         // onDragged={startPosition.current}
                                         // startPosition={startPosition.current}
                                         margin={100}
-                                        responsiveClass={true}
+                                        responsiveclassName={true}
                                         nav={false}
                                         dots={true}
                                         loop={false}
@@ -827,7 +835,7 @@ const Home = () => {
                                     <OwlCarousel
                                         className='owl-theme owl-carousel'
                                         margin={100}
-                                        responsiveClass={true}
+                                        responsiveclassName={true}
                                         nav={false}
                                         dots={true}
                                         loop={false}
@@ -908,7 +916,7 @@ const Home = () => {
                                                                 type="text"
                                                                 placeholder="Last Name"
                                                                 className="form-control"
-                                                                // required
+                                                            // required
                                                             />
 
                                                         </FormGroup>
@@ -935,7 +943,7 @@ const Home = () => {
                                                                 inputProps={{
                                                                     name: 'phone',
                                                                     required: true,
-                                                                    autoFocus: true
+                                                                    autoFocus: false
                                                                 }}
                                                                 required
                                                             />
@@ -956,7 +964,7 @@ const Home = () => {
                                                                 type="text"
                                                                 placeholder="Address"
                                                                 className="form-control"
-                                                                // required
+                                                            // required
                                                             />
 
                                                         </FormGroup>
@@ -968,7 +976,7 @@ const Home = () => {
                                                                 type="url"
                                                                 placeholder="Facebook Link"
                                                                 className="form-control"
-                                                                // required
+                                                            // required
                                                             />
 
                                                         </FormGroup>
@@ -1020,14 +1028,14 @@ const Home = () => {
                                                         </FormGroup>
                                                         <Row className="mt-5">
                                                             <Col xs={6}>
-                                                            <Button className="link btn-md w-100" type="submit">
-                                                                Sign Up
-                                                            </Button>
+                                                                <Button className="link btn-md w-100" type="submit">
+                                                                    Sign Up
+                                                                </Button>
                                                             </Col>
                                                             <Col xs={6}>
-                                                            <Link to="/login" className="btn-md btn link text-white w-100" >
-                                                                Sign In
-                                                            </Link>
+                                                                <Link to="/login" className="btn-md btn link text-white w-100" >
+                                                                    Sign In
+                                                                </Link>
                                                             </Col>
                                                         </Row>
                                                     </AvForm>

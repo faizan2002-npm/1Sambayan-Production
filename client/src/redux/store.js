@@ -1,8 +1,7 @@
-import {createStore,applyMiddleware,combineReducers} from 'redux';
-const thunkMiddleware =require('redux-thunk').default;
+import { configureStore } from "@reduxjs/toolkit";
+import { reducers } from "./reducers";
 
-const mainReducer=combineReducers({});
-
-const store=createStore(mainReducer,applyMiddleware(thunkMiddleware));
-
+const store = configureStore({
+  reducer: reducers,
+});
 export default store;

@@ -8,6 +8,7 @@ const {
   mailForResetPassword,
   resetPassword,
   verifyPhone,
+  contactUs,
 } = require("../../methods/User/account");
 const { forgotPassword } = require("../../methods/User/profile");
 
@@ -15,6 +16,8 @@ const { forgotPassword } = require("../../methods/User/profile");
 router.post("/register", registerUser);
 
 router.post("/login", login);
+
+router.post("/contact-us", contactUs);
 
 router.post("/verify-phone", verifyPhone);
 

@@ -17,8 +17,9 @@ import 'swiper/components/navigation/navigation.min.css'
 import 'swiper/components/pagination/pagination.min.css'
 
 import store from './redux/store';
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import PartyLayout from './layouts/Party/index';
+import ScrollToTop from "./components/ScrollToTop";
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
     if (prop.subMenu) {
@@ -34,23 +35,26 @@ const getRoutes = (routes) => {
   });
 };
 
-ReactDOM.render(<Provider store={store}>
-  <Router>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/party" render={(props) => <PartyLayout {...props} />} />
-      <Route path="/auth" render={(props) => <Auth {...props} />} />
-      <Route path="/public" exact render={(props) => <PublicLayout {...props} />} />
-      {
-        getRoutes(routes)
-      }
-      <Redirect from="/editProfile" to="/admin/EditProfile" />
-      <Redirect from="/editProfile" to="/admin/admin/EditProfile" />
-      <Redirect from="/auth" to="/auth/login" />
-      <Redirect from="/login" to="/auth/login" />
-      <Redirect from="/setNewPassword" to="/auth/setNewPassword" />
-      <Redirect from="/resetPassword" to="/auth/resetPassword" />
-      <Redirect from="/otpAuthentication" to="/auth/otpAuthentication" />
-    </Switch>
-  </Router>
-</Provider>, document.getElementById("root"));
+ReactDOM.render(
+  <ReduxProvider store={store}>
+    <Router>
+      <ScrollToTop>
+        <Switch>
+          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+          <Route path="/party" render={(props) => <PartyLayout {...props} />} />
+          <Route path="/auth" render={(props) => <Auth {...props} />} />
+          <Route path="/public" exact render={(props) => <PublicLayout {...props} />} />
+          {
+            getRoutes(routes)
+          }
+          <Redirect from="/editProfile" to="/admin/EditProfile" />
+          <Redirect from="/editProfile" to="/admin/admin/EditProfile" />
+          <Redirect from="/auth" to="/auth/login" />
+          <Redirect from="/login" to="/auth/login" />
+          <Redirect from="/setNewPassword" to="/auth/setNewPassword" />
+          <Redirect from="/resetPassword" to="/auth/resetPassword" />
+          <Redirect from="/otpAuthentication" to="/auth/otpAuthentication" />
+        </Switch>
+      </ScrollToTop>
+    </Router>
+  </ReduxProvider>, document.getElementById("root"));

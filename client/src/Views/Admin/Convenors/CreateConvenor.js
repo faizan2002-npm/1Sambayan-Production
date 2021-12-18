@@ -147,7 +147,7 @@ class CreateConvenor extends React.Component {
                                                 </FormGroup>
                                             </Col>
                                             <Col className="text-center mt-5" xs={12}>
-                                                <Button type="submit" color="success" outline>
+                                                <Button type="submit" color="success" >
                                                     Save
                                                 </Button>
                                             </Col>

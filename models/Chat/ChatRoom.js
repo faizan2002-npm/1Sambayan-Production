@@ -30,8 +30,8 @@ const chatRoomSchema = new Schema({
   members: [
     new Schema({
       memberId: {
-        type: Schema.ObjectId,
-        ref: "user",
+        type: Schema.Types.ObjectId,
+        ref: "User",
         index: true,
       },
       role: {
@@ -61,8 +61,8 @@ const chatRoomSchema = new Schema({
   },
 
   createdBy: {
-    type: Schema.ObjectId,
-    ref: "user",
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 

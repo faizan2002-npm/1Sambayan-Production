@@ -2,6 +2,8 @@ const express = require("express");
 const _ = require("lodash");
 const uuid = require("uuid");
 const ChatRoom = require("../../../models/Chat/ChatRoom");
+const { protect, authorize } = require("../../../middlewares/auth");
+
 const {
   createGroupChatSchema,
   removeMemberSchema,
@@ -9,19 +11,20 @@ const {
 
 const socketIO = require("../../../services/socketIO");
 const ChatMessage = require("../../../models/Chat/ChatMessage");
+const validateObjectbyId = require("../../../validators/chat/validateObjectbyId");
 
 const router = express.Router();
 
 const USER_PUBLIC_FIELDS =
-  "firstname lastname image.thumbnailUrl image.imageUrl image.aspectRatio";
+  "firstName lastName middleName email phone profileImage";
 
-router.get("/my_chat_rooms", async (req, res) => {
-  const { user } = req.authSession;
+router.get("/my_chat_rooms", protect, async (req, res) => {
+  const user = req.user;
 
   const query = {
     members: {
       $elemMatch: {
-        memberId: user._id,
+        memberId: user._id.toString(),
         role: { $ne: "join_requester" },
       },
     },
@@ -36,10 +39,10 @@ router.get("/my_chat_rooms", async (req, res) => {
     },
   ];
 
-  let rooms = await ChatRoom.find(query)
-    .or(orClause)
-    .populate("lastMessage")
-    .populate("members.memberId", USER_PUBLIC_FIELDS);
+  let rooms = await ChatRoom.find(query).populate(
+    "members.memberId",
+    USER_PUBLIC_FIELDS
+  );
 
   const userId = user._id.toHexString();
   rooms = rooms.map((room) => {
@@ -70,7 +73,7 @@ router.get("/my_chat_rooms", async (req, res) => {
 
 router.get("/get_room/:id", async (req, res) => {
   const { id } = req.params;
-  if (!validateObjectId(id))
+  if (!validateObjectbyId(id))
     return res.status(400).send({
       error: {
         message: "Invalid Room Id",
@@ -92,42 +95,50 @@ router.get("/get_room/:id", async (req, res) => {
   res.send(room);
 });
 
-router.get("/get_private_chat_room/:memberId", async (req, res) => {
-  const { memberId } = req.params;
-  const { user } = req.authSession;
-  if (!validateObjectId(memberId))
-    return res.status(400).send({
-      error: {
-        message: "Invalid member Id",
-      },
-    });
+router.get("/get_private_chat_room/:memberId", protect, async (req, res) => {
+  try {
+    const { memberId } = req.params;
+    const user = req.user;
+    if (!validateObjectbyId(memberId))
+      return res.status(400).send({
+        error: {
+          message: "Invalid member Id",
+        },
+      });
+    console.log("memberId", memberId);
+    const data = {
+      roomType: "direct",
+      createdBy: user._id,
+      members: [
+        { memberId: user._id.toHexString(), role: "member" },
+        { memberId, role: "member" },
+      ],
+    };
 
-  const data = {
-    roomType: "direct",
-    createdBy: user._id,
-    members: [
-      { memberId: user._id.toHexString(), role: "member" },
-      { memberId, role: "member" },
-    ],
-  };
-
-  let room = await ChatRoom.findOne({
-    roomType: "direct",
-    "members.memberId": { $all: [memberId, user._id] },
-  }).populate("members.memberId", USER_PUBLIC_FIELDS);
-
-  if (!room) {
-    await new ChatRoom(data).save();
-    room = await ChatRoom.findOne({
+    let room = await ChatRoom.findOne({
       roomType: "direct",
       "members.memberId": { $all: [memberId, user._id] },
     }).populate("members.memberId", USER_PUBLIC_FIELDS);
-  }
 
-  res.send(room);
+    console.log("ROOM", room);
+
+    if (!room) {
+      await new ChatRoom(data).save();
+      room = await ChatRoom.findOne({
+        roomType: "direct",
+        "members.memberId": { $all: [memberId, user._id] },
+      }).populate("members.memberId", USER_PUBLIC_FIELDS);
+
+      console.log("ROOM 1", room);
+    }
+
+    res.send(room);
+  } catch (err) {
+    console.log("error", err);
+  }
 });
 
-router.post("/create_group_chat", async (req, res) => {
+router.post("/create_group_chat", protect, async (req, res) => {
   const {
     name = "",
     description = "",
@@ -136,7 +147,7 @@ router.post("/create_group_chat", async (req, res) => {
     isPublic,
   } = _.pick(req.body, ["name", "description", "members", "image", "isPublic"]);
 
-  const { user } = req.authSession;
+  const user = req.user;
   const chatRoomBuilder = {
     name,
     description,
@@ -177,16 +188,16 @@ router.post("/create_group_chat", async (req, res) => {
   res.send(populatedRoom);
 });
 
-router.put("/reset_my_chat_count/:id", async (req, res) => {
+router.put("/reset_my_chat_count/:id", protect, async (req, res) => {
   const { id } = req.params;
-  if (!validateObjectId(id))
+  if (!validateObjectbyId(id))
     return res.status(400).send({
       error: {
         message: "Invalid group Id",
       },
     });
 
-  const { user } = req.authSession;
+  const user = req.user;
 
   const chatRoom = await ChatRoom.findById(id);
 
@@ -207,66 +218,70 @@ router.put("/reset_my_chat_count/:id", async (req, res) => {
   await chatRoom.save();
   res.send({ message: "Room Chat count updated", count: 0 });
 });
-router.delete("/remove_member_from_group/:chatRoom", async (req, res) => {
+router.delete(
+  "/remove_member_from_group/:chatRoom",
+  protect,
+  async (req, res) => {
+    const { chatRoom } = req.params;
+    const { memberId } = _.pick(req.body, ["memberId"]);
+    if (!validateObjectbyId(chatRoom))
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const user = req.user;
+
+    const room = await ChatRoom.findOne({
+      _id: chatRoom,
+      roomType: "group",
+      "members.memberId": { $in: user._id },
+      "member.role": "admin",
+    });
+
+    if (!room)
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const updatedRoom = await ChatRoom.findByIdAndUpdate(
+      chatRoom,
+      {
+        $pull: {
+          "members.memberId": memberId,
+        },
+      },
+      { new: true }
+    );
+
+    res.send(updatedRoom);
+
+    // const io = socketIO.getIO();
+    // if (io) {
+    //   room.members.forEach((member) => {
+    //     io.to(member.memberId.toHexString()).emit(
+    //       "member_left_chat_group",
+    //       responseObj
+    //     );
+    //   });
+    // }
+  }
+);
+
+router.delete("/leave_group/:chatRoom", protect, async (req, res) => {
   const { chatRoom } = req.params;
-  const { memberId } = _.pick(req.body, ["memberId"]);
-  if (!validateObjectId(chatRoom))
+
+  if (!validateObjectbyId(chatRoom))
     return res.status(400).send({
       error: {
         message: "Invalid group Id",
       },
     });
 
-  const { user } = req.authSession;
-
-  const room = await ChatRoom.findOne({
-    _id: chatRoom,
-    roomType: "group",
-    "members.memberId": { $in: user._id },
-    "member.role": "admin",
-  });
-
-  if (!room)
-    return res.status(400).send({
-      error: {
-        message: "Invalid group Id",
-      },
-    });
-
-  const updatedRoom = await ChatRoom.findByIdAndUpdate(
-    chatRoom,
-    {
-      $pull: {
-        "members.memberId": memberId,
-      },
-    },
-    { new: true }
-  );
-
-  res.send(updatedRoom);
-
-  // const io = socketIO.getIO();
-  // if (io) {
-  //   room.members.forEach((member) => {
-  //     io.to(member.memberId.toHexString()).emit(
-  //       "member_left_chat_group",
-  //       responseObj
-  //     );
-  //   });
-  // }
-});
-
-router.delete("/leave_group/:chatRoom", async (req, res) => {
-  const { chatRoom } = req.params;
-
-  if (!validateObjectId(chatRoom))
-    return res.status(400).send({
-      error: {
-        message: "Invalid group Id",
-      },
-    });
-
-  const { user } = req.authSession;
+  const user = req.user;
   const room = await ChatRoom.findOneAndUpdate(
     {
       _id: chatRoom,

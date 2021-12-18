@@ -77,9 +77,9 @@ const methods = {
       const data = {
         ogTitle: `${event.title}`,
         ogDiscription: `${event.description}`,
-        image: '',
+        image: "",
         _id: event._id,
-        request: 'singleEvent'
+        request: "singleEvent",
       };
       if (event.image) {
         // var imge_uri = `${process.env.UPLOAD_BASE_URL}${event.image}`;
@@ -87,7 +87,7 @@ const methods = {
         // console.log("decodeURIComponent(encodeURIComponent(imge_uri))",decodeURIComponent(encodeURIComponent(imge_uri)))
         data.image = event.image;
       }
-      res.render('single', { data: data });
+      res.render("single", { data: data });
     } catch (err) {
       next(err);
     }

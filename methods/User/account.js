@@ -85,7 +85,7 @@ const methods = {
     let partyId = req.query.partyId;
 
     try {
-      const users = await User.find({ role: "user", isDeleted: false,partyId });
+      const users = await User.find({ role: "user", isDeleted: false, partyId });
       return res.status(200).json({ users });
     } catch (err) {
       next(err);
@@ -411,6 +411,32 @@ const methods = {
       next(error);
     }
   }),
+  contactUs: asyncHandler(async (req, res, next) => {
+    try {
+      const {
+        name,
+        email,
+        phone,
+        subject,
+        message,
+      } = req.body;
+      const messageBody = `You are receiving this email because someone has filled Contact Us Form. Please have a look:
+      Name: ${name},
+      Email: ${email},
+      Phone: ${phone},
+      Message: ${message}`;
+
+      await sendEmail({
+        from: email,
+        email: '1SAMBAYAN.Secretariat@gmail.com',
+        subject,
+        message: messageBody,
+      });
+      return res.status(200).json({ success: true, data: "Email sent" });
+    } catch (error) {
+      next(error);
+    }
+  }),
 };
 module.exports = methods;
 
@@ -435,7 +461,7 @@ const helpers = {
       res
         .status(statusCode)
         .cookie("token", token, options)
-        .json({ token: token,  user });
+        .json({ token: token, user });
     } else {
       res.send("Invalid Permissions");
     }

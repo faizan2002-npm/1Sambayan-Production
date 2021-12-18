@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React,{ useState, useEffect } from 'react';
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
@@ -166,7 +166,7 @@ const Header = (props) => {
           );
         } else {
           return (
-            <>
+            <React.Fragment key={key}>
               {
                 (prop.subMenu) ? prop.subMenu.map((prop, key) => {
                   if ((location.pathname.indexOf(prop.layout + prop.path) > -1)) {
@@ -184,7 +184,7 @@ const Header = (props) => {
                   </Col>
                 </Row>
               }
-            </>
+            </React.Fragment>
           );
         }
       } else {

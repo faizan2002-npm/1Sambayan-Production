@@ -115,14 +115,14 @@ const Account = () => {
                                                             onClick={onImageUpload}
                                                             {...dragProps}
                                                         >
-                                                            <i class="fal fa-plus"></i>
+                                                            <i className="fal fa-plus"></i>
                                                         </button>
                                                         {(imageList) ? imageList.map((image, index) => (
                                                             <div key={index} className="image-item">
                                                                 <img src={image['data_url']} alt="" />
                                                                 <div className="image-item__btn-wrapper">
                                                                     <button onClick={() => onImageUpdate(index)}>
-                                                                        <i class="fal fa-pencil-alt"></i>
+                                                                        <i className="fal fa-pencil-alt"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -161,7 +161,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-file-signature"></i>
+                                            <i className="fal fa-file-signature"></i>
                                         </div>
                                         <p className="p_3">
                                             My Joined Events
@@ -178,7 +178,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-tv"></i>
+                                            <i className="fal fa-tv"></i>
                                         </div>
                                         <p className="p_3">
                                             My Channels
@@ -195,7 +195,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-bars"></i>
+                                            <i className="fal fa-bars"></i>
                                         </div>
                                         <p className="p_3">
                                             Polls And Positions
@@ -212,7 +212,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-pen"></i>
+                                            <i className="fal fa-pen"></i>
                                         </div>
                                         <p className="p_3">
                                             Edit Profile
@@ -229,7 +229,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-key"></i>
+                                            <i className="fal fa-key"></i>
                                         </div>
                                         <p className="p_3">
                                             Change Password
@@ -247,7 +247,7 @@ const Account = () => {
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
-                                            <i class="fal fa-sign-out"></i>
+                                            <i className="fal fa-sign-out"></i>
                                         </div>
                                         <p className="p_3">
                                             Logout

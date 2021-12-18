@@ -68,7 +68,7 @@ const ListApproval = () => {
                     grow: 1,
                     minWidth: '50px',
                     sortable: false,
-                    cell: (row, index, column, id) => <Link to={`/admin/Approval?_id=${row._id}`} className="btn" size='lg' variant="danger" ><i class="fas fa-chevron-right"></i></Link>
+                    cell: (row, index, column, id) => <Link to={`/admin/Approval?_id=${row._id}`} className="btn" size='lg' variant="danger" ><i className="fas fa-chevron-right"></i></Link>
                 },
             ]);
             setPending(false);

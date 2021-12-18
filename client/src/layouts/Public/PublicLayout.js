@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import React,{useEffect} from 'react'
 import Header from '../../components/Public/Headers/Header';
 import Footer from '../../components/Public/Footers/Footer';
 import "../../assets/scss/Public/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-phone-input-2/lib/style.css'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'
 
-const PublicLayout = ({ children }) => {
+export const PublicLayout = (props) => {
     const adjuster = () => {
         document.getElementById("main_content").style.paddingTop = `${document.getElementById("header").offsetHeight}px`;
         document.addEventListener("DOMContentLoaded", function (event) {
@@ -22,11 +24,19 @@ const PublicLayout = ({ children }) => {
     return (
         <>
             <Header />
-          {/* <Redirect exact from="/events" to="/" /> */}
-            {children}
+            {props.children}
             <Footer />
         </>
     )
 }
 
-export default PublicLayout
+
+const mapStateToProps = (state) => ({
+
+})
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PublicLayout)

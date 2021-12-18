@@ -7,7 +7,7 @@ const {
   editProfile,
   getProfile,
   deleteUser,
-  getProfileByID
+  getProfileByID,
 } = require("../../methods/User/profile");
 const { protect, authorize } = require("../../middlewares/auth");
 const upload = require("../../services/multer");
@@ -19,11 +19,7 @@ router.get("/profile", protect, getProfile);
 router.get("/profile-by-ID", protect, getProfileByID);
 
 //----- Get All users -----//
-router.get(
-  "/get-all-users",
-  [protect],
-  accountMethods.getAllUsers
-);
+router.get("/get-all-users", [protect], accountMethods.getAllUsers);
 router.get(
   "/get-all-users-by-party",
   [protect],
@@ -31,10 +27,6 @@ router.get(
 );
 
 //----- Delete User -----//
-router.post(
-  "/delete-user",
-  [protect],
-  accountMethods.deleteUser
-);
+router.post("/delete-user", [protect], accountMethods.deleteUser);
 
 module.exports = router;

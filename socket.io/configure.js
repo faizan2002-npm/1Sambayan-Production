@@ -7,7 +7,6 @@ module.exports = (io) => {
     //joining the main room
     const { user } = socket;
 
-    console.log(`Welcome ${user.firstname} ${user.lastname}`);
     socket.join(user._id.toHexString());
 
     configureChat(socket);

@@ -28,7 +28,7 @@ const storage = multerS3({
   },
   key: function (req, file, cb) {
     console.log(file)
-    cb(null, `${Date.now().toString()}${file.originalname}`)
+    cb(null, `${Date.now().toString()}_${file.originalname.replace(/\s+/g, '_')}`)
   }
 })
 

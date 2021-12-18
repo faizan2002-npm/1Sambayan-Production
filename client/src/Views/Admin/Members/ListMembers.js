@@ -251,7 +251,7 @@ const ExpandedComponent = ({ data }) => {
                         </FormGroup>
                     </Col>
                     <Col className="text-center mt-3 mb-4" xs={12}>
-                        <Button type="submit" color="success" outline>
+                        <Button type="submit" color="success" >
                             Save
                         </Button>
                     </Col>

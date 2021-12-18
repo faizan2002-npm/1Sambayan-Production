@@ -11,7 +11,7 @@ import {
     FormGroup,
     Label
 } from "reactstrap";
-import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvField} from 'availity-reactstrap-validation';
 import PhoneInput from 'react-phone-input-2';
 import { Link } from 'react-router-dom';
 
@@ -120,8 +120,8 @@ const MemberEditProfile = () => {
                 `/api/secure/user/profile`,
                 token
             );
-            console.log("response.result.data.user", response.result.data.user);
-            setMemberProfile(response.result.data.user);
+            console.log("response.result.data.user", response.result.data.user)
+            setMemberProfile(response.result.data.user)
         } catch (error) {
             console.log("Get Member Profile error", error);
         }
@@ -133,28 +133,19 @@ const MemberEditProfile = () => {
                 `/api/secure/party/party-list`,
                 token
             );
-            console.log("response", response.result.data.parties);
-            setParties(response.result.data.parties);
+            setParties(response.result.data.parties)
+
+
         } catch (error) {
             console.log("Get Site Setting Error", error);
         }
     };
-    const defaultParty = async () => {
-        try {
-            const token = localStorage.getItem("TOKEN");
-            const response = await getRequest(
-                `/api/secure/party/party-list`,
-                token
-            );
-            console.log('memberProfile.partyId',memberProfile.partyId)
-            return response.result.data.parties.filter(async (e) => {
-                if (e._id === memberProfile.partyId) {
-                    return e.title
-                }
-            })
-        } catch (error) {
-            console.log("Get Site Setting Error", error);
-        }
+    const defaultParty = () => {
+        return parties.filter((e) => {
+            if (e._id === memberProfile.partyId) {
+                return e
+            }
+        })
     }
     const ageChange = (selectedOption) => {
         setChangeAge(selectedOption);
@@ -243,16 +234,16 @@ const MemberEditProfile = () => {
             console.log("status", response);
             if (response.result.status === 200) {
                 localStorage.setItem(
-                    "USER_FIRSTNAME",
-                    APIresponse.firstName
+                  "USER_FIRSTNAME",
+                  APIresponse.firstName
                 );
                 localStorage.setItem(
-                    "USER_LASTNAME",
-                    APIresponse.lastName
+                  "USER_LASTNAME",
+                  APIresponse.lastName
                 );
                 localStorage.setItem(
-                    "USER_EMAIL",
-                    APIresponse.email
+                  "USER_EMAIL",
+                  APIresponse.email
                 );
                 toast.success('Profile Updated', {
                     position: "bottom-right",
@@ -393,7 +384,7 @@ const MemberEditProfile = () => {
                                                     </FormGroup>
                                                     <FormGroup className="mb-4">
                                                         <Label>Member Organization</Label>
-                                                        {/* {
+                                                        {
                                                             (parties) ? <Select
                                                                 onChange={partiesChange}
                                                                 defaultValue={{ value: true, label: defaultParty()[0].title }}
@@ -401,15 +392,6 @@ const MemberEditProfile = () => {
                                                                     parties.map((e, index) => {
                                                                         return { value: e._id, label: e.title }
                                                                     })
-                                                                } /> : ''
-                                                        } */}
-                                                        {
-                                                            (parties) ? <Select
-                                                                onChange={partiesChange}
-                                                                defaultValue={{ value: true, label: defaultParty() }}
-                                                                options={parties.map((e, index) => {
-                                                                    return { value: e._id, label: `${e.title}` }
-                                                                })
                                                                 } /> : ''
                                                         }
 

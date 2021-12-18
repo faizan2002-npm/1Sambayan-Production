@@ -102,8 +102,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin" && prop.type === type && prop.subMenu) {
         return (
-          <>
-            <Dropdown className="nav-item" as="li" key={key}>
+          <Dropdown className="nav-item" as="li" key={key}>
               <Dropdown.Toggle as="a" className="nav-link d-block" id="dropdown-basic">
                 <i className={prop.icon} />
                 {prop.name}
@@ -127,7 +126,6 @@ const Sidebar = (props) => {
                 }
               </Dropdown.Menu>
             </Dropdown>
-          </>
         );
       }
     });
