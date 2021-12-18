@@ -100,7 +100,8 @@ const Header = () => {
                                             {/* <Link className="nav-link" to="/chapters">Chapters</Link> */}
                                             {/* <Link className="nav-link" to="/candidates">Candidates</Link> */}
                                             {/* <Link className="nav-link" to="/parties">Member Organizations</Link> */}
-                                            <Link className="nav-link" to="/convenors">Conveners</Link>
+                                            <Link className="nav-link" to="/convenors">Convenors</Link>
+                                            <Nav.Link className="nav-link" href='http://socialwolf.co.in/agenda/'>People's Agenda</Nav.Link>
                                             <Link className="nav-link" to="/contact">Contact Us</Link>
                                             {/* <Link className="nav-link" to="/1Sambalita">1Sambilita</Link> */}
                                             {/* <Link className="nav-link" to="/FAQ">FAQs</Link> */}

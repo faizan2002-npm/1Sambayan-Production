@@ -87,6 +87,15 @@ main#main_content {
       }
     }
   }
+  .other_banner{
+    p {
+      text-align: left;
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: 500;
+      color: black;
+    }
+  }
   .homebanner {
     .carousel-caption {
       top: 50%;
