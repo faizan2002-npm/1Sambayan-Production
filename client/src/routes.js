@@ -1011,7 +1011,7 @@ var routes = [
     order: 1,
   },
   {
-    path: "/news",
+    path: "/posts",
     name: "Posts",
     icon: "ni ni-tv-2 text-primary",
     component: _News,

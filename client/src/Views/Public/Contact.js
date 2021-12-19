@@ -66,7 +66,7 @@ const Contact = () => {
     return (
         <PublicLayout>
             <main id="main_content">
-                <section className="contact_sec py-5">
+                <section className="contact_sec mt-5   py-5">
                     <Container>
                         <Row className="justify-content-center">
                             <Col lg={6} md={6} xs={12}>

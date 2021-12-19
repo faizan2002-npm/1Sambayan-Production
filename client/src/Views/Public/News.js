@@ -64,7 +64,7 @@ const News = () => {
                     <Container>
                         <Row className="justify-content-center">
                             <Col lg={10} md={10} xs={12} className="text-center">
-                                <h1>News</h1>
+                                <h1>Posts</h1>
                             </Col>
                             <Col lg={10} md={10} xs={12}>
                                 {

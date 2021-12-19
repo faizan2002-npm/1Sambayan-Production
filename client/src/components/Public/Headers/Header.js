@@ -95,7 +95,7 @@ const Header = () => {
                                     </div>
                                     <Nav className="ml-auto" as="ul" id="primary_main_menu">
                                         <NavDropdown as="li" title="1SAMBAYAN " id="basic-nav-dropdown-1">
-                                            <Link className="nav-link" to="/news">Posts</Link>
+                                            <Link className="nav-link" to="/posts">Posts</Link>
                                             {/* <Link className="nav-link" to="/events">Events</Link> */}
                                             {/* <Link className="nav-link" to="/chapters">Chapters</Link> */}
                                             {/* <Link className="nav-link" to="/candidates">Candidates</Link> */}

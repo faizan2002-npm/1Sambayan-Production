@@ -102,11 +102,11 @@ const Footer = () => {
                             </Row>
                         </Container>
                     </div>
-                    <div className="lim">
+                    {/* <div className="lim">
                         <HashLink smooth to='/#Register' className="link btn">
                         Membership Form
                         </HashLink>
-                    </div>
+                    </div> */}
 
                     <ToastContainer
                         position="bottom-right"
