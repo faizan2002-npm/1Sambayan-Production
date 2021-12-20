@@ -16,8 +16,8 @@ router.post("/send-pushNoti", protect, (req, res) => {
     const sendNoti = ExpoPushNotificationService.send([
       {
         recipient,
-        notificationTitle: parsedNotifications.title,
-        notificationBody: notificationContent,
+        notificationTitle,
+        notificationBody,
       },
     ]);
     return res.status(200).json("success!");

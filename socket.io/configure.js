@@ -12,7 +12,7 @@ module.exports = (io) => {
     configureChat(socket);
     //leaving the main room
     socket.on("disconnect", () => {
-      console.log(`Goodbye ${user.firstname} ${user.lastname}`);
+      // console.log(`Goodbye ${user.firstname} ${user.lastname}`);
       socket.leave(user._id.toHexString());
     });
   });

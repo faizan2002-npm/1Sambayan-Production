@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const chatMessageSchema = new Schema({
   sender: {
-    type: Schema.ObjectId,
-    ref: "user",
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 
   chatRoom: {
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "chatroom",
     required: true,
     index: true,
@@ -28,8 +28,8 @@ const chatMessageSchema = new Schema({
       startIndex: Number,
       endIndex: Number,
       user: {
-        type: Schema.ObjectId,
-        ref: "user",
+        type: Schema.Types.ObjectId,
+        ref: "User",
       },
     },
   ],
@@ -41,8 +41,8 @@ const chatMessageSchema = new Schema({
 
   seen: [
     {
-      type: Schema.ObjectId,
-      ref: "user",
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   ],
 

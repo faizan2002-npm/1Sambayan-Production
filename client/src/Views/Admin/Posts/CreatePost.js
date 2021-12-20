@@ -4,6 +4,7 @@ import Header from '../../../components/Admin/Headers/Header'
 import { postRequestForm } from '../../../api/request';
 import { Button, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { sendNotification } from './../../../api/notification';
 
 class CreatePost extends React.Component {
     constructor(props) {
@@ -72,19 +73,20 @@ class CreatePost extends React.Component {
 
             console.log("status", response);
             if (response.result.status === 200) {
-                toast.success('Post Created', {
-                    position: "bottom-right",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                });
-                window.location.assign('/admin/ListPost');
-
+                const sendNoti = sendNotification(token,{notificationTitle:'New Post Added',notificationBody:'New post added by client please check'});
+                if(sendNoti == 'success'){
+                    toast.success('Post Created', {
+                        position: "bottom-right",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    window.location.assign('/admin/ListPost');
+                }
             }
-
         } catch (error) {
             console.log("Set Profile APi error", error.message);
         }

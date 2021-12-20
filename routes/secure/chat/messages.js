@@ -26,7 +26,7 @@ router.get("/list/:chatRoom", protect, async (req, res) => {
     }
     const { user } = req;
     const room = await ChatRoom.find({
-      _id: chatRoom,
+      _id: chatRoom.toString(),
       "members.memberId": { $in: [user._id] },
     });
     if (!room)
@@ -39,11 +39,11 @@ router.get("/list/:chatRoom", protect, async (req, res) => {
     const messages = await ChatMessage.find(query)
       .limit(pageSize)
       .sort("-createdAt")
-      .populate("sender", USER_PUBLIC_FIELDS);
+      .populate("sender");
 
     res.send(messages);
   } catch (error) {
-    console.log("ERROR", error);
+    console.log("ERROR CHAT", error);
   }
 });
 

@@ -9,18 +9,6 @@ const USER_PUBLIC_FIELDS =
 module.exports = (socket) => {
   socket.on("send_chat_message", async (message, acknowledge) => {
     //validation
-    try {
-      await sendChatMessageSchema.validate(message);
-    } catch (validationError) {
-      const { path, errors } = validationError;
-      return acknowledge({
-        type: "error",
-        customIdentifier: message.customIdentifier,
-        error: {
-          [path]: errors[0],
-        },
-      });
-    }
     const { user } = socket;
     const chatMessage = await new ChatMessage({
       ...message,

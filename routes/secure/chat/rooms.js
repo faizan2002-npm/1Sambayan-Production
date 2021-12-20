@@ -39,10 +39,9 @@ router.get("/my_chat_rooms", protect, async (req, res) => {
     },
   ];
 
-  let rooms = await ChatRoom.find(query).populate(
-    "members.memberId",
-    USER_PUBLIC_FIELDS
-  );
+  let rooms = await ChatRoom.find(query)
+    .populate("members.memberId", USER_PUBLIC_FIELDS)
+    .populate("lastMessage");
 
   const userId = user._id.toHexString();
   rooms = rooms.map((room) => {
@@ -68,6 +67,7 @@ router.get("/my_chat_rooms", protect, async (req, res) => {
     }
     return room;
   });
+
   res.send(rooms);
 });
 
@@ -105,7 +105,7 @@ router.get("/get_private_chat_room/:memberId", protect, async (req, res) => {
           message: "Invalid member Id",
         },
       });
-    console.log("memberId", memberId);
+    // console.log("memberId", memberId);
     const data = {
       roomType: "direct",
       createdBy: user._id,

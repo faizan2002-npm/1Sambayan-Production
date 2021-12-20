@@ -50,7 +50,7 @@ const chatRoomSchema = new Schema({
     default: true,
   },
   lastMessage: {
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "chatmessage",
     default: null,
   },

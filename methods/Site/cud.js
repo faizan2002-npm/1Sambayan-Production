@@ -32,10 +32,10 @@ const siteMethods = {
       let video, logo;
 
       if (req.files.video) {
-        video = req.files.video[0].key;
+        video = req.files.video[0].filename;
       }
       if (req.files.logo) {
-        logo = req.files.logo[0].key;
+        logo = req.files.logo[0].filename;
       }
 
       //----- Check If user exist with this Email or not -----//
@@ -101,10 +101,10 @@ const siteMethods = {
       let video, logo;
 
       if (req.files.video) {
-        video = req.files.video[0].key;
+        video = req.files.video[0].filename;
       }
       if (req.files.logo) {
-        logo = req.files.logo[0].key;
+        logo = req.files.logo[0].filename;
       }
 
       const ownerId = req.user._id;
@@ -196,10 +196,10 @@ const siteHeaderMethods = {
       const { title, description,buttonURL } = req.body;
       let image, backgroundImage;
       if (req.files.image) {
-        image = req.files.image[0].key;
+        image = req.files.image[0].filename;
       }
       if (req.files.backgroundImage) {
-        backgroundImage = req.files.backgroundImage[0].key;
+        backgroundImage = req.files.backgroundImage[0].filename;
       }
       const siteOwner = req.user._id;
       const site = await Site.findOne({ owner: siteOwner });
@@ -233,10 +233,10 @@ const siteHeaderMethods = {
       let image, backgroundImage;
 
       if (req.files.image) {
-        image = req.files.image[0].key;
+        image = req.files.image[0].filename;
       }
       if (req.files.backgroundImage) {
-        backgroundImage = req.files.backgroundImage[0].key;
+        backgroundImage = req.files.backgroundImage[0].filename;
       }
 
       let header = await SiteHeader.findById(headerId);
