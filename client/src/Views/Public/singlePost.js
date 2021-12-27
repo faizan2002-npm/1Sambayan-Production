@@ -63,7 +63,7 @@ const SinglePost = () => {
                                 </div>
                             </section>
                             <div className="fgd d-flex justify-content-center">
-                                <Link to="/news" className="btn ">
+                                <Link to="/posts" className="btn ">
                                     back
                                 </Link>
                             </div>

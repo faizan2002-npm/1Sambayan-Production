@@ -27,7 +27,7 @@ module.exports = (socket) => {
       if (member.memberId.toHexString() !== user._id.toHexString())
         socket
           .to(member.memberId.toHexString())
-          .emit("indicate_typing", payload);
+          .emit("indicate_typing",   );
     });
 
     //acknowledge the sender

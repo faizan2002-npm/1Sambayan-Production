@@ -19,6 +19,10 @@ const sendChatMessageSchema = yup.object().shape({
   ),
 });
 
+const messageDeleteSchema = yup.object().shape({
+  messageId: yup.string().required(),
+});
+
 const messageSeenSchema = yup.object().shape({
   messageId: yup.string().required(),
 });

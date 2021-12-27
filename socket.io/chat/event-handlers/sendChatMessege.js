@@ -8,72 +8,93 @@ const USER_PUBLIC_FIELDS =
 
 module.exports = (socket) => {
   socket.on("send_chat_message", async (message, acknowledge) => {
-    //validation
-    const { user } = socket;
-    const chatMessage = await new ChatMessage({
-      ...message,
-      sender: user._id,
-      seen: [user._id],
-    }).save();
+    try {
+      //validation
+      const { user } = socket;
 
-    const chatRoom = await ChatRoom.findByIdAndUpdate(message.chatRoom, {
-      lastMessage: chatMessage._id,
-      lastActive: Date.now(),
-    });
+      const chatMessage = await new ChatMessage({
+        ...message,
+        sender: user._id,
+        seen: [user._id],
+      }).save();
+      const senderDoc = await User.findById(user._id);
+      const chatRoom = await ChatRoom.findByIdAndUpdate(message.chatRoom, {
+        lastMessage: chatMessage._id,
+        lastActive: Date.now(),
+      });
 
-    const populatedChatMessage = {
-      sender: _.pick(user, [...USER_PUBLIC_FIELDS.split(" "), "_id"]),
-      ..._.pick(chatMessage, [
-        "chatRoom",
-        "messageType",
-        "message",
-        "tags",
-        "delivered",
-        "seen",
-        "customIdentifier",
-        "isDeleted",
-        "createdAt",
-      ]),
-    };
+      const populatedChatMessage = {
+        sender: senderDoc,
+        ..._.pick(chatMessage, [
+          "chatRoom",
+          "messageType",
+          "message",
+          "tags",
+          "delivered",
+          "seen",
+          "customIdentifier",
+          "isDeleted",
+          "createdAt",
+        ]),
+      };
+      //acknowledge the sender
+      acknowledge({
+        type: "success",
+        data: populatedChatMessage,
+      });
 
-    //acknowledge the sender
-    acknowledge({
-      type: "success",
-      data: populatedChatMessage,
-    });
+      //send notification to the other sockets
+      chatRoom.members.forEach(async (member) => {
+        socket
+          .to(member.memberId.toHexString())
+          .emit("chat_message_recieved", populatedChatMessage);
+      });
 
-    //send notification to the other sockets
-    chatRoom.members.forEach(async (member) => {
-      socket
-        .to(member.memberId.toHexString())
-        .emit("chat_message_recieved", populatedChatMessage);
-    });
+      //send push notification to offline users
 
-    //send push notification to offline users
+      const offlineUsers = [];
+      const offlineUsersMap = {};
+      let onlineUsers = [];
+      const onlineUsersMap = {};
 
-    const offlineUsers = [];
-    const offlineUsersMap = {};
-    for (let i = 0; i < chatRoom.members.length; i++) {
-      const memberId = chatRoom.members[i].memberId.toHexString();
-      const clients = await socket.adapter.sockets(new Set([memberId]));
-
-      if (clients.size === 0) {
-        offlineUsers.push(memberId);
-        offlineUsersMap[memberId] = 1;
+      for (let i = 0; i < chatRoom.members.length; i++) {
+        const memberId = chatRoom.members[i].memberId.toHexString();
+        const clients = await socket.adapter.sockets(new Set([memberId]));
+        if (clients.size === 0) {
+          offlineUsers.push(memberId);
+          offlineUsersMap[memberId] = 1;
+        } else {
+          onlineUsers.push(memberId);
+          onlineUsersMap[memberId] = 1;
+        }
       }
+      if (offlineUsers.length === 0 && onlineUsers.length === 0) return;
+
+      //update the room chat count for users
+      if (offlineUsers.length > 0) {
+        chatRoom.members = chatRoom.members.map((mem) => {
+          if (offlineUsersMap[mem.memberId.toHexString()] === 1) {
+            //user id offline
+            mem.chatCount = mem.chatCount + 1;
+          }
+          return mem;
+        });
+        await chatRoom.save();
+      }
+
+      if (onlineUsers.length > 0) {
+        chatRoom.members = chatRoom.members.map((mem) => {
+          if (onlineUsersMap[mem.memberId.toHexString()] === 1) {
+            //user id offline
+            mem.chatCount = mem.chatCount + 1;
+          }
+          return mem;
+        });
+        await chatRoom.save();
+      }
+    } catch (error) {
+      console.log("error", error);
+      return error;
     }
-    if (offlineUsers.length === 0) return;
-
-    //update the room chat count for users
-
-    chatRoom.members = chatRoom.members.map((mem) => {
-      if (offlineUsersMap[mem.memberId.toHexString()] === 1) {
-        //user id offline
-        mem.chatCount = mem.chatCount + 1;
-      }
-
-      return mem;
-    });
-    await chatRoom.save();
   });
 };

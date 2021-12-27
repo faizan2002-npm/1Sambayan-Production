@@ -678,7 +678,7 @@ const Home = () => {
                                                             <Row className="justify-content-center">
                                                                 <Col lg={10} md={10} xs={12}>
                                                                     <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} alt="" fluid />
-                                                                    <a className="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a>
+                                                                    {/* <a className="btn btn-default mt-4" href={e.buttonURL}>Click to know more</a> */}
                                                                 </Col>
                                                             </Row>
                                                         </Container>

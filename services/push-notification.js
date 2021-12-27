@@ -15,54 +15,52 @@ const DEFAULT_NOTIFICATION_PREFS = {
  * @param {[ParsedNoti]} parsedNotis - ParsedNoti: {recipient(User), notificationTitle, notificationBody, categoryId, path(ex. '/post/postId')}
  */
 async function sendPushNotifications(parsedNotis) {
-  // get expo tokens from recipient object, and create a copy of a push noti for each one for that given recipient
-  let messages = [];
-  for (let noti of parsedNotis) {
-    const {
-      notificationId,
-      recipient,
-      notificationTitle,
-      notificationBody,
-      path,
-    } = noti;
+  try {
+    // get expo tokens from recipient object, and create a copy of a push noti for each one for that given recipient
+    let messages = [];
+    for (let noti of parsedNotis) {
+      const {
+        notificationId,
+        recipient,
+        notificationTitle,
+        notificationBody,
+        path,
+      } = noti;
 
-    const pushTokens =
-      (recipient.notificationPreferences &&
-        recipient.notificationPreferences.expoPushTokens) ||
-      [];
-    let tokenExists;
-    for (let pushToken of pushTokens) {
-      if (!Expo.isExpoPushToken(pushToken)) {
-        helpers.unregisterExpoPushToken(recipient._id, pushToken).then(() => {
-          /*best attempt*/
-        });
-        continue;
-      }
-      if (!tokenExists) {
-        tokenExists = true;
-        helpers.markNotificationSent(recipient._id);
-      }
+      const pushTokens =
+        (recipient.notificationPreferences &&
+          recipient.notificationPreferences.expoPushTokens) ||
+        [];
+      let tokenExists;
+      for (let pushToken of pushTokens) {
+        if (!Expo.isExpoPushToken(pushToken)) {
+          helpers.unregisterExpoPushToken(recipient._id, pushToken).then(() => {
+            /*best attempt*/
+          });
+          continue;
+        }
 
-      let notiDoc = {
-        to: pushToken,
-        sound: "default",
-        body: entities.decode(notificationBody),
-        data: { path, notificationId },
-        owner: recipient._id,
-      };
+        let notiDoc = {
+          to: pushToken,
+          sound: "default",
+          body: entities.decode(notificationBody),
+          data: { path, notificationId },
+          owner: recipient._id,
+        };
 
-      if (notificationTitle) {
-        notiDoc.title = entities.decode(notificationTitle);
+        if (notificationTitle) {
+          notiDoc.title = entities.decode(notificationTitle);
+        }
+        messages.push(notiDoc);
       }
-      if (categoryId) {
-        // TOOD: Uncomment once expo supports iOS 12 `threadId` for notifications
-        // notiDoc.threadId = categoryId;
-      }
-      messages.push(notiDoc);
     }
+    if (messages.length) {
+      sendNotificationsWithExponentialBackoff(messages, 2000, 9);
+    }
+  } catch (error) {
+    console.log("Error", error);
+    return error;
   }
-  if (messages.length)
-    sendNotificationsWithExponentialBackoff(messages, 2000, 9);
 }
 
 function sendNotificationsWithExponentialBackoff(
@@ -274,38 +272,39 @@ const helpers = {
       .catch((err) => callback(err));
   },
 
-  markNotificationSent: async function (callerId, callback) {
-    User.updateOne(
-      {
-        _id: callerId,
-      },
-      {
-        $set: { "notificationPreferences.lastPushSentDate": new Date() },
-      },
-      (e, d) => {
-        if (e) return callback(e);
-        if (!d.nModified) return callback(new Error("Invalid permissions"));
-        return callback(null, e);
-      }
-    );
+  markNotificationSent: async function (callerId) {
+    try {
+      const user = User.updateOne(
+        {
+          _id: callerId,
+        },
+        {
+          $set: { "notificationPreferences.lastPushSentDate": new Date() },
+        }
+      );
+      return user;
+    } catch (error) {
+      return error;
+    }
   },
 
   /**
    * For unregistering a certain push token from the user's account
    */
-  unregisterExpoPushTokenWithPushToken: function (expoPushToken, callback) {
-    User.updateOne(
-      {
-        "notificationPreferences.expoPushTokens": expoPushToken,
-      },
-      {
-        $pull: { "notificationPreferences.expoPushTokens": expoPushToken },
-      },
-      (e, d) => {
-        if (e) return callback(e);
-        if (!d.nModified) return callback(new Error("Invalid permissions"));
-        return callback(null, e);
-      }
-    );
+  unregisterExpoPushTokenWithPushToken: function (expoPushToken) {
+    try {
+      const user = User.updateOne(
+        {
+          "notificationPreferences.expoPushTokens": expoPushToken,
+        },
+        {
+          $pull: { "notificationPreferences.expoPushTokens": expoPushToken },
+        }
+      );
+      return user;
+    } catch (error) {
+      console.log("ert", error);
+      return error;
+    }
   },
 };

@@ -18,11 +18,13 @@ const chatMessageSchema = new Schema({
   messageType: {
     type: String,
     default: "message",
-    enum: ["message", "info"],
+    enum: ["message", "info", "file"],
   },
 
   message: { type: String, default: "", trim: true },
-
+  filename: {
+    type: String,
+  },
   tags: [
     {
       startIndex: Number,

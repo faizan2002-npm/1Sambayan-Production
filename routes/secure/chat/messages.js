@@ -47,4 +47,22 @@ router.get("/list/:chatRoom", protect, async (req, res) => {
   }
 });
 
+router.post("/delete-message/:messageId", protect, async (req, res) => {
+  try {
+    let { messageId } = req.params;
+    if (!messageId) throw new Error("Missing Message Id");
+    const deleteMessage = await ChatMessage.findByIdAndUpdate(
+      messageId,
+      {
+        isDeleted: true,
+      },
+      { new: true }
+    );
+    res.status(200).json({ message: "message has been deleted successfully!" });
+  } catch (error) {
+    console.log("ERROR CHAT", error);
+    res.status(400).json({ message: error });
+  }
+});
+
 module.exports = router;

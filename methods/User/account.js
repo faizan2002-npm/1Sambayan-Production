@@ -42,6 +42,14 @@ const methods = {
         res.status(404).send("User already registered with this Email Address");
       } else {
         // Saving User in DataBase
+        let expoToken = [];
+        let fcmToken = [];
+        if (expoPushToken) {
+          expoToken.push(expoPushToken);
+        }
+        if (fcmPushToken) {
+          fcmToken.push(fcmPushToken);
+        }
         const user = await User.create({
           firstName,
           middleName,
@@ -56,15 +64,20 @@ const methods = {
           password: hashedPassword,
           phone,
           fbLink,
-        });
-        if (expoPushToken) {
-          user.notificationPreferences.expoPushTokens.push(expoPushToken);
-        }
-        if (fcmPushToken) {
-          user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
-        }
-        helpers.sendTokenResponse(user, 200, res);
+          notificationPreferences: {
+            expoPushTokens: [
+              ...expoToken
+            ],
 
+            fcmPushTokens: [
+              ...fcmToken
+            ]
+          }
+
+        });
+        console.log("req.body",req.body)
+        console.log("user",user)
+        helpers.sendTokenResponse(user, 200, res);
         // return res.status(200).json({ user: user });
       }
     } catch (err) {
@@ -284,8 +297,8 @@ const methods = {
     if (!email || !password) {
       return res.status(400).send("Please provide email and password");
     }
-    const user = await User.findOne({ email: email }).select("+password");
-    if (!user) {
+    const getUser = await User.findOne({ email: email }).select("+password");
+    if (!getUser) {
       const party = await Party.findOne({ email: email }).select("+password");
       if (party) {
         const isMatch = await party.matchPassword(password);
@@ -297,16 +310,17 @@ const methods = {
         return res.status(400).send("You are not registered, Please Sign up!");
       }
     } else {
-      const isMatch = await user.matchPassword(password);
+      const isMatch = await getUser.matchPassword(password);
       if (!isMatch) {
         return res.status(400).send("Password is Invalid");
       }
       if (expoPushToken) {
-        user.notificationPreferences.expoPushTokens.push(expoPushToken);
+        getUser.notificationPreferences.expoPushTokens.push(expoPushToken);
       }
       if (fcmPushToken) {
-        user.notificationPreferences.fcmPushTokens.push(fcmPushToken);
+        getUser.notificationPreferences.fcmPushTokens.push(fcmPushToken);
       }
+      const user =  await getUser.save();
       helpers.sendTokenResponse(user, 200, res);
     }
   }),

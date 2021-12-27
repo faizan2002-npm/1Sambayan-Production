@@ -39,7 +39,7 @@ module.exports = (socket) => {
 
     acknowledge({
       type: "success",
-      mesasge: "message seened",
+      mesasge: "message seen",
     });
 
     chatMessage.chatRoom.members.forEach(async (member) => {
