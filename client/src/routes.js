@@ -413,7 +413,7 @@ function _1Sambalita() {
   return null;
 }
 function _1SambalitaDonate() {
-  window.location.href = 'http://socialwolf.co.in/donate'; 
+  window.location.href = 'https://1donation.org/donate'; 
   return null;
 }
 var routes = [
