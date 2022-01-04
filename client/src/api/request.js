@@ -4,7 +4,7 @@ const qs = require("querystring");
 //DEV
 // const baseURL = "http://localhost:3000";
 //Production
-const baseURL = "https://votewatchers.co.in";
+const baseURL = "https://1sambayan.org";
 
 export const postRequest = async (url, body = {}, headers = {}) => {
   let xform = qs.stringify(body);

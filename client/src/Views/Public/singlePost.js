@@ -36,7 +36,7 @@ const SinglePost = () => {
         <>
             {
                 (postData) ? <>
-                    <PublicLayout title={(postData.title) ? postData.title.substring(0, 50) : postData.title} description={(postData.description) ? postData.description.substring(0, 150) : postData.description} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + postData.image} url={`https://votewatchers.co.in/singlePost?_id=${parsed._id}`}>
+                    <PublicLayout title={(postData.title) ? postData.title.substring(0, 50) : postData.title} description={(postData.description) ? postData.description.substring(0, 150) : postData.description} image={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + postData.image} url={`https://1sambayan.org/singlePost?_id=${parsed._id}`}>
 
                         <main id="main_content">
                             <section className="section-9">
