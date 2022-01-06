@@ -66,19 +66,25 @@ const Contact = () => {
     return (
         <PublicLayout>
             <main id="main_content">
-                <section className="contact_sec mt-5   py-5">
+                <section className="contact_sec mt-5 py-5">
                     <Container>
                         <Row className="justify-content-center">
                             <Col lg={6} md={6} xs={12}>
                                 <h1>Contact Us</h1>
                                 <p>
-                                    <b>Address:</b> 2904 West Tower. Tektite Building, Pasig City
+                                    <b>Authorized Rep:</b> Br. Armin A. Luistro FSC
                                 </p>
                                 <p>
-                                    <b>Office hours:</b> 9am - 5pm
+                                    <b>Email Address:</b> <a href="mailto:1SAMBAYAN.Secretariat@gmail.com">1SAMBAYAN.Secretariat@gmail.com</a>
                                 </p>
                                 <p>
-                                    <b>Tel. no.:</b> 8633-6113
+                                    <b>Phone Number:</b> <a href="tel:+63 8721-2000">+63 8721-2000</a>
+                                </p>
+                                <p>
+                                    <b>Mailing Address:</b> 343 Ortigas Avenue, Mandaluyong City 1550 PH
+                                </p>
+                                <p>
+                                    <b>Office Hours:</b> 9am - 5pm (Monday through Friday)
                                 </p>
                             </Col>
                             <Col lg={6} md={6} xs={12}>
