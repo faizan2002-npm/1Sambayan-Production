@@ -271,6 +271,87 @@ router.delete(
   }
 );
 
+router.delete("/delete-group/:chatRoom", protect, async (req, res) => {
+  try {
+    const { chatRoom } = req.params;
+    if (!validateObjectbyId(chatRoom))
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const user = req.user;
+
+    const room = await ChatRoom.findOne({
+      _id: chatRoom,
+      roomType: "group",
+      "members.memberId": { $in: user._id },
+      "member.role": "admin",
+    });
+
+    if (!room)
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const updatedRoom = await ChatRoom.findByIdAndDelete(chatRoom);
+
+    res.status(200).json({ message: "Chatroom deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.post("/add-member/:chatRoom", protect, async (req, res) => {
+  try {
+    const { chatRoom } = req.params;
+    const { memberId } = _.pick(req.body, ["memberId"]);
+    if (!validateObjectbyId(chatRoom))
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const user = req.user;
+
+    const room = await ChatRoom.findOne({
+      _id: chatRoom,
+      roomType: "group",
+      "members.memberId": { $in: user._id },
+      "member.role": "admin",
+    });
+
+    if (!room)
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const updatedRoom = await ChatRoom.findByIdAndUpdate(
+      chatRoom,
+      {
+        $push: {
+          members: {
+            memberId: memberId,
+            role: "member",
+            chatCount: 0,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    res.send(updatedRoom);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 router.delete("/leave_group/:chatRoom", protect, async (req, res) => {
   const { chatRoom } = req.params;
 
