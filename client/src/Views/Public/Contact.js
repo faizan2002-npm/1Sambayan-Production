@@ -75,10 +75,14 @@ const Contact = () => {
                                     <b>Authorized Rep:</b> Br. Armin A. Luistro FSC
                                 </p>
                                 <p>
-                                    <b>Email Address:</b> <a href="mailto:1SAMBAYAN.Secretariat@gmail.com">1SAMBAYAN.Secretariat@gmail.com</a>
+                                    <b>Email Address:</b> <a href="mailto:1SAMBAYAN.Secretariat@gmail.com" style={{
+                                        color: '#ee4c89'
+                                    }}>1SAMBAYAN.Secretariat@gmail.com</a>
                                 </p>
                                 <p>
-                                    <b>Phone Number:</b> <a href="tel:+63 8721-2000">+63 8721-2000</a>
+                                    <b>Phone Number:</b> <a href="tel:+63 8721-2000" style={{
+                                        color: '#ee4c89'
+                                    }}>+63 8721-2000</a>
                                 </p>
                                 <p>
                                     <b>Mailing Address:</b> 343 Ortigas Avenue, Mandaluyong City 1550 PH
@@ -96,12 +100,12 @@ const Contact = () => {
                                             <Row>
                                                 <Col lg={6} md={6} xs={12}>
                                                     <FormGroup className="mb-4">
-                                                        <Label>First Name</Label>
+                                                        <Label>Full Name</Label>
 
                                                         <AvField
                                                             name="firstName"
                                                             type="text"
-                                                            placeholder="First Name"
+                                                            placeholder="Full Name"
                                                             className="form-control"
                                                             required
                                                         />
