@@ -346,7 +346,7 @@ router.post("/add-member/:chatRoom", protect, async (req, res) => {
         },
       },
       { new: true }
-    );
+    ).populate("members.memberId");
 
     res.send(updatedRoom);
   } catch (error) {
