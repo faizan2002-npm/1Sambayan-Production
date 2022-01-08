@@ -160,24 +160,8 @@ router.post("/create_group_chat", protect, async (req, res) => {
     isPublic,
     roomType: "group",
     createdBy: user._id,
+    image,
   };
-
-  if (image) {
-    const imageMedia = await ImageMedia.findOneAndUpdate(
-      { _id: image },
-      { isUsed: true },
-      { new: true }
-    );
-
-    if (!imageMedia)
-      return res.status(400).send({
-        error: {
-          message: "Invalid image id.",
-        },
-      });
-
-    chatRoomBuilder.image = imageMedia;
-  }
 
   const room = await new ChatRoom(chatRoomBuilder).save();
 
@@ -185,7 +169,7 @@ router.post("/create_group_chat", protect, async (req, res) => {
     "members.memberId",
     USER_PUBLIC_FIELDS
   );
-  res.send(populatedRoom);
+  res.status(200).send(populatedRoom);
 });
 
 router.put("/reset_my_chat_count/:id", protect, async (req, res) => {
