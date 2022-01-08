@@ -222,42 +222,44 @@ router.delete(
   "/remove_member_from_group/:chatRoom",
   protect,
   async (req, res) => {
-    const { chatRoom } = req.params;
-    const { memberId } = _.pick(req.body, ["memberId"]);
-    if (!validateObjectbyId(chatRoom))
-      return res.status(400).send({
-        error: {
-          message: "Invalid group Id",
-        },
+    try {
+      const { chatRoom } = req.params;
+      const { memberId } = _.pick(req.body, ["memberId"]);
+      if (!validateObjectbyId(chatRoom))
+        return res.status(400).send({
+          error: {
+            message: "Invalid group Id",
+          },
+        });
+
+      const user = req.user;
+
+      const room = await ChatRoom.findOne({
+        _id: chatRoom,
+        roomType: "group",
+        "members.memberId": { $in: user._id },
+        "member.role": "admin",
       });
+      if (!room)
+        return res.status(400).send({
+          error: {
+            message: "Invalid group Id",
+          },
+        });
 
-    const user = req.user;
-
-    const room = await ChatRoom.findOne({
-      _id: chatRoom,
-      roomType: "group",
-      "members.memberId": { $in: user._id },
-      "member.role": "admin",
-    });
-
-    if (!room)
-      return res.status(400).send({
-        error: {
-          message: "Invalid group Id",
+      const updatedRoom = await ChatRoom.findByIdAndUpdate(
+        chatRoom,
+        {
+          $pull: {
+            members: { memberId: memberId },
+          },
         },
-      });
-
-    const updatedRoom = await ChatRoom.findByIdAndUpdate(
-      chatRoom,
-      {
-        $pull: {
-          "members.memberId": memberId,
-        },
-      },
-      { new: true }
-    );
-
-    res.send(updatedRoom);
+        { new: true }
+      );
+      res.status(200).send(updatedRoom);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
 
     // const io = socketIO.getIO();
     // if (io) {
