@@ -73,9 +73,11 @@ class CreatePost extends React.Component {
 
             console.log("status", response);
             if (response.result.status === 200) {
-                const sendNoti = sendNotification(token,{notificationTitle:'New Post Added',notificationBody:'New post added by client please check'});
-                if(sendNoti == 'success'){
-                    toast.success('Post Created', {
+                // const sendNoti = sendNotification(token,{notificationTitle:'New Post Added',notificationBody:'New post added by client please check'});
+                // if(sendNoti == 'success'){
+                    
+                // }
+                toast.success('Post Created', {
                         position: "bottom-right",
                         autoClose: 2000,
                         hideProgressBar: false,
@@ -85,7 +87,6 @@ class CreatePost extends React.Component {
                         progress: undefined,
                     });
                     window.location.assign('/admin/ListPost');
-                }
             }
         } catch (error) {
             console.log("Set Profile APi error", error.message);
