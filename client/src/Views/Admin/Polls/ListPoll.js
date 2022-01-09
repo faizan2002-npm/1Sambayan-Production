@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import Poll from 'react-polls';
 import { LeafPoll, Result } from 'react-leaf-polls'
+import * as _ from 'underscore'
 
 const ExpandedComponent = ({ data }) => {
     const updateSlideHandler = async (e) => {
@@ -320,7 +321,7 @@ const ListPoll = () => {
                             <CardBody className="p-0">
                                 <DataTable
                                     columns={tableHead}
-                                    data={tableData}
+                                    data={_.sortBy(tableData, 'total').reverse()}
                                     expandableRows
                                     style={{
                                         borderRadius: "5px"

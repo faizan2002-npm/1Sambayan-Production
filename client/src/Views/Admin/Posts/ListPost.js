@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import * as _ from 'underscore'
 
 // A super simple expandable component.
 function camelize(str) {
@@ -267,7 +268,7 @@ const ListPost = () => {
                             <CardBody className="p-0">
                                 <DataTable
                                     columns={tableHead}
-                                    data={tableData}
+                                    data={_.sortBy(tableData, 'total').reverse()}
                                     expandableRows
                                     style={{
                                         borderRadius: "5px"

@@ -54,11 +54,11 @@ const Footer = () => {
                                             <FontAwesomeIcon icon={faTwitter} />
                                         </Nav.Link>
                                     </Nav.Item>
-                                    <Nav.Item as="li">
+                                    {/* <Nav.Item as="li">
                                         <Nav.Link href={siteSetting.LinkedIn} target="_BLANK">
                                             <FontAwesomeIcon icon={faWhatsapp} />
                                         </Nav.Link>
-                                    </Nav.Item>
+                                    </Nav.Item> */}
                                 </Nav>
                                 <Nav className="mt-3" as="ul">
                                     <Nav.Item as="li">

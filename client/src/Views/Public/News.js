@@ -4,6 +4,7 @@ import PublicLayout from './../../layouts/Public/PublicLayout';
 import { useState, useEffect } from 'react';
 import { PostCard } from './../../components/Public/PostCard';
 import { Container, Row, Col } from 'react-bootstrap';
+import * as _ from 'underscore'
 
 const News = () => {
     const [postData, setPostData] = useState([]);
@@ -91,7 +92,7 @@ const News = () => {
                                         }
                                     </OwlCarousel> */}
                                         {
-                                            postData.map((e, index) => (
+                                             _.sortBy(postData, 'total').reverse().map((e, index) => (
                                                 <PostCard link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
                                             ))
                                         }

@@ -20,7 +20,7 @@ import {
     Input,
     Label
 } from "reactstrap";
-
+import * as _ from 'underscore'
 const Home = () => {
     const history = useHistory();
     const [index, setIndex] = useState(0);
@@ -374,7 +374,7 @@ const Home = () => {
                 `/api/secure/site/header-list`,
                 token
             );
-            
+
             setSlides(response.result.data.headers)
         } catch (error) {
             console.log("Get Site Setting Error", error);
@@ -387,7 +387,7 @@ const Home = () => {
                 `/api/secure/site/`,
                 token
             );
-            
+
             setBigVideo(response.result.data.site[0]);
         } catch (error) {
             console.log("Get Site Setting Error", error);
@@ -400,7 +400,7 @@ const Home = () => {
                 `/api/secure/post/post-list`,
                 token
             );
-            
+
             setLatestPosts(response.result.data.posts)
 
         } catch (error) {
@@ -736,9 +736,13 @@ const Home = () => {
                                 <Col lg={10} md={10} xs={12}>
                                     <h1>{latestPostsSection.heading}</h1>
                                     {
-                                        latestPosts.slice(0, 4).map((e, index) => (
+                                        _.sortBy(latestPosts.slice(Math.max(latestPosts.length - 5, 1)), 'total').reverse().map((e, index) => (
                                             <PostCard readMore={true} link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
                                         ))
+                                        //    _.sortBy(latestPosts.slice(0, 4), function(o) { return o.createdAt; })
+                                        // latestPosts.slice(0, 4).map((e, index) => (
+                                        //     <PostCard readMore={true} link={`/singlePost?_id=${e._id}`} key={`id_${e._id}_${index}`} heading={e.title} text={e.description} time={e.createdAt} video={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.image} image={false} grid={true} />
+                                        // ))
                                     }
                                     <Row>
                                         <Col xs={12} className="d-flex justify-content-lg-end justify-content-center">

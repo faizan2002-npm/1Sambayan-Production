@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PublicLayout from './../../layouts/Public/PublicLayout';
+import PublicLayout from '../../layouts/Public/PublicLayout';
 import { Link } from 'react-router-dom';
 import { getRequest } from '../../api/request';
 const queryString = require('query-string');

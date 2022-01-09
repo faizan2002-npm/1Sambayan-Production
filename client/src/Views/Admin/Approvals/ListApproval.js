@@ -10,7 +10,7 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-// A super simple expandable component.
+import * as _ from 'underscore'
 function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
         return index === 0 ? word.toLowerCase() : word.toUpperCase();
@@ -85,7 +85,7 @@ const ListApproval = () => {
                             <CardBody className="p-0">
                                 <DataTable
                                     columns={tableHead}
-                                    data={tableData}
+                                    data={_.sortBy(tableData, 'total').reverse()}
                                     style={{
                                         borderRadius: "5px"
                                     }}

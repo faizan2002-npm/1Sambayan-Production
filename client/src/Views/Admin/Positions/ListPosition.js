@@ -10,6 +10,7 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { CardTitle } from 'reactstrap';
+import * as _ from 'underscore'
 
 const ExpandedComponent = ({ data }) => {
     const [defaultData, setDefaultSlideData] = useState({
@@ -256,7 +257,7 @@ const ListPosition = () => {
                             <CardBody className="p-0">
                                 <DataTable
                                     columns={tableHead}
-                                    data={tableData}
+                                    data={_.sortBy(tableData, 'total').reverse()}
                                     expandableRows
                                     style={{
                                         borderRadius: "5px"
