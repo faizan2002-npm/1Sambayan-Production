@@ -200,7 +200,7 @@ const Sidebar = (props) => {
               <DropdownItem divider />
               <DropdownItem to="#pablo" onClick={() => {
                   localStorage.removeItem("TOKEN");
-                  history.push("/login");
+                  history.push("/");
                 }}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>

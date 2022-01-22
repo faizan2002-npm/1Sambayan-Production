@@ -23,7 +23,7 @@ const Auth = (props) => {
   } else {
     var pathName = window.location.pathname;
     if (location.pathname.indexOf('/admin') > -1) {
-      history.push("/login");
+      history.push("/");
     }
   }
   React.useEffect(() => {

@@ -74,7 +74,7 @@ const PartyNavbar = (props) => {
                 <DropdownItem divider />
                 <DropdownItem to="#pablo" onClick={() => {
                   localStorage.clear();
-                  history.push("/login");
+                  history.push("/");
                 }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>

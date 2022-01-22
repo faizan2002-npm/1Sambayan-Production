@@ -17,7 +17,7 @@ const UserLayout = ({ children }) => {
     }  else {
         var pathName = window.location.pathname;
         if (location.pathname.indexOf('/account') > -1) {
-            history.push("/login");
+            history.push("/");
         }
     }
     const adjuster = () => {

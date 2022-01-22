@@ -243,7 +243,7 @@ const Account = () => {
                             <div className="col-lg-4 col-md-4 col-12">
                                 <button className="btn w-100" onClick={() => {
                                     localStorage.clear();
-                                    history.push("/login");
+                                    history.push("/");
                                 }}>
                                     <div className="d-flex">
                                         <div className="back text-white">
