@@ -118,7 +118,7 @@ var port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log("Listening to port " + `${port}`);
 });
-
+server.timeout = 120000;
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
 }

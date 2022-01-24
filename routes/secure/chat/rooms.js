@@ -8,6 +8,7 @@ const {
   createGroupChatSchema,
   removeMemberSchema,
 } = require("../../../validators/chat/room");
+const upload = require("../../../services/multer");
 
 const socketIO = require("../../../services/socketIO");
 const ChatMessage = require("../../../models/Chat/ChatMessage");
@@ -138,15 +139,19 @@ router.get("/get_private_chat_room/:memberId", protect, async (req, res) => {
   }
 });
 
-router.post("/create_group_chat", protect, async (req, res) => {
+router.post("/create_group_chat", [protect, upload.single("image")], async (req, res) => {
+  console.log("req.body", req.body);
   const {
     name = "",
     description = "",
     members = [],
-    image,
     isPublic,
-  } = _.pick(req.body, ["name", "description", "members", "image", "isPublic"]);
-
+  } = _.pick(req.body, ["name", "description", "members", "isPublic"]);
+  let image;
+  console.log('req.file', req.file)
+  if (req.file) {
+    image = req.file.key;
+  }
   const user = req.user;
   const chatRoomBuilder = {
     name,
@@ -160,7 +165,7 @@ router.post("/create_group_chat", protect, async (req, res) => {
     isPublic,
     roomType: "group",
     createdBy: user._id,
-    image,
+    image: image ? image : "",
   };
 
   const room = await new ChatRoom(chatRoomBuilder).save();
@@ -202,59 +207,65 @@ router.put("/reset_my_chat_count/:id", protect, async (req, res) => {
   await chatRoom.save();
   res.send({ message: "Room Chat count updated", count: 0 });
 });
-router.delete(
-  "/remove_member_from_group/:chatRoom",
-  protect,
-  async (req, res) => {
-    try {
-      const { chatRoom } = req.params;
-      const { memberId } = _.pick(req.body, ["memberId"]);
-      if (!validateObjectbyId(chatRoom))
-        return res.status(400).send({
-          error: {
-            message: "Invalid group Id",
-          },
-        });
-
-      const user = req.user;
-
-      const room = await ChatRoom.findOne({
-        _id: chatRoom,
-        roomType: "group",
-        "members.memberId": { $in: user._id },
-        "member.role": "admin",
-      });
-      if (!room)
-        return res.status(400).send({
-          error: {
-            message: "Invalid group Id",
-          },
-        });
-
-      const updatedRoom = await ChatRoom.findByIdAndUpdate(
-        chatRoom,
-        {
-          $pull: {
-            members: { memberId: memberId },
-          },
+router.delete("/remove_member_from_group/:chatRoom/:memberId", protect, async (req, res) => {
+  try {
+    console.log('req.params', req.params)
+    let message;
+    const { chatRoom, memberId } = _.pick(req.params, ["memberId", "chatRoom"]);
+    // console.log('req.params chatRoom', chatRoom)
+    // console.log('req.params memberId', memberId)
+    if (!validateObjectbyId(chatRoom))
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
         },
-        { new: true }
-      );
-      res.status(200).send(updatedRoom);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+      });
 
-    // const io = socketIO.getIO();
-    // if (io) {
-    //   room.members.forEach((member) => {
-    //     io.to(member.memberId.toHexString()).emit(
-    //       "member_left_chat_group",
-    //       responseObj
-    //     );
-    //   });
-    // }
+    const user = req.user;
+
+    const room = await ChatRoom.findOne({
+      _id: chatRoom,
+      roomType: "group",
+      "members.memberId": { $in: user._id },
+      "member.role": "admin",
+    });
+    if (!room)
+      return res.status(400).send({
+        error: {
+          message: "Invalid group Id",
+        },
+      });
+
+    const updatedRoom = await ChatRoom.findByIdAndUpdate(
+      chatRoom,
+      {
+        $pull: {
+          members: { _id:memberId },
+        },
+      },
+      { new: true }
+    );
+
+    console.log('updatedRoom', updatedRoom)
+    if (updatedRoom) {
+      message = "Chatroom deleted successfully";
+    }
+    // console.log(message)
+    res.status(200).json({ message: message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
+
+  // const io = socketIO.getIO();
+  // if (io) {
+  //   room.members.forEach((member) => {
+  //     io.to(member.memberId.toHexString()).emit(
+  //       "member_left_chat_group",
+  //       responseObj
+  //     );
+  //   });
+  // }
+}
 );
 
 router.delete("/delete-group/:chatRoom", protect, async (req, res) => {
