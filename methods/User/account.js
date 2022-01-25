@@ -350,7 +350,7 @@ const methods = {
         try {
           await sendEmail({
             email: user.email,
-            subject: "Password reset token",
+            subject: "1SAMBAYAN - Password rest request",
             message: message,
           });
           return res.status(200).json({ success: true, data: "Email sent" });
