@@ -342,7 +342,10 @@ const methods = {
       if (user) {
         const resetToken = await user.getResetPasswordToken();
         await user.save({ validateBeforeSave: false });
-        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
+        const message = `You are receiving this email because you or someone else has requested the password for your account with 1SAMBAYAN, to be reset.
+        If it is not you, who has requested the password to be reset, please ignore this mail.
+        If you have requested for the password to be reset, please click on the link listed below.
+        ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
 
         try {
           await sendEmail({
@@ -360,12 +363,15 @@ const methods = {
         const resetToken = await party.getResetPasswordToken();
         // console.log("resetToken", resetToken);
         await party.save({ validateBeforeSave: false });
-        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
+        const message = `You are receiving this email because you or someone else has requested the password for your account with 1SAMBAYAN, to be reset.
+        If it is not you, who has requested the password to be reset, please ignore this mail.
+        If you have requested for the password to be reset, please click on the link listed below.
+        ${process.env.BASE_URL}/auth/setNewPassword?token=${resetToken}`;
 
         try {
           await sendEmail({
             email: party.email,
-            subject: "Password reset token",
+            subject: "1SAMBAYAN - Password rest request",
             message: message,
           });
           return res.status(200).json({ success: true, data: "Email sent" });

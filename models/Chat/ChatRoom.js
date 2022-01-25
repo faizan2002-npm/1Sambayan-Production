@@ -34,6 +34,10 @@ const chatRoomSchema = new Schema({
         ref: "User",
         index: true,
       },
+      status: {
+        type: String,
+        enum: ["Pending", "Approved", "Declined"],
+      },
       role: {
         type: String,
         enum: ["admin", "member", "join_requester"],
@@ -64,6 +68,10 @@ const chatRoomSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Active", "InActive"],
   },
 
   createdAt: {
