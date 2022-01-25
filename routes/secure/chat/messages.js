@@ -3,6 +3,7 @@ const _ = require("lodash");
 const { protect } = require("../../../middlewares/auth");
 const ChatMessage = require("../../../models/Chat/ChatMessage");
 const ChatRoom = require("../../../models/Chat/ChatRoom");
+const upload = require("../../../services/multer");
 
 const USER_PUBLIC_FIELDS =
   "firstname lastname image.thumbnailUrl image.imageUrl image.aspectRatio";
@@ -61,6 +62,15 @@ router.post("/delete-message/:messageId", protect, async (req, res) => {
     res.status(200).json({ message: "message has been deleted successfully!" });
   } catch (error) {
     console.log("ERROR CHAT", error);
+    res.status(400).json({ message: error });
+  }
+});
+
+router.post("/uploadfiles", [protect,  upload.single("image")], async (req, res) => {
+  try {
+    res.status(200).json({ url: req.file.key });
+  } catch (error) {
+    console.log("ERROR IN UPLOADING FILES", error);
     res.status(400).json({ message: error });
   }
 });
