@@ -74,7 +74,27 @@ router.get("/my_chat_rooms", protect, async (req, res) => {
   res.send(rooms);
 });
 
-router.get("/get_room/:id", async (req, res) => {
+router.get("/single/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!validateObjectbyId(id))
+    return res.status(400).send({
+      error: {
+        message: "Invalid Room Id",
+      },
+    });
+
+  const room = await ChatRoom.findById(id);
+
+  if (!room)
+    return res.status(404).send({
+      error: {
+        message: "Room Not Found.",
+      },
+    });
+
+  res.send(room);
+});
+router.get("/get_room/:id", protect, async (req, res) => {
   const { id } = req.params;
   if (!validateObjectbyId(id))
     return res.status(400).send({
@@ -180,6 +200,38 @@ router.post(
       USER_PUBLIC_FIELDS
     );
     res.status(200).send(populatedRoom);
+  }
+);
+
+router.put(
+  "/update_group_chat",
+  [protect, upload.single("image")],
+  async (req, res) => {
+    console.log('req.body',req.body)
+    const {
+      name = "",
+      description = "",
+      chatroomId,
+    } = _.pick(req.body, ["name", "description", "chatroomId"]);
+    let image;
+    // console.log("req.file", req.file);
+    if (req.file) {
+      image = req.file.key;
+    }
+
+    let room = await ChatRoom.findById(chatroomId);
+    if (name) {
+      room.name = name;
+    }
+    if (description) {
+      room.description = description;
+    }
+    if (image) {
+      room.image = image;
+    }
+    await room.save();
+
+    res.status(200).json({ message: "Group updated successfully!",room });
   }
 );
 
