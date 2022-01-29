@@ -268,7 +268,7 @@ const MemberEditProfile = () => {
     return (
         <UserLayout>
             <main id="main_content">
-                <section className="latest_posts  bg-white v2">
+                <section className="latest_posts  bg-white v2 mt-5">
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-lg-10 col-md-10 col-12">

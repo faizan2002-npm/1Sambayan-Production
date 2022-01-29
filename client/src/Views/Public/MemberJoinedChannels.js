@@ -26,7 +26,7 @@ const MemberJoinedChannels = () => {
     return (
         <UserLayout>
             <main id="main_content">
-                <section className="py-5">
+                <section className="py-5 mt-5">
                     <Container>
                         <h1 className="text-center">
                             My Approvals

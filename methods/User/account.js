@@ -39,7 +39,9 @@ const methods = {
       const hashedPassword = await helpers.genHashPassword(password);
 
       if (result) {
-        res.status(404).send("User already registered with this Email Address");
+        res
+          .status(400)
+          .json({ message: "User already registered with this Email Address" });
       } else {
         // Saving User in DataBase
         let expoToken = [];
@@ -65,18 +67,13 @@ const methods = {
           phone,
           fbLink,
           notificationPreferences: {
-            expoPushTokens: [
-              ...expoToken
-            ],
+            expoPushTokens: [...expoToken],
 
-            fcmPushTokens: [
-              ...fcmToken
-            ]
-          }
-
+            fcmPushTokens: [...fcmToken],
+          },
         });
-        console.log("req.body",req.body)
-        console.log("user",user)
+        console.log("req.body", req.body);
+        console.log("user", user);
         helpers.sendTokenResponse(user, 200, res);
         // return res.status(200).json({ user: user });
       }
@@ -98,7 +95,11 @@ const methods = {
     let partyId = req.query.partyId;
 
     try {
-      const users = await User.find({ role: "user", isDeleted: false, partyId });
+      const users = await User.find({
+        role: "user",
+        isDeleted: false,
+        partyId,
+      });
       return res.status(200).json({ users });
     } catch (err) {
       next(err);
@@ -297,13 +298,24 @@ const methods = {
     if (!email || !password) {
       return res.status(400).send("Please provide email and password");
     }
-    const getUser = await User.findOne({ email: email }).select("+password");
+    const getUser = await User.findOne({
+      email: email,
+    }).select("+password");
     if (!getUser) {
-      const party = await Party.findOne({ email: email }).select("+password");
+      const party = await Party.findOne({
+        email: email,
+      }).select("+password");
       if (party) {
         const isMatch = await party.matchPassword(password);
         if (!isMatch) {
           return res.status(400).send("Password is Invalid");
+        }
+        const isDeleteed = await Party.findOne({
+          isDeleted: false,
+          email: email,
+        });
+        if (!isDeleteed) {
+          return res.status(400).send("Party Deleted by Admin");
         }
         helpers.sendTokenResponse(party, 200, res);
       } else {
@@ -314,13 +326,20 @@ const methods = {
       if (!isMatch) {
         return res.status(400).send("Password is Invalid");
       }
+      const isDeleteed = await User.findOne({
+        email: email,
+        isDeleted: false,
+      });
+      if (!isDeleteed) {
+        return res.status(400).send("User Deleted by Admin");
+      }
       if (expoPushToken) {
         getUser.notificationPreferences.expoPushTokens.push(expoPushToken);
       }
       if (fcmPushToken) {
         getUser.notificationPreferences.fcmPushTokens.push(fcmPushToken);
       }
-      const user =  await getUser.save();
+      const user = await getUser.save();
       helpers.sendTokenResponse(user, 200, res);
     }
   }),
@@ -379,7 +398,6 @@ const methods = {
           return res.status(404).json({ message: "Internelm Error" });
         }
       }
-
     } catch (err) {
       next(err);
     }
@@ -392,7 +410,9 @@ const methods = {
       const password = req.body.password;
       const hashedPassword = await helpers.genHashPassword(password);
       let user = await User.findOne({ resetPasswordToken: resetPasswordToken });
-      let party = await Party.findOne({ resetPasswordToken: resetPasswordToken });
+      let party = await Party.findOne({
+        resetPasswordToken: resetPasswordToken,
+      });
       if (user) {
         user.password = hashedPassword;
         user.resetPasswordToken = undefined;
@@ -410,11 +430,8 @@ const methods = {
           .status(200)
           .json({ message: "Password has been Updated successfully" });
       } else {
-        return res
-          .status(400)
-          .json({ message: "Register First" });
+        return res.status(400).json({ message: "Register First" });
       }
-
     } catch (error) {
       next(error);
     }
@@ -433,13 +450,7 @@ const methods = {
   }),
   contactUs: asyncHandler(async (req, res, next) => {
     try {
-      const {
-        name,
-        email,
-        phone,
-        subject,
-        message,
-      } = req.body;
+      const { name, email, phone, subject, message } = req.body;
       const messageBody = `You are receiving this email because someone has filled Contact Us Form. Please have a look:
       Name: ${name},
       Email: ${email},
@@ -448,7 +459,7 @@ const methods = {
 
       await sendEmail({
         from: email,
-        email: '1SAMBAYAN.Secretariat@gmail.com',
+        email: "1SAMBAYAN.Secretariat@gmail.com",
         subject,
         message: messageBody,
       });

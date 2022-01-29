@@ -612,7 +612,7 @@ const Home = () => {
             );
 
             console.log("status", response);
-            if (response.result.status === 200) {
+            if (response?.result?.status === 200) {
                 localStorage.setItem(
                     "TOKEN",
                     response.result.data.token
@@ -638,8 +638,9 @@ const Home = () => {
                     response.result.data.user._id
                 );
                 history.push("/account");
+            }else{
+                alert(`ERROR: ${response.error.response.data.message}`)
             }
-
         } catch (error) {
             console.log("Set Profile APi error", error.message);
         }

@@ -112,51 +112,53 @@ const MemberChannels = () => {
     return (
         <UserLayout>
         <main id="main_content">
-            <section className="py-5">
+            <section className="py-5 mt-5">
                 <Container>
                     <h1 className="text-center">
                         My Channels
                     </h1>
                     {
-                        (channelData) ?
-                            channelData.map((e, index) => (<>
-                                <Card className="mb-4">
-                                    <CardBody>
-                                        <Row>
-                                            <Col lg={6} md={9} xs={9} className="align-self-center">
-                                                <Row>
-                                                    <Col lg={3} md={3} xs={4} className="align-self-center">
-                                                        <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.icon} fluid style={{
-                                                            width: "55px",
-                                                            height: "55px",
-                                                            objectFit: "cover",
-                                                            borderRadius: "50%",
-                                                            boxShadow: "0px 0px 6px 1px #00000061",
+                        (channelData?.length)?(channelData) ?
+                        channelData.map((e, index) => (<>
+                            <Card className="mb-4">
+                                <CardBody>
+                                    <Row>
+                                        <Col lg={6} md={9} xs={9} className="align-self-center">
+                                            <Row>
+                                                <Col lg={3} md={3} xs={4} className="align-self-center">
+                                                    <Image src={"https://sambayan-1.s3.ap-south-1.amazonaws.com/" + e.icon} fluid style={{
+                                                        width: "55px",
+                                                        height: "55px",
+                                                        objectFit: "cover",
+                                                        borderRadius: "50%",
+                                                        boxShadow: "0px 0px 6px 1px #00000061",
 
-                                                        }} />
-                                                    </Col>
-                                                    <Col lg={9} md={9} xs={8} className="align-self-center">
-                                                        <h2>
-                                                            {e.title}
-                                                        </h2>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col lg={6} md={3} xs={3} className="text-right align-self-center">
-                                                <button className="btn text-white" onClick={() => onNext(e._id, localStorage.getItem("USER_ID"))} disabled={disableButton(e)} style={{
-                                                    backgroundColor: renderButtonText(e) === "Joined" ? "#FF5EC1" : '#FF5EC1',
-                                                }}>
-                                                    {renderButtonText(e)}
-                                                </button>
-                                                {/* {renderButtonText(e)} */}
-                                            </Col>
-                                        </Row>
-                                    </CardBody>
-                                </Card>
-                            </>))
-                            : <>
-                                <p className="text-center">Loading</p>
-                            </>
+                                                    }} />
+                                                </Col>
+                                                <Col lg={9} md={9} xs={8} className="align-self-center">
+                                                    <h2>
+                                                        {e.title}
+                                                    </h2>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col lg={6} md={3} xs={3} className="text-right align-self-center">
+                                            <button className="btn text-white" onClick={() => onNext(e._id, localStorage.getItem("USER_ID"))} disabled={disableButton(e)} style={{
+                                                backgroundColor: renderButtonText(e) === "Joined" ? "#FF5EC1" : '#FF5EC1',
+                                            }}>
+                                                {renderButtonText(e)}
+                                            </button>
+                                            {/* {renderButtonText(e)} */}
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </>))
+                        : (<>
+                            <p className="text-center">Loading</p>
+                        </>):<>
+                            <p className="text-center">There are no active channels.</p>
+                        </>
                     }
                     <div className="row mt-4" >
                         <div className="col text-center">

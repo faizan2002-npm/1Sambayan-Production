@@ -253,3 +253,14 @@ main#main_content .latest_posts .form_box .form-control {
 main#main_content .latest_posts .card .card-body a.btn {
     color: #ff5ec1;
 }
+
+.login_form .input-group-alternative .form-group {
+    margin: 0;
+    width: 89%;
+}
+@media(max-width:425.98px){
+    .login_form .input-group-alternative .form-group {
+        margin: 0;
+        width: 84%;
+    }
+}

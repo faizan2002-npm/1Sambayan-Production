@@ -63,7 +63,7 @@ const Auth = (props) => {
         <AuthNavbar />
         <div className="header bg-gradient-info py-7 pt-xl-9">
           <Container>
-            <div className="header-body text-center mb-7">
+            <div className="header-body text-center mb-7 mt-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
                   {(location.pathname === '/auth/login') ? <>

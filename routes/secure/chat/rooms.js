@@ -207,7 +207,7 @@ router.put(
   "/update_group_chat",
   [protect, upload.single("image")],
   async (req, res) => {
-    console.log('req.body',req.body)
+    console.log("req.body", req.body);
     const {
       name = "",
       description = "",
@@ -231,7 +231,7 @@ router.put(
     }
     await room.save();
 
-    res.status(200).json({ message: "Group updated successfully!",room });
+    res.status(200).json({ message: "Group updated successfully!", room });
   }
 );
 
@@ -367,10 +367,11 @@ router.delete("/delete-group/:chatRoom", protect, async (req, res) => {
   }
 });
 
-router.post("/add-member/:chatRoom", protect, async (req, res) => {
+router.post("/add-members/:chatRoom", protect, async (req, res) => {
   try {
     const { chatRoom } = req.params;
-    const { memberId } = _.pick(req.body, ["memberId"]);
+    const { members = [] } = _.pick(req.body, ["members"]);
+    // console.log("req.body", req.body);
     if (!validateObjectbyId(chatRoom))
       return res.status(400).send({
         error: {
@@ -386,45 +387,73 @@ router.post("/add-member/:chatRoom", protect, async (req, res) => {
       "members.memberId": { $in: user._id },
       "member.role": "admin",
     });
-    if (!room)
+    if (!room) {
       return res.status(400).send({
         error: {
           message: "Invalid group Id",
         },
       });
-    const alreadyMember = await ChatRoom.findOne({
-      _id: chatRoom,
-      roomType: "group",
-      "members.memberId": { $in: memberId },
-      "member.role": "member",
-    });
-
-    if (alreadyMember)
-      return res.status(400).send({
-        error: {
-          message: "Already a member in group.",
-        },
-      });
-
-    const updatedRoom = await ChatRoom.findByIdAndUpdate(
-      chatRoom,
-      {
-        $push: {
-          members: {
-            memberId: memberId,
-            role: "member",
-            chatCount: 0,
+    } else {
+      const updatedRoom = await ChatRoom.findByIdAndUpdate(
+        chatRoom,
+        {
+          $push: {
+            members: [...members.map((mem) => {
+              return { memberId: mem._id, role: "member", chatCount: 0 };
+            })]
           },
         },
-      },
-      { new: true }
-    ).populate("members.memberId");
+        { new: true }
+      ).populate("members.memberId");
 
-    res.send(updatedRoom);
+      res.status(200).send(updatedRoom);
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
+router.get(
+  "/validate-member/:chatRoom/:memberId",
+  protect,
+  async (req, res) => {
+    try {
+      const { chatRoom, memberId } = _.pick(req.params, [
+        "memberId",
+        "chatRoom",
+      ]);
+      if (!validateObjectbyId(chatRoom)) {
+        res.status(400).send({
+          error: {
+            message: "Invalid group Id",
+          },
+        });
+      } else {
+        const alreadyMember = await ChatRoom.findOne({
+          _id: chatRoom,
+          roomType: "group",
+          "members.memberId": { $in: memberId },
+          // "member.role": "member",
+        });
+        if (alreadyMember) {
+          res.status(200).json({ chatRoom, memberId });
+        } else {
+          res.status(400).json({ chatRoom, memberId });
+        }
+      }
+
+      //
+
+      // if (alreadyMember) {
+      //    res.status(200);
+      // }else{
+      //    res.status(400);
+      // }
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
+);
 
 router.delete("/leave_group/:chatRoom", protect, async (req, res) => {
   const { chatRoom } = req.params;
