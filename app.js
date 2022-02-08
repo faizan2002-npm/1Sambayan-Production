@@ -13,11 +13,23 @@ const Joi = require("joi");
 var cors = require("cors");
 var mustacheExpress = require("mustache-express");
 const http = require("http");
+const https = require("https");
+const helmet = require("helmet");
+const tls = require('tls');
+const sanitize = require('sanitize');
+
 
 const app = express();
 app.use(cors());
-
-const server = http.createServer(app);
+app.use(helmet.frameguard());
+app.use(sanitize.middleware);
+let server;
+if (app.get("env") === "production") {
+  server = https.createServer(app);
+  tls.DEFAULT_MAX_VERSION = 'TLSv1.3';
+} else {
+  server = http.createServer(app);
+}
 //configuring socket io
 const socketIO = require("./services/socketIO");
 require("./socket.io/configure")(socketIO.initialize(server));
@@ -28,8 +40,8 @@ app.set("view engine", "html");
 //// Body Parser Middleware ////
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({limit:'50mb'})); 
-app.use(bodyParser.urlencoded({extended:true, limit:'50mb'})); 
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 //// Cookie Parser ////
 app.use(cookieParser());

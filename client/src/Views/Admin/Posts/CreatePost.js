@@ -15,6 +15,8 @@ class CreatePost extends React.Component {
             image: null,
             // video: null,
             defaultImage: null,
+            isApproved:true,
+            isAdmin:true
             // defaultVideo: null,
         }
     }
@@ -45,6 +47,14 @@ class CreatePost extends React.Component {
         formData.append(
             "backgroundImage",
             this.state.backgroundImage
+        );
+        formData.append(
+            "isApproved",
+            this.state.isApproved
+        );
+        formData.append(
+            "isAdmin",
+            this.state.isAdmin
         );
         // console.log("formData", formData);
         const featuredImage = {

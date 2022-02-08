@@ -23,16 +23,18 @@ const PartyLayout = (props) => {
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
-  if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "user")) {
-    history.push("/account");
-  } else if (localStorage.getItem("TOKEN") && (localStorage.getItem("ROLE") === "admin")) {
-    history.push("/admin");
-  } else {
-    var pathName = window.location.pathname;
-    if (location.pathname.indexOf('/admin') > -1) {
-      history.push("/");
+  if(localStorage.getItem("TOKEN")){
+    if(localStorage.getItem("ROLE") === "user"){
+      history.push("/account");
+    }if(localStorage.getItem("ROLE") === "admin"){
+      history.push("/admin");
+    }if(localStorage.getItem("ROLE") === "party"){
+
     }
+  }else{
+    history.push("/");
   }
+  
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/party") {

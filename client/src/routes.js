@@ -10,6 +10,8 @@ import OTPAuthentication from './Views/Auth/OTP';
 import Home from "./Views/Public/Home";
 import About from "./Views/Public/About";
 import Account from "./Views/Public/Account";
+import ManagerDashboard from "./Views/Public/ManagerDashboard";
+import ApproverDashboard from "./Views/Public/ApproverDashboard";
 import Contact from "./Views/Public/Contact";
 import Convenors from "./Views/Public/Convenors";
 import Events from "./Views/Public/Events";
@@ -406,6 +408,16 @@ function _singlePosition() {
 function _singlePoll() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Poll`)
   return <SinglePoll />
+}
+// singlePosition
+function _ApproverDashboard() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Approver Dashboard`)
+  return <ApproverDashboard />
+}
+// singlePoll
+function _ManagerDashboard() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Manager Dashboard`)
+  return <ManagerDashboard />
 }
 // _1Sambilita
 function _1Sambalita() {
@@ -1069,6 +1081,24 @@ var routes = [
     name: "Account",
     icon: "ni ni-tv-2 text-primary",
     component: _Account,
+    layout: "",
+    show: "no",
+    order: 4,
+  },
+  {
+    path: "/ApproverDashboard",
+    name: "Approver Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: _ApproverDashboard,
+    layout: "",
+    show: "no",
+    order: 4,
+  },
+  {
+    path: "/ManagerDashboard",
+    name: "Manager Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: _ManagerDashboard,
     layout: "",
     show: "no",
     order: 4,

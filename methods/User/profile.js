@@ -43,6 +43,7 @@ const methods = {
       next(err);
     }
   }),
+  
   getProfileByID: asyncHandler(async (req, res, next) => {
     try {
       let userId = req.query.userId;
@@ -73,10 +74,11 @@ const methods = {
         fbLink,
         partyId,
         userId,
+        isApprover,
+        isManager
       } = req.body;
 
       let image;
-      console.log('req.file',req.file)
       if (req.file) {
         image = req.file.key;
       }
@@ -131,6 +133,12 @@ const methods = {
       }
       if (image) {
         user.profileImage = image;
+      }
+      if (isApprover) {
+        user.isApprover = isApprover;
+      }
+      if (isManager) {
+        user.isManager = isManager;
       }
       await user.save();
       return res.status(200).json({ message: "profile updated successfully!" });

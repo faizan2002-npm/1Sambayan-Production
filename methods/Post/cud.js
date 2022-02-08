@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
@@ -7,15 +6,16 @@ const Site = require("../../models/Site/Site");
 const Post = require("../../models/Post/Post");
 var path = require("path");
 const entities = require("html-entities");
+const moment = require("moment");
 // const entities = new Entities();
 
 const methods = {
   //----- Create post -----//
   create: asyncHandler(async (req, res, next) => {
     try {
-      const { title, description } = req.body;
+      const { title, description, isApproved, isAdmin } = req.body;
       let image, video;
-
+console.log("req",req.files)
       if (req.files.video) {
         video = req.files.video[0].key;
       }
@@ -23,7 +23,7 @@ const methods = {
         image = req.files.image[0].key;
       }
       const ownerId = req.user._id;
-
+      const partyId = req.user?.partyId ? req.user?.partyId : {};
       const newDescription = description.replace(/(<([^>]+)>)/gi, "");
 
       // Saving User in DataBase
@@ -33,6 +33,9 @@ const methods = {
         image,
         video,
         owner: ownerId,
+        party: partyId,
+        isApproved,
+        isAdmin,
       });
 
       res.status(200).json({ post: post });
@@ -44,7 +47,7 @@ const methods = {
   //----- Update post -----//
   update: asyncHandler(async (req, res, next) => {
     try {
-      const { title, description, postId } = req.body;
+      const { title, description, postId, isApproved } = req.body;
       let image, video;
 
       if (req.files.video) {
@@ -56,6 +59,9 @@ const methods = {
       let post = await Post.findById(postId);
       if (title) {
         post.title = title;
+      }
+      if (isApproved) {
+        post.isApproved = isApproved;
       }
       if (description) {
         const newDescription = description.replace(/(<([^>]+)>)/gi, "");
@@ -84,19 +90,23 @@ const methods = {
       const post = await Post.findById(postId);
       // console.log("post.title", post.title);
       // if (process.env.NODE_ENV == "production") {
-      const indexFilePath = path.join(__dirname, "../../client/build", "index.html");
+      const indexFilePath = path.join(
+        __dirname,
+        "../../client/build",
+        "index.html"
+      );
 
       const data = {
         ogTitle: `${post.title}`,
         ogDiscription: `${post.description}`,
-        image: '',
+        image: "",
         _id: post._id,
-        request: 'singlePost'
+        request: "singlePost",
       };
       if (post.image) {
         data.image = post.image;
       }
-      res.render('single', { data: data });
+      res.render("single", { data: data });
       // const content = fs.readFileSync(indexFilePath);
 
       // let resHtml = content.toString();
@@ -115,11 +125,11 @@ const methods = {
       // } else {
       // res.status(200).json({ post: post });
       // }
-
     } catch (err) {
       next(err);
     }
   }),
+
   //----- Get Single post -----//
   getSinglePost: asyncHandler(async (req, res, next) => {
     try {
@@ -128,7 +138,6 @@ const methods = {
       const post = await Post.findById(postId);
 
       res.status(200).json({ post: post });
-
     } catch (err) {
       next(err);
     }
@@ -137,6 +146,15 @@ const methods = {
   //----- Get list of posts -----//
   getPosts: asyncHandler(async (req, res, next) => {
     try {
+      const posts = await Post.find({ isApproved: true });
+      res.status(200).json({ posts: posts });
+    } catch (err) {
+      next(err);
+    }
+  }),
+  
+  getAllPosts: asyncHandler(async (req, res, next) => {
+    try {
       const posts = await Post.find({});
       res.status(200).json({ posts: posts });
     } catch (err) {
@@ -144,6 +162,53 @@ const methods = {
     }
   }),
 
+  listByParty: asyncHandler(async (req, res, next) => {
+    try {
+      const { partyId } = req.params;
+      const posts = await Post.find({ party: partyId });
+      res.status(200).json({ posts: posts });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  approvedByParty: asyncHandler(async (req, res, next) => {
+    try {
+      const { partyId } = req.params;
+      const posts = await Post.find({ isApproved: true, party: partyId });
+      res.status(200).json({ posts: posts });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  unapprovedByParty: asyncHandler(async (req, res, next) => {
+    try {
+      const { partyId } = req.params;
+      const posts = await Post.find({ isApproved: false, party: partyId });
+      res.status(200).json({ posts: posts });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  todayPost: asyncHandler(async (req, res, next) => {
+    try {
+      const { partyId } = req.params;
+      var start = new Date();
+      start.setHours(0, 0, 0, 0);
+
+      var end = new Date();
+      end.setHours(23, 59, 59, 999);
+      const posts = await Post.find({
+        createdAt: { $gte: start, $lt: end },
+        party: partyId,
+      });
+      res.status(200).json({ posts: posts });
+    } catch (err) {
+      next(err);
+    }
+  }),
   //----- Delete Post -----//
   deletePost: asyncHandler(async (req, res, next) => {
     try {
@@ -151,6 +216,26 @@ const methods = {
       if (!postId) return res.status(400).json({ message: "Provide post id" });
       await Post.findByIdAndDelete(postId);
       res.status(200).json({ message: "Successfully Deleted!" });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+  //---- Approved Post  ----//
+  approverUser: asyncHandler(async (req, res, next) => {
+    try {
+      // console.log("req.body", req.body);
+      const postId = req.body.postId;
+      await Post.findByIdAndUpdate(
+        postId,
+        {
+          isApproved: true,
+        },
+        { new: true }
+      );
+      return res
+        .status(200)
+        .json({ message: "Post has been Approved Successfully" });
     } catch (err) {
       next(err);
     }

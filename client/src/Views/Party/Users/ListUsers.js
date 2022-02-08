@@ -13,6 +13,8 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 import Select from 'react-select'
 const ExpandedComponent = ({ data }) => {
     const [changeAge, setChangeAge] = useState()
+    const [approver, setApprover] = useState()
+    const [manager, setManager] = useState()
     const [changeProfession, setChangeProfession] = useState()
     const ageOptions = [
         { value: '15', label: '15' },
@@ -109,6 +111,12 @@ const ExpandedComponent = ({ data }) => {
     const ageChange = (selectedOption) => {
         setChangeAge(selectedOption);
     }
+    const approverChange = (selectedOption) => {
+        setApprover(selectedOption);
+    }
+    const managerChange = (selectedOption) => {
+        setManager(selectedOption);
+    }
     const professionChange = (selectedOption) => {
         setChangeProfession(selectedOption);
     }
@@ -140,6 +148,18 @@ const ExpandedComponent = ({ data }) => {
                 formData.append(
                     "age",
                     changeAge.value
+                );
+            }
+            if (approver) {
+                formData.append(
+                    "isApprover",
+                    approver.value
+                );
+            }
+            if (manager) {
+                formData.append(
+                    "isManager",
+                    manager.value
                 );
             }
             formData.append(
@@ -174,6 +194,8 @@ const ExpandedComponent = ({ data }) => {
                 address: formData.get('address'),
                 fbLink: formData.get('fbLink'),
                 profession: formData.get('profession'),
+                isApprover: formData.get('isApprover'),
+                isManager: formData.get('isManager'),
                 partyId: formData.get('partyId'),
                 userId: data._id,
             };
@@ -247,7 +269,7 @@ const ExpandedComponent = ({ data }) => {
                                         type="text"
                                         placeholder="Last Name"
                                         className="form-control"
-                                        required
+                                        
                                         value={data.lastName}
                                     />
 
@@ -303,7 +325,7 @@ const ExpandedComponent = ({ data }) => {
                                         type="text"
                                         placeholder="Address"
                                         className="form-control"
-                                        required
+                                        
                                         value={data.address}
                                     />
 
@@ -318,7 +340,7 @@ const ExpandedComponent = ({ data }) => {
                                         type="url"
                                         placeholder="Facebook Link"
                                         className="form-control"
-                                        required
+                                        
                                         value={data.fbLink}
                                     />
 
@@ -332,6 +354,30 @@ const ExpandedComponent = ({ data }) => {
                                         defaultValue={{ value: true, label: data.profession }}
                                         options={professionOptions}
                                     />
+                                </FormGroup>
+                            </Col>
+                            <Col lg={6} md={6} xs={12}>
+                                <FormGroup className="mb-4">
+                                    <Label>Approver</Label>
+                                    <Select
+                                        onChange={approverChange}
+                                        defaultValue={{ value: true, label: (data?.isApprover)?'Approver':'Not Approver' }}
+                                        options={[
+                                            { value: false, label: 'Not Approver' },
+                                            { value: true, label: 'Approver' },
+                                        ]} />
+                                </FormGroup>
+                            </Col>
+                            <Col lg={6} md={6} xs={12}>
+                                <FormGroup className="mb-4">
+                                    <Label>Post Manager</Label>
+                                    <Select
+                                        onChange={managerChange}
+                                        defaultValue={{ value: true, label: (data?.isManager)?'Post Manager':'Not Post Manager' }}
+                                        options={[
+                                            { value: false, label: 'Not Post Manager' },
+                                            { value: true, label: 'Post Manager' },
+                                        ]} />
                                 </FormGroup>
                             </Col>
                             <Col xs={12}>

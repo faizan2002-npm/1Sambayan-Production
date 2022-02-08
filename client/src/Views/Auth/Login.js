@@ -77,6 +77,7 @@ const Login = () => {
           );
           localStorage.setItem("USER_EMAIL", response.result.data.user.email);
           localStorage.setItem("USER_ID", response.result.data.user._id);
+          localStorage.setItem("PARTY_ID", response.result.data.user.partyId);
         }
 
         // if (response.result.data.user.type === "teacher") {

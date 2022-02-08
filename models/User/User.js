@@ -83,6 +83,16 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
 
+  isApprover: {
+    type: Boolean,
+    default: false,
+  },
+  
+  isManager: {
+    type: Boolean,
+    default: false,
+  },
+
   barangay: {
     type: String,
     required: false,

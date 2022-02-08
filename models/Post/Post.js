@@ -14,6 +14,14 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isApproved: {
+    type: Boolean,
+    default: false,
+  },
   video: {
     videoURL: String,
     videoSettings: {
@@ -38,6 +46,14 @@ const PostSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
+  },
+  approver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  party: {
+    type: mongoose.Schema.Types.ObjectId,
+    // ref: "users",
   },
   createdAt: {
     type: Date,

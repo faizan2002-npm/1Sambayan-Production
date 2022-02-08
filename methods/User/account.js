@@ -91,6 +91,7 @@ const methods = {
       next(err);
     }
   }),
+
   getAllUsersByParty: asyncHandler(async (req, res, next) => {
     let partyId = req.query.partyId;
 
@@ -121,6 +122,48 @@ const methods = {
       return res
         .status(200)
         .json({ message: "User has been deleted successfully" });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+
+  //---- Approver Master USER  ----//
+  approverUser: asyncHandler(async (req, res, next) => {
+    try {
+      // console.log("req.body", req.body);
+      const userId = req.body.userId;
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          isApprover: true,
+        },
+        { new: true }
+      );
+      return res
+        .status(200)
+        .json({ message: "User has now been promoted to Approver successfully" });
+    } catch (err) {
+      next(err);
+    }
+  }),
+
+
+  //---- Post Manager USER  ----//
+  managerUser: asyncHandler(async (req, res, next) => {
+    try {
+      // console.log("req.body", req.body);
+      const userId = req.body.userId;
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          isManager: true,
+        },
+        { new: true }
+      );
+      return res
+        .status(200)
+        .json({ message: "User has now been promoted to Manager successfully" });
     } catch (err) {
       next(err);
     }
@@ -448,6 +491,7 @@ const methods = {
       next(error);
     }
   }),
+
   contactUs: asyncHandler(async (req, res, next) => {
     try {
       const { name, email, phone, subject, message } = req.body;
